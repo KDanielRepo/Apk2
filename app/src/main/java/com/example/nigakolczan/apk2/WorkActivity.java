@@ -600,6 +600,7 @@ public class WorkActivity extends AppCompatActivity {
             ShowMap();
             SetBackground();
             AddResourceMove();
+            ShowStats();
             getRng();
             Fight();
         }
@@ -618,6 +619,7 @@ public class WorkActivity extends AppCompatActivity {
             ShowMap();
             SetBackground();
             AddResourceMove();
+            ShowStats();
             getRng();
             Fight();
         }
@@ -635,6 +637,7 @@ public class WorkActivity extends AppCompatActivity {
             ShowMap();
             SetBackground();
             AddResourceMove();
+            ShowStats();
             getRng();
             Fight();
         }
@@ -652,6 +655,7 @@ public class WorkActivity extends AppCompatActivity {
             ShowMap();
             SetBackground();
             AddResourceMove();
+            ShowStats();
             getRng();
             Fight();
         }
