@@ -44,16 +44,13 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-public class WorkActivity extends AppCompatActivity {
-
+public class WorkActivity extends AppCompatActivity implements Runnable {
+    Thread test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Equipment equipment = new Equipment();
         equipment.SetStats();
-        SetHp();
-        SetDmg();
-        setDmgTemp();
         setContentView(R.layout.activity_work);
         ImageView img = (ImageView) findViewById(R.id.testanim);
         img.setBackgroundResource(R.drawable.testanim_1);
@@ -67,13 +64,11 @@ public class WorkActivity extends AppCompatActivity {
 
         ImageView dot = (ImageView) findViewById(R.id.dot);
         dot.setImageResource(R.drawable.dot);
-        GetArea();
-        startSeen();
-        setMap();
-        SetBackground();
-        SetResource();
-        ShowStats();
         getSpells();
+        xArray = new int[36];
+        test = new Thread(this, "ale checa");
+        test.start();
+        System.out.println(Thread.activeCount());
         }
     protected Node getNode(String tagName, NodeList nodes) {
         for (int x = 0; x < nodes.getLength(); x++) {
@@ -86,14 +81,31 @@ public class WorkActivity extends AppCompatActivity {
         return null;
     }
 
+    public void run(){
+        SetHp();
+        SetDmg();
+        setDmgTemp();
+        GetArea();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                SetBackground();
+            }
+        });
+        StartSeen();
+        setMap();
+        SetResource();
+        ShowStats();
+    }
+
     //Statystyki bohatera
-    protected static int Poziom = Integer.parseInt(RestActivity.Lvl);
-    protected static int Money = Integer.parseInt(RestActivity.Shekles);
+    protected static int Lvl = Integer.parseInt(RestActivity.Lvl);
+    protected static int Shekles = Integer.parseInt(RestActivity.Shekles);
     protected int Exp = Integer.parseInt(RestActivity.Experience);
     protected int SetHp(){
         int reset = 0;
         if(reset == 0){
-            Hp = ((Poziom*2) + Equipment.Hp)/2;
+            Hp = ((Lvl*2) + Equipment.Hp)/2;
             reset++;
             return Hp;
         }else if(reset > 0){
@@ -119,12 +131,12 @@ public class WorkActivity extends AppCompatActivity {
     protected int SetResource(){
         switch(ResourceName){
             case "Mana":
-                Resource_Max = Poziom *10;
+                Resource_Max = Lvl *10;
                 Resource = Resource_Max;
             case "Rage":
-                Resource_Max = Poziom * 5;
+                Resource_Max = Lvl * 5;
             case "Energy":
-                Resource_Max = Poziom * 15;
+                Resource_Max = Lvl * 15;
         }
         return Resource;
     }
@@ -154,6 +166,13 @@ public class WorkActivity extends AppCompatActivity {
                 }
         }
         return  Resource;
+    }
+    protected void getSpells(){
+        RestActivity restActivity = new RestActivity();
+        for(int i = 0; i < 8; i++){
+            restActivity.getSpells(i);
+            Spells.add(restActivity.getSpells(i));
+        }
     }
     private void SetEq(){
         RestActivity restActivity = new RestActivity();
@@ -303,10 +322,11 @@ public class WorkActivity extends AppCompatActivity {
     private int[] xArray;
     private int[] seen;
     private int testcheck = 0;
-    private int k_temp;
-    private int k;
+    private int k_temp=0;
+    private int k=0;
     private int id = 0;
     private int finish = 0;
+
 
     private void ResetMap(){
         setY=96;
@@ -325,11 +345,10 @@ public class WorkActivity extends AppCompatActivity {
         iv.setTranslationX(x);
         iv.setTranslationY(y);
         if(deep==3){
-            System.out.println("To ostatni poziom");
+            System.out.println("To ostatni Lvl");
             Finished();
         }
     }
-
     protected void BlackoutMap(){
         id=0;
         setY=96;
@@ -358,23 +377,30 @@ public class WorkActivity extends AppCompatActivity {
         xArray[0] = 1;
         for (int i = 0; i < 11; i++) {
             k = ThreadLocalRandom.current().nextInt(1, 4);
-            if(k==1 & k_temp ==3){
+            if(k==1 && k_temp ==3){
+                //System.out.println("jestem w 1 if");
                 k = ThreadLocalRandom.current().nextInt(1, 4);
-            }else if(k==2 & k_temp==4){
+            }else if(k==2 && k_temp==4){
+                //System.out.println("jestem w 2 if");
                 k = ThreadLocalRandom.current().nextInt(1, 4);
-            }else if(k==3 & k_temp==1){
+            }else if(k==3 && k_temp==1){
+                //System.out.println("jestem w 3 if");
                 k = ThreadLocalRandom.current().nextInt(1, 4);
-            }else if(k==4 & k_temp==2) {
+            }else if(k==4 && k_temp==2) {
+               // System.out.println("jestem w 4 if");
                 k = ThreadLocalRandom.current().nextInt(1, 4);
             }
 
             if (k == 1) {
+                //System.out.println("jestem w 5 if");
                 k_temp = k;
                 testcheck -= 6;
                 if (testcheck < 1) {
+                  //  System.out.println("jestem w 6 if");
                     testcheck += 6;
                 }
                 if(xArray[testcheck]==1){
+                   // System.out.println("jestem w 7 if");
                     i--;
                 }else if(xArray[testcheck]!=1){
                     xArray[testcheck] = 1;
@@ -382,10 +408,16 @@ public class WorkActivity extends AppCompatActivity {
             } else if (k == 2) {
                 k_temp = k;
                 testcheck += 1;
-                if (testcheck > 35 | testcheck%6==0) {
-                    testcheck -= 1;
+                if (testcheck > 35 || testcheck%6==0) {
+                   // System.out.println("jestem w 8 if");
+                    if(testcheck>35){
+                        testcheck = 2;
+                    }else{
+                        testcheck -= 1;
+                    }
                 }
                 if(xArray[testcheck]==1){
+                   //System.out.println("jestem w 9 if");
                     i--;
                 }else if(xArray[testcheck]!=1){
                     xArray[testcheck] = 1;
@@ -394,9 +426,11 @@ public class WorkActivity extends AppCompatActivity {
                 k_temp = k;
                 testcheck += 6;
                 if (testcheck > 35) {
+                    //System.out.println("jestem w 10 if");
                     testcheck -= 6;
                 }
                 if(xArray[testcheck]==1){
+                    //System.out.println("jestem w 11 if");
                     i--;
                 }else if(xArray[testcheck]!=1){
                     xArray[testcheck] = 1;
@@ -404,14 +438,17 @@ public class WorkActivity extends AppCompatActivity {
             } else if (k == 4 ) {
                 k_temp = k;
                 testcheck -= 1;
-                if (testcheck < 1 | testcheck%6==0) {
+                if (testcheck < 1 || (testcheck+1)%6==0) {
+                    //System.out.println("jestem w 12 if");
                     testcheck += 1;
                 }
                 if(xArray[testcheck]==1){
+                    //System.out.println("jestem w 13 if");
                     i--;
                 }else if(xArray[testcheck]!=1){
                     xArray[testcheck] = 1;
                 }
+                System.out.println(i);
             }
         }
     }
@@ -486,86 +523,89 @@ public class WorkActivity extends AppCompatActivity {
     protected void SetBackground(){
         android.support.constraint.ConstraintLayout constraintLayout = (android.support.constraint.ConstraintLayout) findViewById(R.id.Screen);
         constraintLayout.setBackgroundResource(0);
-        if(getArray(arrayX+1)==1 && getArray(arrayX+6)==1 && getArray(arrayX-1)==1 && getArray(arrayX-6)==1 ){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==1 && GetArray(arrayX-6)==1 ){
             constraintLayout.setBackgroundResource(R.drawable.test_map_9);
         }
-        if(getArray(arrayX+1)==1 && getArray(arrayX+6)==1 && getArray(arrayX-6)==1 && getArray(arrayX-1)==0){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
             constraintLayout.setBackgroundResource(R.drawable.test_map_1);
         }
-        if(getArray(arrayX+1)==1 && getArray(arrayX+6)==1 && getArray(arrayX-6)==0 && getArray(arrayX-1)==1){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
             constraintLayout.setBackgroundResource(R.drawable.test_map_11);
         }
-        if(getArray(arrayX+1)==1 && getArray(arrayX+6)==0 && getArray(arrayX-6)==1 && getArray(arrayX-1)==1){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
             constraintLayout.setBackgroundResource(R.drawable.test_map_10);
         }
-        if(getArray(arrayX+1)==0 && getArray(arrayX+6)==1 && getArray(arrayX-6)==1 && getArray(arrayX-1)==1){
+        if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
             constraintLayout.setBackgroundResource(R.drawable.test_map_12);
         }
-        if(getArray(arrayX+1)==1 && getArray(arrayX+6)==1 && getArray(arrayX-6)==0 && getArray(arrayX-1)==0){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==0){
             constraintLayout.setBackgroundResource(R.drawable.test_map_3);
         }
-        if(getArray(arrayX+1)==1 && getArray(arrayX+6)==0 && getArray(arrayX-6)==1 && getArray(arrayX-1)==0){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
             constraintLayout.setBackgroundResource(R.drawable.test_map_2);
         }
-        if(getArray(arrayX+1)==0 && getArray(arrayX+6)==1 && getArray(arrayX-6)==1 && getArray(arrayX-1)==0){
+        if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
             constraintLayout.setBackgroundResource(R.drawable.test_map_4);
         }
-        if(getArray(arrayX+1)==1 && getArray(arrayX+6)==0 && getArray(arrayX-1)==0 && getArray(arrayX-6)==0 ){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-1)==0 && GetArray(arrayX-6)==0 ){
             constraintLayout.setBackgroundResource(R.drawable.test_map_5);
         }
-        if(getArray(arrayX+1)==0 && getArray(arrayX+6)==0 && getArray(arrayX-6)==1 && getArray(arrayX-1)==0){
+        if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
             constraintLayout.setBackgroundResource(R.drawable.test_map_7);
         }
-        if(getArray(arrayX+1)==0 && getArray(arrayX+6)==1 && getArray(arrayX-1)==0 && getArray(arrayX-6)==0 ){
+        if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==0 && GetArray(arrayX-6)==0 ){
             constraintLayout.setBackgroundResource(R.drawable.test_map_6);
         }
-        if(getArray(arrayX+1)==0 && getArray(arrayX+6)==0 && getArray(arrayX-6)==0 && getArray(arrayX-1)==1){
+        if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
             constraintLayout.setBackgroundResource(R.drawable.test_map_8);
         }
-        if(getArray(arrayX+1)==1 && getArray(arrayX+6)==0 && getArray(arrayX-6)==0 && getArray(arrayX-1)==1){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
             constraintLayout.setBackgroundResource(R.drawable.test_map_13);
         }
-        if(getArray(arrayX+1)==0 && getArray(arrayX+6)==1 && getArray(arrayX-6)==0 && getArray(arrayX-1)==1){
+        if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
             constraintLayout.setBackgroundResource(R.drawable.test_map_14);
         }
-        if(getArray(arrayX+1)==0 && getArray(arrayX+6)==0 && getArray(arrayX-6)==1 && getArray(arrayX-1)==1){
+        if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
             constraintLayout.setBackgroundResource(R.drawable.test_map_15);
         }
     }
-    protected int setArray(int a){
+    protected int SetArray(int a){
         a = arrayX;
+        if(arrayX>35){
+            a-=1;
+        }
         return xArray[a];
     }
-    protected void startSeen(){
+
+    protected void StartSeen(){
         seen = new int[36];
         seen[0] = 1;
         for(int i = 1; i < 36; i++){
             seen[i] = 0;
         }
     }
-    protected int setSeen(int a){
+    protected int SetSeen(int a){
         seen[a] = 1;
         return seen[a];
     }
     protected void CheckEnd(){
         if(seen[arrayX] == 0){
-            setSeen(arrayX);
+            SetSeen(arrayX);
                 finish++;
                 System.out.println("finish to: "+finish);
         }else if(seen[arrayX] == 1){
         }
             if(finish == 11){
-                System.out.println("Brawo");
                 BlackoutMap();
                 ResetMap();
                 GetArea();
-                startSeen();
+                StartSeen();
                 setMap();
                 ShowMap();
                 SetBackground();
             }
         }
-    protected int getArray(int a){
+    protected int GetArray(int a){
         xArray[0]=1;
         if(a<0){
             a=0;
@@ -577,6 +617,28 @@ public class WorkActivity extends AppCompatActivity {
         }
         return xArray[a];
     }
+    protected void Finished(){
+        final WriteAnim writeAnim = (WriteAnim) findViewById(R.id.battleText);
+        writeAnim.setVisibility(View.VISIBLE);
+        writeAnim.setCharacterDelay(30);
+        HideMovement();
+        writeAnim.animateText("brawo");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                writeAnim.animateText("zebrales: "+temp_gold+" zlota i: "+temp_exp+" doswiadczenia");
+            }
+        },250);
+        final ConstraintLayout constraintLayout = findViewById(R.id.Screen);
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                constraintLayout.setOnClickListener(null);
+                LostExit();
+            }
+        });
+    }
+
 
     //losowo generowane potyczki
     int rng = 3;
@@ -589,10 +651,10 @@ public class WorkActivity extends AppCompatActivity {
     //Sekcja ruchu na mapie
     protected void Right(View v) {
         arrayX += 1;
-        if ( arrayX % 6== 0 | setArray(arrayX) == 0 | setArray(arrayX)%6 == 0) {
+        if (arrayX>35 | arrayX % 6== 0 | SetArray(arrayX) == 0 | SetArray(arrayX)%6 == 0) {
             arrayX -= 1;
         } else {
-            setArray(arrayX);
+            SetArray(arrayX);
             ImageView img = findViewById(R.id.dot);
             x+=50;
             img.setTranslationX(x);
@@ -601,17 +663,17 @@ public class WorkActivity extends AppCompatActivity {
             SetBackground();
             AddResourceMove();
             ShowStats();
-            getRng();
-            Fight();
+            //getRng();
+            //Fight();
         }
     }
     protected void Left(View v) {
         arrayX -= 1;
-        // tak na wszelki wypadek  | setArray(arrayX)%6 == 0 | (arrayX > 0 & arrayX % 6 == 0)
-        if ( arrayX < 0 || setArray(arrayX) == 0 || (arrayX > 4 && (arrayX+1)%6==0) ) {
+        // tak na wszelki wypadek  | SetArray(arrayX)%6 == 0 | (arrayX > 0 & arrayX % 6 == 0)
+        if ( arrayX < 0 || SetArray(arrayX) == 0 || (arrayX > 4 && (arrayX+1)%6==0) ) {
             arrayX += 1;
         } else {
-            setArray(arrayX);
+            SetArray(arrayX);
             ImageView img = findViewById(R.id.dot);
             x-=50;
             img.setTranslationX(x);
@@ -620,16 +682,16 @@ public class WorkActivity extends AppCompatActivity {
             SetBackground();
             AddResourceMove();
             ShowStats();
-            getRng();
-            Fight();
+            //getRng();
+            //Fight();
         }
     }
     protected void Up(View v) {
         arrayX -= 6;
-        if (arrayX < 0 || setArray(arrayX) == 0) {
+        if (arrayX < 0 || SetArray(arrayX) == 0) {
             arrayX += 6;
         } else {
-            setArray(arrayX);
+            SetArray(arrayX);
             ImageView img = findViewById(R.id.dot);
             y-=50;
             img.setTranslationY(y);
@@ -638,16 +700,16 @@ public class WorkActivity extends AppCompatActivity {
             SetBackground();
             AddResourceMove();
             ShowStats();
-            getRng();
-            Fight();
+            //getRng();
+           // Fight();
         }
     }
     protected void Down(View v) {
         arrayX += 6;
-        if (arrayX > 36 || setArray(arrayX) == 0) {
+        if (arrayX > 36 || SetArray(arrayX) == 0) {
             arrayX -= 6;
         } else {
-            setArray(arrayX);
+            SetArray(arrayX);
             ImageView img = findViewById(R.id.dot);
             y+=50;
             img.setTranslationY(y);
@@ -656,44 +718,8 @@ public class WorkActivity extends AppCompatActivity {
             SetBackground();
             AddResourceMove();
             ShowStats();
-            getRng();
-            Fight();
-        }
-    }
-    protected void CheckforIlments(){
-        if(stun){
-            Stunned();
-            a++;
-        }
-        if(ablaze){
-            click++;
-            if(click%2==1){
-                System.out.print("Ploniesz");
-                Dmg -= 2;
-                Hp -= 3;
-            }else if(click%2==0){
-                System.out.print("Wrog plonie i dostaje: "+3+" obrazen");
-                EnemyDmg -= 2;
-                EnemyHp -= 3;
-            }
-            Ablaze();
-            click--;
-            a++;
-        }
-        if(bleed){
-            click++;
-            if(click%2==1){
-                System.out.print("Krwawisz");
-                Dmg -= 1;
-                Hp -= 5;
-            }else if(click%2==0){
-                System.out.print("Wrog Krwawi i dostaje: "+5+" obrazen");
-                EnemyDmg -= 1;
-                EnemyHp -= 5;
-            }
-            click--;
-            a++;
-            Bleed();
+            //getRng();
+            //Fight();
         }
     }
 
@@ -773,7 +799,7 @@ public class WorkActivity extends AppCompatActivity {
         if (stateCheck == true) {
             battleText.setVisibility(View.VISIBLE);
             battleText.setCharacterDelay(30);
-            battleText.animateText("Przeciwnik to: "+RestActivity.EnemyName+ newLine+"HP: "+EnemyHp+ newLine+"Zadaje: "+EnemyDmg+" obrazen"+newLine+"Poziom: "+StatsCreate.EnemyLvlVar);
+            battleText.animateText("Przeciwnik to: "+RestActivity.EnemyName+ newLine+"HP: "+EnemyHp+ newLine+"Zadaje: "+EnemyDmg+" obrazen"+newLine+"Lvl: "+StatsCreate.EnemyLvlVar);
             HideDuringCheck();
             stateCheck = false;
         } else if (stateCheck == false) {
@@ -850,6 +876,44 @@ public class WorkActivity extends AppCompatActivity {
             EnemyDmg = enemy_dmg_temp;
         }
     }
+    protected void CheckforIlments(){
+        if(stun){
+            Stunned();
+            a++;
+        }
+        if(ablaze){
+            click++;
+            if(click%2==1){
+                System.out.print("Ploniesz");
+                Dmg -= 2;
+                Hp -= 3;
+            }else if(click%2==0){
+                System.out.print("Wrog plonie i dostaje: "+3+" obrazen");
+                EnemyDmg -= 2;
+                EnemyHp -= 3;
+            }
+            Ablaze();
+            click--;
+            a++;
+        }
+        if(bleed){
+            click++;
+            if(click%2==1){
+                System.out.print("Krwawisz");
+                Dmg -= 1;
+                Hp -= 5;
+            }else if(click%2==0){
+                System.out.print("Wrog Krwawi i dostaje: "+5+" obrazen");
+                EnemyDmg -= 1;
+                EnemyHp -= 5;
+            }
+            click--;
+            a++;
+            Bleed();
+        }
+    }
+
+    //Umiejetnosci
     protected void Test_at1(final View v){
         CheckforIlments();
         WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
@@ -861,7 +925,6 @@ public class WorkActivity extends AppCompatActivity {
         battleText.animateText("zadales: "+Dmg+" obrazen!"+newLine+ "Wrogowi zostalo: "+EnemyHp+" punktow zycia!");
         FightAnimMelee();
     }
-    //tutaj gotowy szablon do umiejek
     protected void Test_at2(final View v){
         Boolean done = false;
         final WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
@@ -1011,13 +1074,6 @@ public class WorkActivity extends AppCompatActivity {
     protected void Test_at6(final View v){}
     protected void Test_at7(final View v){}
     protected void Test_at8(final View v){}
-    protected void getSpells(){
-        RestActivity restActivity = new RestActivity();
-        for(int i = 0; i < 8; i++){
-            restActivity.getSpells(i);
-            Spells.add(restActivity.getSpells(i));
-        }
-    }
 
     //pokazuje lub ukrywa liste ruchow w walce
     protected void CheckSkillsFirstRow(){
@@ -1385,7 +1441,7 @@ public class WorkActivity extends AppCompatActivity {
             player.setVisibility(View.GONE);
             ImageView enemy = findViewById(R.id.testanim_2);
             enemy.setVisibility(View.GONE);
-            Money += StatsCreate.GetMoney();
+            Shekles += StatsCreate.GetMoney();
             Exp += StatsCreate.GetExperience();
             temp_gold+=StatsCreate.GetMoney();
             temp_exp+=StatsCreate.GetExperience();
@@ -1393,9 +1449,9 @@ public class WorkActivity extends AppCompatActivity {
             id=0;
             ShowMap();
             BattleWriter();
-            if (Exp >= Poziom * 2) {
-                Exp = Exp - Poziom * 2;
-                Poziom += 1;
+            if (Exp >= Lvl * 2) {
+                Exp = Exp - Lvl * 2;
+                Lvl += 1;
             }
         }
         if (Hp < 1) {
@@ -1422,27 +1478,6 @@ public class WorkActivity extends AppCompatActivity {
             }
         });
         LostExit();
-    }
-    protected void Finished(){
-        final WriteAnim writeAnim = (WriteAnim) findViewById(R.id.battleText);
-        writeAnim.setVisibility(View.VISIBLE);
-        writeAnim.setCharacterDelay(30);
-        HideMovement();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                writeAnim.animateText("brawo");
-            }
-        },250);
-        writeAnim.animateText("zebrales: "+temp_gold+" zlota i: "+temp_exp+" doswiadczenia");
-        final ConstraintLayout constraintLayout = findViewById(R.id.Screen);
-        constraintLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                constraintLayout.setOnClickListener(null);
-                LostExit();
-            }
-        });
     }
 
     //Komunikaty na ekranie
@@ -1488,8 +1523,8 @@ public class WorkActivity extends AppCompatActivity {
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(file);
 
-            String pz = Integer.toString(Poziom);
-            String mo = Integer.toString(Money);
+            String pz = Integer.toString(Lvl);
+            String mo = Integer.toString(Shekles);
             String ex = Integer.toString(Exp);
 
             NodeList root = doc.getChildNodes();
@@ -1517,8 +1552,8 @@ public class WorkActivity extends AppCompatActivity {
             transformer.transform(source, result);
 
             System.out.println("Done");
-            System.out.println(Poziom);
-            System.out.println(Money);
+            System.out.println(Lvl);
+            System.out.println(Shekles);
         } catch (ParserConfigurationException | TransformerException | IOException | SAXException pce) {
             pce.printStackTrace();
         }

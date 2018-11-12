@@ -29,8 +29,6 @@ class Equipment {
     protected static int max;
     private int done =0;
 
-    RestActivity restActivity = new RestActivity();
-
     private Node getNode(String tagName, NodeList nodes) {
         for (int x = 0; x < nodes.getLength(); x++) {
             Node node = nodes.item(x);
@@ -162,6 +160,7 @@ class Equipment {
 
     List<String>Backpack = new ArrayList<>();
     protected String SetBackpack(){
+        RestActivity restActivity = new RestActivity();
         if(restActivity.getFirst_eq().equals("F")){
             if(this.done==0){
                 Backpack.add("Mana");
