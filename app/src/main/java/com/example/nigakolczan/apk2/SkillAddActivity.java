@@ -96,7 +96,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
     }
     protected void ShowMoney(){
         TextView m = findViewById(R.id.money);
-        m.setText("Szekle: "+WorkActivity.Money);
+        m.setText("Szekle: "+WorkActivity.Shekles);
     }
 
     protected void ShowYesNoButtons(){
@@ -229,8 +229,8 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(WorkActivity.Money >= needmoney & WorkActivity.Poziom >= needlvl){
-                    WorkActivity.Money -=needmoney;
+                if(WorkActivity.Shekles >= needmoney & WorkActivity.Lvl >= needlvl){
+                    WorkActivity.Shekles -=needmoney;
                     UpdateStats();
                     text.animateText("prosze bardzo, cos jeszcze?");
                     HideSkillButtons();
@@ -273,8 +273,8 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(WorkActivity.Money >= needmoney & WorkActivity.Poziom >= needlvl){
-                    WorkActivity.Money -=needmoney;
+                if(WorkActivity.Shekles >= needmoney & WorkActivity.Lvl >= needlvl){
+                    WorkActivity.Shekles -=needmoney;
                     UpdateEq();
                     text.animateText("prosze bardzo, cos jeszcze?");
                     HideWhichButtons();
@@ -322,8 +322,8 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(WorkActivity.Money >= needmoney){
-                    WorkActivity.Money -=needmoney;
+                if(WorkActivity.Shekles >= needmoney){
+                    WorkActivity.Shekles -=needmoney;
                     UpdateStats();
                     equipment.AddToBackpack(item);
                     text.animateText("prosze bardzo, cos jeszcze?");
@@ -376,7 +376,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
             public void onClick(View view) {
                 choise = true;
                 if(choise){
-                    WorkActivity.Money +=needmoney;
+                    WorkActivity.Shekles +=needmoney;
                     UpdateStats();
                     equipment.DeleteFromBackpack(b);
                     text.animateText("prosze bardzo, cos jeszcze?");
@@ -661,7 +661,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(file);
 
-            String mo = Integer.toString(WorkActivity.Money);
+            String mo = Integer.toString(WorkActivity.Shekles);
 
             NodeList root = doc.getChildNodes();
             Node Stats = getNode("Stats", root);
@@ -700,7 +700,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(file);
 
-            String mo = Integer.toString(WorkActivity.Money);
+            String mo = Integer.toString(WorkActivity.Shekles);
 
             NodeList root = doc.getChildNodes();
             Node Stats = getNode("Stats", root);
@@ -788,7 +788,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
    /* protected void AddSkill_8(View v){
         a=8;
         needlvl=5;
-        needmoney=300;
+        needShekles=300;
         AddSkill();
     }
 */
