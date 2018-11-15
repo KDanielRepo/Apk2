@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -77,21 +79,18 @@ public class TestGroundActivity extends AppCompatActivity {
     private int click = 1;
     private Boolean stateCheck = true;
     private Boolean stateList = true;
+    private Boolean end = false;
 
     private void cpuTurn(){
         ImageView img = findViewById(R.id.testanim_2);
-        img.setX(600);
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        img.setX(700);
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 ImageView img = findViewById(R.id.testanim_2);
                 img.setX(1200);
             }
-        }, 500);
-        EndFight();
-        Hp = Hp - EnemyDmg;
-        System.out.println("Zostalo ci "+Hp+" Hp");
+        },500);
         EndFight();
     }
     private void HideDuringCheck(){
@@ -135,40 +134,56 @@ public class TestGroundActivity extends AppCompatActivity {
         Intent tavern = new Intent(getApplicationContext(),TavernActivity.class);
         startActivity(tavern);
     }
-    protected void Move(View v) {
-        if (click % 2 == 0) {
-            cpuTurn();
-            click++;
-            tura++;
-            WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
-            battleText.setCharacterDelay(30);
-            battleText.animateText("Wrog zadal: "+EnemyDmg+" obrazen!"+newLine+ "Zostalo ci: "+Hp+" punktow zycia!");
-            System.out.println("Koniec tury: "+tura);
+    protected void move(){
+        final WriteAnim battleText = (WriteAnim) findViewById(R.id.writeAnim);
+        battleText.animateText("");
+        battleText.setVisibility(View.VISIBLE);
+        if(click % 2 == 0){
+            EndFight();
+            if(!end){
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                            cpuTurn();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    battleText.setCharacterDelay(30);
+                                    battleText.animateText("Wrog zadal: " + EnemyDmg + " obrazen!" + newLine + "Zostalo ci: " + Hp + " punktow zycia!");
+                                    System.out.println("Koniec tury: " + tura);
+                                }
+                            });
+                        }
+                },1000);
+                click++;
+                tura++;
+                final ConstraintLayout constraintLayout = findViewById(R.id.Screen);
+                constraintLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        battleText.setVisibility(View.GONE);
+                        constraintLayout.setOnClickListener(null);
+                        EnableButtons();
+                    }
+                });
+            }
         } else {
             MoveList();
         }
     }
+    protected void Move(View v) {
+        move();
+    }
 
     //ruchy w walce
     protected void Test_at1(View v){
-        ImageView img = findViewById(R.id.testanim);
-        img.setX(900);
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            public void run() {
-                ImageView img = findViewById(R.id.testanim);
-                img.setX(300);
-            }
-        }, 500);
-        click++;
-        EndFight();
-        EnemyHp = EnemyHp - Dmg;
         WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
+        battleText.setVisibility(View.VISIBLE);
         battleText.setCharacterDelay(30);
+        click++;
+        EnemyHp = EnemyHp - Dmg;
         battleText.animateText("zadales: "+Dmg+" obrazen!"+newLine+ "Wrogowi zostalo: "+EnemyHp+" punktow zycia!");
-        System.out.println("Wrog ma " + EnemyHp+" Hp");
-        MoveList_hide();
-        EndFight();
+        FightAnimMelee();
     }
 
     //pokazuje lub ukrywa liste ruchow w walce
@@ -212,6 +227,52 @@ public class TestGroundActivity extends AppCompatActivity {
         MoveList_hide();
     }
 
+    protected void FightAnimMelee(){
+        ImageView img = findViewById(R.id.testanim);
+        img.setX(900);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ImageView img = findViewById(R.id.testanim);
+                img.setX(400);
+            }
+        },500);
+        MoveList_hide();
+        BlockButtons();
+        EndFight();
+        if(!end){
+            final ConstraintLayout constraintLayout = findViewById(R.id.Screen);
+            constraintLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    constraintLayout.setOnClickListener(null);
+                    WriteAnim b = findViewById(R.id.battleText);
+                    b.setVisibility(View.GONE);
+                    move();
+                }
+            });
+        }
+    }
+    protected void BlockButtons(){
+        Button move = findViewById(R.id.Move);
+        move.setEnabled(false);
+        Button check = findViewById(R.id.Check);
+        check.setEnabled(false);
+        Button list = findViewById(R.id.List);
+        list.setEnabled(false);
+        Button dunno = findViewById(R.id.dunno);
+        dunno.setEnabled(false);
+    }
+    protected void EnableButtons(){
+        Button move = findViewById(R.id.Move);
+        move.setEnabled(true);
+        Button check = findViewById(R.id.Check);
+        check.setEnabled(true);
+        Button list = findViewById(R.id.List);
+        list.setEnabled(true);
+        Button dunno = findViewById(R.id.dunno);
+        dunno.setEnabled(true);
+    }
 
     private void Fight(){
         final Button move = findViewById(R.id.Move);
@@ -262,7 +323,11 @@ public class TestGroundActivity extends AppCompatActivity {
 
     }
     private void EndFight() {
-        if (EnemyHp < 1) {
+        if (EnemyHp <= 0) {
+            MoveList_hide();
+            click = 1;
+            end = true;
+            EnableButtons();
             Button move = findViewById(R.id.Move);
             move.setVisibility(View.GONE);
             Button check = findViewById(R.id.Check);
@@ -275,13 +340,12 @@ public class TestGroundActivity extends AppCompatActivity {
             map.setVisibility(View.VISIBLE);
             ImageView dot = findViewById(R.id.dot);
             dot.setVisibility(View.VISIBLE);
-            click++;
-            Hp = Poziom * 20;
-            Dmg = Poziom * 4;
-            EnemyHp = StatsCreate.EnemyLvlVar * 2;
-            SetComplete();
+            ImageView player = findViewById(R.id.testanim);
+            player.setVisibility(View.GONE);
+            ImageView enemy = findViewById(R.id.testanim_2);
+            enemy.setVisibility(View.GONE);
             BattleWriter();
-
+            SetComplete();
         }
     }
 
