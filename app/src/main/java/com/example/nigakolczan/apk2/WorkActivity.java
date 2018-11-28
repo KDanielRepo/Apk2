@@ -66,7 +66,8 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         dot.setImageResource(R.drawable.dot);
         getSpells();
         xArray = new int[36];
-        test = new Thread(this, "ale checa");
+
+        test = new Thread(this, "test");
         test.start();
         System.out.println(Thread.activeCount());
         }
