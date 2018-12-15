@@ -35,6 +35,8 @@ public class StatsCreate extends AppCompatActivity {
     protected static int EnemyNameVar;
     protected static int money;
     protected static int experience;
+    protected static int bossLvlVar;
+    protected static int bossNameVar;
     protected static String Input;
     protected static String Rasa;
     protected static String Klasa;
@@ -55,6 +57,14 @@ public class StatsCreate extends AppCompatActivity {
     protected static int GetMoney(){
         money = EnemyLvlVar *10;
         return money;
+    }
+    protected static int GetBossMoney(){
+        money = bossLvlVar *20;
+        return money;
+    }
+    protected static int GetBossExperience(){
+        experience = bossLvlVar*10;
+        return experience;
     }
     protected static int GetExperience(){
         experience = EnemyLvlVar *5;
@@ -115,6 +125,38 @@ public class StatsCreate extends AppCompatActivity {
                 break;
         }
         return EnemyNames;
+    }
+    protected static int GetBossLvlVar(){
+        bossLvlVar = ThreadLocalRandom.current().nextInt(TavernActivity.bossMin, TavernActivity.bossMax);
+        return bossLvlVar;
+    }
+    protected static int GetEnemzNameVar(){
+        bossNameVar = ThreadLocalRandom.current().nextInt(1,6);
+        return bossNameVar;
+    }
+    protected static String GetBossName(){
+        String bossNames;
+        switch (bossNameVar) {
+            case 1:
+                bossNames = "Boss_1";
+                break;
+            case 2:
+                bossNames = "Boss_2";
+                break;
+            case 3:
+                bossNames = "Boss_3";
+                break;
+            case 4:
+                bossNames = "Boss_4";
+                break;
+            case 5:
+                bossNames = "Boss_5";
+                break;
+            default:
+                bossNames = "err";
+                break;
+        }
+        return bossNames;
     }
 
     //Pobiera wybrane nick rase i klase
@@ -351,6 +393,7 @@ public class StatsCreate extends AppCompatActivity {
         }
 
     }
+    //zrobic statystyki dla bossa
     protected static void EnemyStats() {
         try {
             GetEnemyNameVar();

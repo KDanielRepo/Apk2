@@ -75,6 +75,8 @@ public class TavernActivity extends AppCompatActivity{
 
     protected static int min;
     protected static int max;
+    protected static int bossMin;
+    protected static int bossMax;
     List<String> Spells = new ArrayList<>();
 
     protected Node getNode(String tagName, NodeList nodes) {
@@ -182,21 +184,29 @@ public class TavernActivity extends AppCompatActivity{
     protected void SelectArea_1(View v){
         min=1;
         max=3;
+        bossMin=4;
+        bossMax=6;
         GotoDungeon();
     }
     protected void SelectArea_2(View v){
         min=3;
         max=5;
+        bossMin=6;
+        bossMax=8;
         GotoDungeon();
     }
     protected void SelectArea_3(View v){
         min=5;
         max=7;
+        bossMin=8;
+        bossMax=10;
         GotoDungeon();
     }
     protected void SelectArea_4(View v){
         min=7;
         max=9;
+        bossMin=10;
+        bossMax=12;
         GotoDungeon();
     }
 

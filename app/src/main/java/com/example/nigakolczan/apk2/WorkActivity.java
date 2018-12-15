@@ -279,7 +279,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         exp.setText(ResourceName+" : "+Resource);
     }
     protected void setDmgTemp(){
-        dmg_temp = Dmg;
+        dmgTemp = Dmg;
     }
 
     final Equipment equipment = new Equipment();
@@ -287,14 +287,17 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     //Statystyki Wroga
     int EnemyHp;
     int EnemyDmg;
+    int bossHp;
+    int bossDmg;
 
     //Liczniki do walki
     private int a = 0;
     private int stun_for = 0;
     private int ablaze_for = 0;
     private int bleed_for = 0;
-    private int dmg_temp = 0;
-    private int enemy_dmg_temp = 0;
+    private int dmgTemp = 0;
+    private int enemyDmgTemp = 0;
+    private int bossDmgTemp = 0;
     private Boolean bleed = false;
     private Boolean ablaze = false;
     private Boolean stun = false;
@@ -306,6 +309,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     Boolean end = false;
     private int temp_gold=0;
     private int temp_exp=0;
+    private Boolean bossFight = false;
 
     String newLine = System.getProperty("line.separator");
 
@@ -344,8 +348,12 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         iv.setImageResource(R.drawable.dot);
         iv.setTranslationX(x);
         iv.setTranslationY(y);
+        if(deep == 2){
+            bossFight = true;
+        }
         if(deep==3){
             System.out.println("To ostatni Lvl");
+
             Finished();
         }
     }
@@ -665,6 +673,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             ShowStats();
             //getRng();
             //Fight();
+            BossFight();
         }
     }
     protected void Left(View v) {
@@ -684,6 +693,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             ShowStats();
             //getRng();
             //Fight();
+            BossFight();
         }
     }
     protected void Up(View v) {
@@ -702,6 +712,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             ShowStats();
             //getRng();
            // Fight();
+            BossFight();
         }
     }
     protected void Down(View v) {
@@ -720,6 +731,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             ShowStats();
             //getRng();
             //Fight();
+            BossFight();
         }
     }
 
@@ -738,6 +750,9 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         if(click % 2 == 0){
             CheckforIlments();
             EndFight();
+            if(bossFight){
+                EndBossFight();
+            }
             if(!end){
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -793,6 +808,9 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             Hp = Hp - EnemyDmg;
         ShowStats();
         EndFight();
+        if(bossFight){
+            EndBossFight();
+        }
     }
     protected void Check(View v) {
         WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
@@ -835,6 +853,9 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         MoveList_hide();
         BlockButtons();
         EndFight();
+        if(bossFight){
+            EndBossFight();
+        }
         if(!end){
             final ConstraintLayout constraintLayout = findViewById(R.id.Screen);
             constraintLayout.setOnClickListener(new View.OnClickListener() {
@@ -862,8 +883,8 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         }else{
             a = 0;
             ablaze = false;
-            Dmg = dmg_temp;
-            EnemyDmg = enemy_dmg_temp;
+            Dmg = dmgTemp;
+            EnemyDmg = enemyDmgTemp;
         }
     }
     protected void Bleed(){
@@ -872,8 +893,8 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         }else{
             a = 0;
             bleed = false;
-            Dmg = dmg_temp;
-            EnemyDmg = enemy_dmg_temp;
+            Dmg = dmgTemp;
+            EnemyDmg = enemyDmgTemp;
         }
     }
     protected void CheckforIlments(){
@@ -1392,9 +1413,9 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             StatsCreate.EnemyStats();
             RestActivity set = new RestActivity();
             set.EnemyStats();
-            EnemyHp = StatsCreate.EnemyLvlVar *4;
+            EnemyHp = StatsCreate.EnemyLvlVar*4;
             EnemyDmg = StatsCreate.EnemyLvlVar;
-            enemy_dmg_temp = EnemyDmg;
+            enemyDmgTemp = EnemyDmg;
             Button move = findViewById(R.id.Move);
             move.setVisibility(View.VISIBLE);
             Button check = findViewById(R.id.Check);
@@ -1414,6 +1435,101 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             HideMap();
 
             HideMovement();
+        }
+    }
+    protected void BossFight(){
+        if(bossFight){
+
+            final WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
+            battleText.setVisibility(View.VISIBLE);
+            battleText.setCharacterDelay(30);
+            battleText.animateText("Start Walki");
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            battleText.animateText("");
+                        }
+                    });
+                }
+            },1000);
+            StatsCreate.EnemyStats();
+            RestActivity set = new RestActivity();
+            set.EnemyStats();
+            bossHp = StatsCreate.bossLvlVar *4;
+            bossDmg = StatsCreate.bossLvlVar;
+            bossDmgTemp = bossDmg;
+            Button move = findViewById(R.id.Move);
+            move.setVisibility(View.VISIBLE);
+            Button check = findViewById(R.id.Check);
+            check.setVisibility(View.VISIBLE);
+            Button list = findViewById(R.id.List);
+            list.setVisibility(View.VISIBLE);
+            Button dunno = findViewById(R.id.dunno);
+            dunno.setVisibility(View.VISIBLE);
+            ImageView map = findViewById(R.id.testbg);
+            map.setVisibility(View.GONE);
+            ImageView dot = findViewById(R.id.dot);
+            dot.setVisibility(View.GONE);
+            ImageView player = findViewById(R.id.testanim);
+            player.setVisibility(View.VISIBLE);
+            ImageView enemy = findViewById(R.id.testanim_2);
+            enemy.setVisibility(View.VISIBLE);
+            HideMap();
+
+            HideMovement();
+        }
+    }
+    protected void EndBossFight() {
+        if (bossHp <= 0) {
+            bossFight = false;
+            MoveList_hide();
+            click = 1;
+            ablaze = false;
+            stun = false;
+            bleed = false;
+            end = true;
+            EnableButtons();
+            Button move = findViewById(R.id.Move);
+            move.setVisibility(View.GONE);
+            Button check = findViewById(R.id.Check);
+            check.setVisibility(View.GONE);
+            Button list = findViewById(R.id.List);
+            list.setVisibility(View.GONE);
+            Button dunno = findViewById(R.id.dunno);
+            dunno.setVisibility(View.GONE);
+            ImageView map = findViewById(R.id.testbg);
+            map.setVisibility(View.VISIBLE);
+            ImageView dot = findViewById(R.id.dot);
+            dot.setVisibility(View.VISIBLE);
+            ImageView player = findViewById(R.id.testanim);
+            player.setVisibility(View.GONE);
+            ImageView enemy = findViewById(R.id.testanim_2);
+            enemy.setVisibility(View.GONE);
+            Shekles += StatsCreate.GetBossMoney();
+            Exp += StatsCreate.GetBossExperience();
+            temp_gold += StatsCreate.GetBossMoney();
+            temp_exp += StatsCreate.GetBossExperience();
+
+            id = 0;
+            ShowMap();
+            BattleWriter();
+            if (Exp >= Lvl * 2) {
+                Exp = Exp - Lvl * 2;
+                Lvl += 1;
+            }
+        }
+        if (Hp < 1) {
+            ablaze = false;
+            stun = false;
+            bleed = false;
+            BlockButtons();
+            System.out.println("PRZEGRYWASZ");
+            SetHp();
+            LostFight();
         }
     }
     protected void EndFight() {
