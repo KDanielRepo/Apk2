@@ -788,7 +788,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
    /* protected void AddSkill_8(View v){
         a=8;
         needlvl=5;
-        needmoney=300;
+        needShekles=300;
         AddSkill();
     }
 */
