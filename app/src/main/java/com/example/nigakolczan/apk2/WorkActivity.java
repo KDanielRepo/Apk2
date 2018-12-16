@@ -305,9 +305,9 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     int tura = 0;
     int click = 1;
     private int deep = 0;
-    Boolean stateCheck = true;
-    Boolean stateList = true;
-    Boolean end = false;
+    private Boolean stateCheck = true;
+    private Boolean stateList = true;
+    private Boolean end = false;
     private int temp_gold=0;
     private int temp_exp=0;
     private Boolean bossFight = false;
@@ -750,9 +750,10 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         battleText.setVisibility(View.VISIBLE);
         if(click % 2 == 0){
             CheckforIlments();
-            EndFight();
             if(bossFight){
                 EndBossFight();
+            }else{
+                EndFight();
             }
             if(!end){
                 new Handler().postDelayed(new Runnable() {
@@ -763,9 +764,15 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    battleText.setCharacterDelay(30);
-                                    battleText.animateText("Wrog zadal: " + EnemyDmg + " obrazen!" + newLine + "Zostalo ci: " + Hp + " punktow zycia!");
-                                    System.out.println("Koniec tury: " + tura);
+                                    if(bossFight){
+                                        battleText.setCharacterDelay(30);
+                                        battleText.animateText("Wrog zadal: " + bossDmg + " obrazen!" + newLine + "Zostalo ci: " + Hp + " punktow zycia!");
+                                        System.out.println("Koniec tury: " + tura);
+                                    }else{
+                                        battleText.setCharacterDelay(30);
+                                        battleText.animateText("Wrog zadal: " + EnemyDmg + " obrazen!" + newLine + "Zostalo ci: " + Hp + " punktow zycia!");
+                                        System.out.println("Koniec tury: " + tura);
+                                    }
                                 }
                             });
                         }
@@ -806,21 +813,31 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             bleed_for = 2;
             Bleed();
             }
-            Hp = Hp - EnemyDmg;
         ShowStats();
-        EndFight();
         if(bossFight){
+            Hp = Hp - bossDmg;
             EndBossFight();
+        }else{
+            Hp = Hp - EnemyDmg;
+            EndFight();
         }
     }
     protected void Check(View v) {
         WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
         if (stateCheck == true) {
-            battleText.setVisibility(View.VISIBLE);
-            battleText.setCharacterDelay(30);
-            battleText.animateText("Przeciwnik to: "+RestActivity.EnemyName+ newLine+"HP: "+EnemyHp+ newLine+"Zadaje: "+EnemyDmg+" obrazen"+newLine+"Lvl: "+StatsCreate.EnemyLvlVar);
-            HideDuringCheck();
-            stateCheck = false;
+            if(!bossFight){
+                battleText.setVisibility(View.VISIBLE);
+                battleText.setCharacterDelay(30);
+                battleText.animateText("Przeciwnik to: "+RestActivity.EnemyName+ newLine+"HP: "+EnemyHp+ newLine+"Zadaje: "+EnemyDmg+" obrazen"+newLine+"Lvl: "+StatsCreate.EnemyLvlVar);
+                HideDuringCheck();
+                stateCheck = false;
+            }else{
+                battleText.setVisibility(View.VISIBLE);
+                battleText.setCharacterDelay(30);
+                battleText.animateText("Przeciwnik to: "+RestActivity.bossName+ newLine+"HP: "+bossHp+ newLine+"Zadaje: "+bossDmg+" obrazen"+newLine+"Lvl: "+StatsCreate.bossLvlVar);
+                HideDuringCheck();
+                stateCheck = false;
+            }
         } else if (stateCheck == false) {
             stateCheck = true;
             ShowAfterCheck();
@@ -853,9 +870,10 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         },500);
         MoveList_hide();
         BlockButtons();
-        EndFight();
         if(bossFight){
             EndBossFight();
+        }else{
+            EndFight();
         }
         if(!end){
             final ConstraintLayout constraintLayout = findViewById(R.id.Screen);
@@ -886,6 +904,9 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             ablaze = false;
             Dmg = dmgTemp;
             EnemyDmg = enemyDmgTemp;
+            if(bossFight){
+                bossDmg = bossDmgTemp;
+            }
         }
     }
     protected void Bleed(){
@@ -896,6 +917,9 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             bleed = false;
             Dmg = dmgTemp;
             EnemyDmg = enemyDmgTemp;
+            if(bossFight){
+                bossDmg = bossDmgTemp;
+            }
         }
     }
     protected void CheckforIlments(){
@@ -910,9 +934,15 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                 Dmg -= 2;
                 Hp -= 3;
             }else if(click%2==0){
-                System.out.print("Wrog plonie i dostaje: "+3+" obrazen");
-                EnemyDmg -= 2;
-                EnemyHp -= 3;
+                if(bossFight){
+                    System.out.print("Boss plonie i dostaje: "+3+" obrazen");
+                    bossDmg -=2;
+                    bossHp -=3;
+                }else{
+                    System.out.print("Wrog plonie i dostaje: "+3+" obrazen");
+                    EnemyDmg -= 2;
+                    EnemyHp -= 3;
+                }
             }
             Ablaze();
             click--;
@@ -925,9 +955,15 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                 Dmg -= 1;
                 Hp -= 5;
             }else if(click%2==0){
-                System.out.print("Wrog Krwawi i dostaje: "+5+" obrazen");
-                EnemyDmg -= 1;
-                EnemyHp -= 5;
+                if(bossFight){
+                    System.out.print("Boss Krwawi i dostaje: "+5+" obrazen");
+                    bossDmg -=1;
+                    bossHp -=5;
+                }else{
+                    System.out.print("Wrog Krwawi i dostaje: "+5+" obrazen");
+                    EnemyDmg -= 1;
+                    EnemyHp -= 5;
+                }
             }
             click--;
             a++;
@@ -943,8 +979,13 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         battleText.setCharacterDelay(30);
         click++;
         AddResourceFight();
-        EnemyHp = EnemyHp - Dmg;
-        battleText.animateText("zadales: "+Dmg+" obrazen!"+newLine+ "Wrogowi zostalo: "+EnemyHp+" punktow zycia!");
+        if(bossFight){
+            bossHp = bossHp - Dmg;
+            battleText.animateText("zadales: "+Dmg+" obrazen!"+newLine+ "Wrogowi zostalo: "+bossHp+" punktow zycia!");
+        }else{
+            EnemyHp = EnemyHp - Dmg;
+            battleText.animateText("zadales: "+Dmg+" obrazen!"+newLine+ "Wrogowi zostalo: "+EnemyHp+" punktow zycia!");
+        }
         FightAnimMelee();
     }
     protected void Test_at2(final View v){
@@ -955,11 +996,16 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         switch(ResourceName){
             case "Mana":
                 if(Resource >= 10){
-                    EnemyHp -= (Dmg*3);
+                    if(bossFight){
+                        bossHp -= (Dmg*3);
+                        battleText.animateText("zadales: "+Dmg*3+" obrazen!"+newLine+ "Wrogowi zostalo: "+bossHp+" punktow zycia!");
+                    }else{
+                        EnemyHp -= (Dmg*3);
+                        battleText.animateText("zadales: "+Dmg*3+" obrazen!"+newLine+ "Wrogowi zostalo: "+EnemyHp+" punktow zycia!");
+                    }
                     Resource -= 10;
                     Ablaze();
                     ablaze_for = 1;
-                    battleText.animateText("zadales: "+Dmg*3+" obrazen!"+newLine+ "Wrogowi zostalo: "+EnemyHp+" punktow zycia!");
                     done = true;
                 }else{
                     System.out.println("Za malo many");
@@ -967,9 +1013,14 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                 break;
             case "Rage":
                 if(Resource != 0){
-                    EnemyHp -= Resource/2;
+                    if(bossFight){
+                        bossHp -= Resource/2;
+                        battleText.animateText("zadales: "+Resource/2+" obrazen!"+newLine+ "Wrogowi zostalo: "+bossHp+" punktow zycia!");
+                    }else{
+                        EnemyHp -= Resource/2;
+                        battleText.animateText("zadales: "+Resource/2+" obrazen!"+newLine+ "Wrogowi zostalo: "+EnemyHp+" punktow zycia!");
+                    }
                     Resource = 0;
-                    battleText.animateText("zadales: "+Resource/2+" obrazen!"+newLine+ "Wrogowi zostalo: "+EnemyHp+" punktow zycia!");
                     done = true;
                 }else{
                     System.out.println("Za malo furii");
@@ -977,10 +1028,15 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                 break;
             case "Energy":
                 if(Resource >= 5){
-                    EnemyHp -= (Dmg*2);
+                    if(bossFight){
+                        bossHp -= (Dmg*2);
+                        battleText.animateText("zadales: "+Dmg*2+" obrazen!"+newLine+ "Wrogowi zostalo: "+bossHp+" punktow zycia!");
+                    }else{
+                        EnemyHp -= (Dmg*2);
+                        battleText.animateText("zadales: "+Dmg*2+" obrazen!"+newLine+ "Wrogowi zostalo: "+EnemyHp+" punktow zycia!");
+                    }
                     Resource -=5;
                     Bleed();
-                    battleText.animateText("zadales: "+Dmg*2+" obrazen!"+newLine+ "Wrogowi zostalo: "+EnemyHp+" punktow zycia!");
                     done = true;
                 }else{
                     System.out.println("Za malo energii");
@@ -1048,11 +1104,16 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         switch(ResourceName){
             case "Mana":
                 if(Resource >= 25){
-                    EnemyHp -= Dmg/2;
+                    if(bossFight){
+                        bossHp -=Dmg/2;
+                        battleText.animateText("Zadales: "+Dmg+" obrazen!"+newLine+ "Zostalo wrogowi: "+bossHp+" punktow zycia!");
+                    }else{
+                        EnemyHp -= Dmg/2;
+                        battleText.animateText("Zadales: "+Dmg+" obrazen!"+newLine+ "Zostalo wrogowi: "+EnemyHp+" punktow zycia!");
+                    }
                     Resource -= 25;
                     stun_for=2;
                     Stunned();
-                    battleText.animateText("Zadales: "+Dmg+" obrazen!"+newLine+ "Zostalo wrogowi: "+EnemyHp+" punktow zycia!");
                     done = true;
                 }else{
                     System.out.println("Za malo many");
@@ -1060,11 +1121,16 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                 break;
             case "Rage":
                 if(Resource >= 15){
-                    EnemyHp -= Dmg;
+                    if(bossFight){
+                        bossHp -= Dmg;
+                        battleText.animateText("Zadales: "+Dmg+" obrazen!"+newLine+ "Zostalo wrogowi: "+bossHp+" punktow zycia!");
+                    }else{
+                        EnemyHp -= Dmg;
+                        battleText.animateText("Zadales: "+Dmg+" obrazen!"+newLine+ "Zostalo wrogowi: "+EnemyHp+" punktow zycia!");
+                    }
                     Resource -= 15;
                     stun_for=1;
                     Stunned();
-                    battleText.animateText("Zadales: "+Dmg+" obrazen!"+newLine+ "Zostalo wrogowi: "+EnemyHp+" punktow zycia!");
                     done = true;
                 }else{
                     System.out.println("Za malo furii");
@@ -1072,11 +1138,16 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                 break;
             case "Energy":
                 if(Resource >= 10){
-                    EnemyHp -= (Dmg*2);
+                    if(bossFight){
+                        bossHp -= (Dmg*2);
+                        battleText.animateText("Zadales: "+Dmg*2+" obrazen!"+newLine+ "Zostalo wrogowi: "+bossHp+" punktow zycia!");
+                    }else{
+                        EnemyHp -= (Dmg*2);
+                        battleText.animateText("Zadales: "+Dmg*2+" obrazen!"+newLine+ "Zostalo wrogowi: "+EnemyHp+" punktow zycia!");
+                    }
                     Resource -=10;
                     stun_for=1;
                     Stunned();
-                    battleText.animateText("Zadales: "+Dmg*2+" obrazen!"+newLine+ "Zostalo wrogowi: "+EnemyHp+" punktow zycia!");
                     done = true;
                 }else{
                     System.out.println("Za malo energii");
@@ -1440,7 +1511,6 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     }
     protected void BossFight(){
         if(bossFight){
-
             final WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
             battleText.setVisibility(View.VISIBLE);
             battleText.setCharacterDelay(30);
@@ -1457,9 +1527,9 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                     });
                 }
             },1000);
-            StatsCreate.EnemyStats();
+            StatsCreate.BossStats();
             RestActivity set = new RestActivity();
-            set.EnemyStats();
+            set.BossStats();
             bossHp = StatsCreate.bossLvlVar *4;
             bossDmg = StatsCreate.bossLvlVar;
             bossDmgTemp = bossDmg;
@@ -1486,7 +1556,6 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     }
     protected void EndBossFight() {
         if (bossHp <= 0) {
-            bossFight = false;
             MoveList_hide();
             click = 1;
             ablaze = false;
@@ -1601,9 +1670,13 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     protected void Writer(){
         final WriteAnim writer = (WriteAnim) findViewById(R.id.writeAnim);
         writer.setVisibility(View.VISIBLE);
-        //Add a character every
         writer.setCharacterDelay(30);
-        writer.animateText("Otrzymujesz: " + StatsCreate.GetExperience() + " doswiadczenia i: " + StatsCreate.GetMoney() + " Shekli!");
+        if(bossFight){
+            writer.animateText("Otrzymujesz: " + StatsCreate.GetBossExperience() + " doswiadczenia i: " + StatsCreate.GetBossMoney() + " Shekli!");
+            bossFight = false;
+        }else{
+            writer.animateText("Otrzymujesz: " + StatsCreate.GetExperience() + " doswiadczenia i: " + StatsCreate.GetMoney() + " Shekli!");
+        }
         final android.support.constraint.ConstraintLayout constraintLayout = (android.support.constraint.ConstraintLayout) findViewById(R.id.Screen);
         constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override

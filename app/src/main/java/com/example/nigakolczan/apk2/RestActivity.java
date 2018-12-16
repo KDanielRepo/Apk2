@@ -65,6 +65,8 @@ public class RestActivity extends AppCompatActivity {
     private static String Cape;
     protected static String EnemyName;
     protected static String EnemyLvl;
+    protected static String bossName;
+    protected static String bossLvl;
     protected static String input;
     protected static int a;
 
@@ -351,7 +353,22 @@ public class RestActivity extends AppCompatActivity {
                 File filetemp = new File("data/data/com.example.nigakolczan.apk2/EnemyStats.xml");
             }
             EnemyName = StatsCreate.GetEnemyName();
-            EnemyLvl = StatsCreate.GetEnemyLvl();
+            EnemyLvl =Integer.toString(StatsCreate.GetEnemyLvlVar());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    protected void BossStats(){
+        try {
+            File file = new File("data/data/com.example.nigakolczan.apk2/BossStats.xml");
+            Boolean exists = file.exists();
+            if(exists){
+                file.delete();
+                File filetemp = new File("data/data/com.example.nigakolczan.apk2/BossStats.xml");
+            }
+            bossName = StatsCreate.GetBossName();
+            bossLvl =Integer.toString(StatsCreate.GetBossLvlVar());
 
         } catch (Exception e) {
             e.printStackTrace();

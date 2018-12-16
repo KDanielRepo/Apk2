@@ -78,7 +78,7 @@ public class StatsCreate extends AppCompatActivity {
         EnemyNameVar = ThreadLocalRandom.current().nextInt(1, 6);
         return EnemyNameVar;
     }
-    protected static String GetEnemyLvl(){
+    /*protected static String GetEnemyLvl(){
         String EnemyLvl;
         switch (EnemyLvlVar) {
             case 1:
@@ -101,7 +101,7 @@ public class StatsCreate extends AppCompatActivity {
                 break;
         }
         return EnemyLvl;
-    }
+    }*/
     protected static String GetEnemyName(){
         String EnemyNames;
         switch (EnemyNameVar) {
@@ -130,7 +130,7 @@ public class StatsCreate extends AppCompatActivity {
         bossLvlVar = ThreadLocalRandom.current().nextInt(TavernActivity.bossMin, TavernActivity.bossMax);
         return bossLvlVar;
     }
-    protected static int GetEnemzNameVar(){
+    protected static int GetBossNameVar(){
         bossNameVar = ThreadLocalRandom.current().nextInt(1,6);
         return bossNameVar;
     }
@@ -450,6 +450,72 @@ public class StatsCreate extends AppCompatActivity {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File("data/data/com.example.nigakolczan.apk2/EnemyStats.xml"));
+
+            // Output to console for testing
+            // StreamResult result = new StreamResult(System.out);
+
+            transformer.transform(source, result);
+
+        } catch (ParserConfigurationException | TransformerException pce) {
+            pce.printStackTrace();
+        }
+    }
+    protected static void BossStats() {
+        try {
+            GetBossNameVar();
+            GetBossLvlVar();
+            String Money = Integer.toString(GetBossMoney());
+            String Exp = Integer.toString(GetBossExperience());
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+            // root elements
+            Document doc = docBuilder.newDocument();
+
+            Element rootElement = doc.createElement("Stats");
+            doc.appendChild(rootElement);
+
+            // Postac
+            Element enemyCharacter = doc.createElement("BossCharacter");
+            rootElement.appendChild(enemyCharacter);
+
+            // Jej poziom
+            Attr attr = doc.createAttribute("Lvl");
+            attr.setValue(Integer.toString(bossLvlVar));
+            enemyCharacter.setAttributeNode(attr);
+
+
+            // shorten way
+            // staff.setAttribute("id", "1");
+
+            // Nazwa
+            Element nickName = doc.createElement("Enemy");
+            nickName.appendChild(doc.createTextNode(Integer.toString(bossNameVar)));
+            enemyCharacter.appendChild(nickName);
+
+
+            // Zloto
+            Element gold = doc.createElement("Gold");
+            enemyCharacter.appendChild(gold);
+
+            Attr shekles = doc.createAttribute("Shekles");
+            shekles.setValue(Money);
+            gold.setAttributeNode(shekles);
+
+            // Ilosc doswiadczenia
+            Element Experience = doc.createElement("Experience");
+            enemyCharacter.appendChild(Experience);
+
+            Attr exp = doc.createAttribute("Exp");
+            exp.setValue(Exp);
+            Experience.setAttributeNode(exp);
+
+            // write the content into xml file
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File("data/data/com.example.nigakolczan.apk2/BossStats.xml"));
 
             // Output to console for testing
             // StreamResult result = new StreamResult(System.out);
