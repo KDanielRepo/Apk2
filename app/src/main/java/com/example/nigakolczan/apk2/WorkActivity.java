@@ -1,40 +1,32 @@
 package com.example.nigakolczan.apk2;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.Image;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.graphics.drawable.AnimationDrawable;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.StackView;
 import android.widget.TextView;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import  java.util.concurrent.ThreadLocalRandom;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -43,6 +35,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import android.graphics.Bitmap;
 
 public class WorkActivity extends AppCompatActivity implements Runnable {
     Thread test;
@@ -330,6 +323,11 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     private int kTemp=0;
     private int k=0;
     private int id = 0;
+    private int idB = 0;
+    private int bgX = 0;
+    private int bgY = 0;
+    private int testX = 0;
+    private int testY = 0;
     private int finish = 0;
 
 
@@ -485,7 +483,35 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                id++;
                setX+=50;
                constraintLayout.addView(imageView);
-               }}}
+               }
+       }
+    }
+    protected void setBackground(){
+        idB = 0;
+        bgX = 0;
+        bgY = 0;
+        testX = 11520;
+        testY = 6480;
+        Bitmap bitmap = Bitmap.createBitmap(testX,testY, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+
+        Paint paint = new Paint();
+        for(int i = 0; i<36; i++){
+            if(i>0 & i%6==0){
+                bgX = 0;
+                bgY += 1080;
+            }
+            if(xArray[i]==0){
+                setX+=1920;
+            }
+            if(xArray[i]!=0){
+                Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_1);
+                canvas.drawBitmap(b,bgX,bgY,null);
+            }
+            android.support.constraint.ConstraintLayout constraintLayout = findViewById(R.id.Screen);
+        }
+    }
     protected void HideMap(){
         id=0;
         setY=96;
