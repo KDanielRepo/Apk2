@@ -1,15 +1,21 @@
 package com.example.nigakolczan.apk2;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.graphics.drawable.AnimationDrawable;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,10 +26,14 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import  java.util.concurrent.ThreadLocalRandom;
@@ -60,6 +70,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         getSpells();
         xArray = new int[36];
 
+
         test = new Thread(this, "test");
         test.start();
         System.out.println(Thread.activeCount());
@@ -80,10 +91,15 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         SetDmg();
         setDmgTemp();
         GetArea();
+        StartSeen();
+        setMap();
+        SetResource();
+        ShowStats();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 SetBackground();
+                SetSecondBackground();
             }
         });
         StartSeen();
@@ -323,11 +339,6 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     private int kTemp=0;
     private int k=0;
     private int id = 0;
-    private int idB = 0;
-    private int bgX = 0;
-    private int bgY = 0;
-    private int testX = 0;
-    private int testY = 0;
     private int finish = 0;
 
 
@@ -343,6 +354,8 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         id=0;
         finish=0;
         deep++;
+        SetBackground();
+        SetSecondBackground();
         ImageView iv = findViewById(R.id.dot);
         iv.setImageResource(R.drawable.dot);
         iv.setTranslationX(x);
@@ -486,32 +499,116 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                }
        }
     }
-    protected void setBackground(){
+    /*protected void setBackground(){
         idB = 0;
         bgX = 0;
         bgY = 0;
-        testX = 11520;
-        testY = 6480;
+        testX = 1920;
+        testY = 1080;
         Bitmap bitmap = Bitmap.createBitmap(testX,testY, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-
-
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(getResources(),R.id.Screen,options);
+        int imageHeight = options.outHeight;
+        int imageWidth = options.outWidth;
+        String imageType = options.outMimeType;
         Paint paint = new Paint();
         for(int i = 0; i<36; i++){
-            if(i>0 & i%6==0){
-                bgX = 0;
-                bgY += 1080;
+                if(i>0 & i%6==0){
+                    bgX = 0;
+                    bgY += 180;
+                }
+                if(xArray[i]==0){
+                    bgX+=320;
+                }
+                if(xArray[i]!=0){
+                    //uwzglednij ze ponizej 6 pozycji wywala skale!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==1 && GetArray(arrayX-6)==1){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_9);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_1);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_11);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_10);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_12);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==0){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_3);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_2);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_4);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-1)==0 && GetArray(arrayX-6)==0){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_5);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_7);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==0 && GetArray(arrayX-6)==0){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_6);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_8);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_13);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_14);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
+                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_15);
+                        canvas.drawBitmap(b,bgX,bgY,null);
+                    }
+                    bgX+=320;
             }
-            if(xArray[i]==0){
-                setX+=1920;
-            }
-            if(xArray[i]!=0){
-                Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_1);
-                canvas.drawBitmap(b,bgX,bgY,null);
-            }
-            android.support.constraint.ConstraintLayout constraintLayout = findViewById(R.id.Screen);
         }
-    }
+        android.support.constraint.ConstraintLayout constraintLayout = findViewById(R.id.Screen);
+        bitmap = Bitmap.createScaledBitmap(bitmap,testX,testY,false);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        bitmap.compress(Bitmap.CompressFormat.PNG,90,outputStream);
+        try{
+            File file = new File("data/data/com.example.nigakolczan.apk2/background.png");
+            if(file.exists()){
+                file.delete();
+            }
+            file.createNewFile();
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(outputStream.toByteArray());
+            fileOutputStream.flush();
+            fileOutputStream.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        drawable = new BitmapDrawable(getResources(),bitmap);
+        constraintLayout.setBackground(drawable);
+    }*/
     protected void HideMap(){
         id=0;
         setY=96;
@@ -604,6 +701,57 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             constraintLayout.setBackgroundResource(R.drawable.test_map_15);
         }
     }
+    protected void SetSecondBackground(){
+        ImageView imageView = findViewById(R.id.bg);
+        imageView.setBackgroundResource(0);
+        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==1 && GetArray(arrayX-2)==1 && GetArray(arrayX-7)==1 ){
+            imageView.setBackgroundResource(R.drawable.test_map_9);
+        }
+        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==1 && GetArray(arrayX-7)==1 && GetArray(arrayX-2)==0){
+            imageView.setBackgroundResource(R.drawable.test_map_1);
+        }
+        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==1 && GetArray(arrayX-7)==0 && GetArray(arrayX-2)==1){
+            imageView.setBackgroundResource(R.drawable.test_map_11);
+        }
+        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==0 && GetArray(arrayX-7)==1 && GetArray(arrayX-2)==1){
+            imageView.setBackgroundResource(R.drawable.test_map_10);
+        }
+        if(GetArray(arrayX+2)==0 && GetArray(arrayX+7)==1 && GetArray(arrayX-7)==1 && GetArray(arrayX-2)==1){
+            imageView.setBackgroundResource(R.drawable.test_map_12);
+        }
+        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==1 && GetArray(arrayX-7)==0 && GetArray(arrayX-2)==0){
+            imageView.setBackgroundResource(R.drawable.test_map_3);
+        }
+        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==0 && GetArray(arrayX-7)==1 && GetArray(arrayX-2)==0){
+            imageView.setBackgroundResource(R.drawable.test_map_2);
+        }
+        if(GetArray(arrayX+2)==0 && GetArray(arrayX+7)==1 && GetArray(arrayX-7)==1 && GetArray(arrayX-2)==0){
+            imageView.setBackgroundResource(R.drawable.test_map_4);
+        }
+        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==0 && GetArray(arrayX-2)==0 && GetArray(arrayX-7)==0 ){
+            imageView.setBackgroundResource(R.drawable.test_map_5);
+        }
+        if(GetArray(arrayX+2)==0 && GetArray(arrayX+7)==0 && GetArray(arrayX-7)==1 && GetArray(arrayX-2)==0){
+            imageView.setBackgroundResource(R.drawable.test_map_7);
+        }
+        if(GetArray(arrayX+2)==0 && GetArray(arrayX+7)==1 && GetArray(arrayX-2)==0 && GetArray(arrayX-7)==0 ){
+            imageView.setBackgroundResource(R.drawable.test_map_6);
+        }
+        if(GetArray(arrayX+2)==0 && GetArray(arrayX+7)==0 && GetArray(arrayX-7)==0 && GetArray(arrayX-2)==1){
+            imageView.setBackgroundResource(R.drawable.test_map_8);
+        }
+        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==0 && GetArray(arrayX-7)==0 && GetArray(arrayX-2)==1){
+            imageView.setBackgroundResource(R.drawable.test_map_13);
+        }
+        if(GetArray(arrayX+2)==0 && GetArray(arrayX+7)==1 && GetArray(arrayX-7)==0 && GetArray(arrayX-2)==1){
+            imageView.setBackgroundResource(R.drawable.test_map_14);
+        }
+        if(GetArray(arrayX+2)==0 && GetArray(arrayX+7)==0 && GetArray(arrayX-7)==1 && GetArray(arrayX-2)==1){
+            imageView.setBackgroundResource(R.drawable.test_map_15);
+        }
+        imageView.setX(1920);
+        imageView.setY(1080);
+    }
     protected int SetArray(int a){
         a = arrayX;
         if(arrayX>35){
@@ -611,7 +759,86 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         }
         return xArray[a];
     }
+    protected void animBgLeft(){
+        final ConstraintLayout constraintLayout = findViewById(R.id.Screen);
+        final ImageView imageView = findViewById(R.id.bg);
 
+        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,1.0f);
+        animator.setRepeatCount(0);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.setDuration(1000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                final float progress = (float) valueAnimator.getAnimatedValue();
+                final float width = constraintLayout.getWidth();
+                final float translationX = width * progress;
+                constraintLayout.setTranslationX(translationX);
+                imageView.setTranslationX(translationX+width);
+            }
+        });
+        animator.start();
+    }
+    protected void animBgRight(){
+        final ConstraintLayout constraintLayout = findViewById(R.id.Screen);
+        final ImageView imageView = findViewById(R.id.bg);
+
+        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,1.0f);
+        animator.setRepeatCount(0);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.setDuration(1000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                final float progress = (float) valueAnimator.getAnimatedValue();
+                final float width = constraintLayout.getWidth();
+                final float translationX = width * progress;
+                constraintLayout.setTranslationX(translationX);
+                imageView.setTranslationX(translationX-width);
+            }
+        });
+        animator.start();
+    }
+    protected void animBgUp(){
+        final ConstraintLayout constraintLayout = findViewById(R.id.Screen);
+        final ImageView imageView = findViewById(R.id.bg);
+
+        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,1.0f);
+        animator.setRepeatCount(0);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.setDuration(1000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                final float progress = (float) valueAnimator.getAnimatedValue();
+                final float height = constraintLayout.getHeight();
+                final float translationY = height * progress;
+                constraintLayout.setTranslationY(translationY);
+                imageView.setTranslationY(translationY-height);
+            }
+        });
+        animator.start();
+    }
+    protected void animBgDown(){
+        final ConstraintLayout constraintLayout = findViewById(R.id.Screen);
+        final ImageView imageView = findViewById(R.id.bg);
+
+        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,1.0f);
+        animator.setRepeatCount(0);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.setDuration(1000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                final float progress = (float) valueAnimator.getAnimatedValue();
+                final float height = constraintLayout.getHeight();
+                final float translationY = height * progress;
+                constraintLayout.setTranslationY(translationY);
+                imageView.setTranslationY(translationY+height);
+            }
+        });
+        animator.start();
+    }
     protected void StartSeen(){
         seen = new int[36];
         seen[0] = 1;
@@ -638,6 +865,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                 setMap();
                 ShowMap();
                 SetBackground();
+                SetSecondBackground();
             }
         }
     protected int GetArray(int a){
@@ -691,11 +919,15 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         } else {
             SetArray(arrayX);
             ImageView img = findViewById(R.id.dot);
+            android.support.constraint.ConstraintLayout bg = findViewById(R.id.Screen);
+            bg.setBackgroundResource(0);
             x+=50;
             img.setTranslationX(x);
             CheckEnd();
             ShowMap();
             SetBackground();
+//            SetSecondBackground();
+            animBgRight();
             AddResourceMove();
             ShowStats();
             //getRng();
@@ -711,11 +943,17 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         } else {
             SetArray(arrayX);
             ImageView img = findViewById(R.id.dot);
+            SetBackground();
+//            SetSecondBackground();
+            animBgLeft();
+            //ImageView bg = findViewById(R.id.Screen);
+            //bg.setTranslationX(-1920);
             x-=50;
             img.setTranslationX(x);
             CheckEnd();
             ShowMap();
-            SetBackground();
+
+            //SetBackground();
             AddResourceMove();
             ShowStats();
             //getRng();
@@ -730,11 +968,16 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         } else {
             SetArray(arrayX);
             ImageView img = findViewById(R.id.dot);
+            SetBackground();
+//            SetSecondBackground();
+            animBgUp();
+            //ImageView bg = findViewById(R.id.Screen);
             y-=50;
             img.setTranslationY(y);
             CheckEnd();
             ShowMap();
-            SetBackground();
+            //bg.setTranslationY(-1080);
+            //SetBackground();
             AddResourceMove();
             ShowStats();
             //getRng();
@@ -749,11 +992,16 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         } else {
             SetArray(arrayX);
             ImageView img = findViewById(R.id.dot);
+            SetBackground();
+//            SetSecondBackground();
+            animBgDown();
+            //ImageView bg = findViewById(R.id.Screen);
             y+=50;
             img.setTranslationY(y);
             CheckEnd();
             ShowMap();
-            SetBackground();
+            //bg.setTranslationY(1080);
+            //SetBackground();
             AddResourceMove();
             ShowStats();
             //getRng();

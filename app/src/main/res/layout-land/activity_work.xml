@@ -7,6 +7,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.nigakolczan.apk2.WorkActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/bg"/>
+
     <Button
         android:layout_width="60dp"
         android:layout_height="48dp"
