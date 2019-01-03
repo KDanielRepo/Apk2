@@ -383,7 +383,6 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                 setX+=50;
             }
             if(seen[i]!=0){
-                android.support.constraint.ConstraintLayout constraintLayout = findViewById(R.id.Screen);
                 imageView.setX(setX);
                 imageView.setY(setY);
                 imageView.setImageResource(0);
@@ -622,7 +621,6 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                 setX+=50;
             }
             if(xArray[i]!=0){
-                android.support.constraint.ConstraintLayout constraintLayout = findViewById(R.id.Screen);
                 ImageView imageView = findViewById(id);
                 imageView.setX(setX);
                 imageView.setY(setY);
@@ -644,7 +642,6 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                 setX+=50;
             }
             if(seen[i]!=0){
-                android.support.constraint.ConstraintLayout constraintLayout = findViewById(R.id.Screen);
                 imageView.setX(setX);
                 imageView.setY(setY);
                 imageView.setImageResource(R.drawable.bgdot);
@@ -653,104 +650,100 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             }}
     }
     protected void SetBackground(){
-        android.support.constraint.ConstraintLayout constraintLayout = (android.support.constraint.ConstraintLayout) findViewById(R.id.Screen);
-        constraintLayout.setBackgroundResource(0);
+        ImageView imageView = findViewById(R.id.bg);
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==1 && GetArray(arrayX-6)==1 ){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_9);
+            imageView.setBackgroundResource(R.drawable.test_map_9);
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_1);
+            imageView.setBackgroundResource(R.drawable.test_map_1);
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_11);
+            imageView.setBackgroundResource(R.drawable.test_map_11);
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_10);
+            imageView.setBackgroundResource(R.drawable.test_map_10);
         }
         if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_12);
+            imageView.setBackgroundResource(R.drawable.test_map_12);
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==0){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_3);
+            imageView.setBackgroundResource(R.drawable.test_map_3);
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_2);
+            imageView.setBackgroundResource(R.drawable.test_map_2);
         }
         if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_4);
+            imageView.setBackgroundResource(R.drawable.test_map_4);
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-1)==0 && GetArray(arrayX-6)==0 ){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_5);
+            imageView.setBackgroundResource(R.drawable.test_map_5);
         }
         if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_7);
+            imageView.setBackgroundResource(R.drawable.test_map_7);
         }
         if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==0 && GetArray(arrayX-6)==0 ){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_6);
+            imageView.setBackgroundResource(R.drawable.test_map_6);
         }
         if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_8);
+            imageView.setBackgroundResource(R.drawable.test_map_8);
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_13);
+            imageView.setBackgroundResource(R.drawable.test_map_13);
         }
         if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_14);
+            imageView.setBackgroundResource(R.drawable.test_map_14);
         }
         if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
-            constraintLayout.setBackgroundResource(R.drawable.test_map_15);
+            imageView.setBackgroundResource(R.drawable.test_map_15);
         }
     }
     protected void SetSecondBackground(){
-        ImageView imageView = findViewById(R.id.bg);
-        imageView.setBackgroundResource(0);
-        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==1 && GetArray(arrayX-2)==1 && GetArray(arrayX-7)==1 ){
+        ImageView imageView = findViewById(R.id.bgSecond);
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==1 && GetArray(arrayX-6)==1 ){
             imageView.setBackgroundResource(R.drawable.test_map_9);
         }
-        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==1 && GetArray(arrayX-7)==1 && GetArray(arrayX-2)==0){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
             imageView.setBackgroundResource(R.drawable.test_map_1);
         }
-        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==1 && GetArray(arrayX-7)==0 && GetArray(arrayX-2)==1){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
             imageView.setBackgroundResource(R.drawable.test_map_11);
         }
-        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==0 && GetArray(arrayX-7)==1 && GetArray(arrayX-2)==1){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
             imageView.setBackgroundResource(R.drawable.test_map_10);
         }
-        if(GetArray(arrayX+2)==0 && GetArray(arrayX+7)==1 && GetArray(arrayX-7)==1 && GetArray(arrayX-2)==1){
+        if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
             imageView.setBackgroundResource(R.drawable.test_map_12);
         }
-        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==1 && GetArray(arrayX-7)==0 && GetArray(arrayX-2)==0){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==0){
             imageView.setBackgroundResource(R.drawable.test_map_3);
         }
-        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==0 && GetArray(arrayX-7)==1 && GetArray(arrayX-2)==0){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
             imageView.setBackgroundResource(R.drawable.test_map_2);
         }
-        if(GetArray(arrayX+2)==0 && GetArray(arrayX+7)==1 && GetArray(arrayX-7)==1 && GetArray(arrayX-2)==0){
+        if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
             imageView.setBackgroundResource(R.drawable.test_map_4);
         }
-        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==0 && GetArray(arrayX-2)==0 && GetArray(arrayX-7)==0 ){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-1)==0 && GetArray(arrayX-6)==0 ){
             imageView.setBackgroundResource(R.drawable.test_map_5);
         }
-        if(GetArray(arrayX+2)==0 && GetArray(arrayX+7)==0 && GetArray(arrayX-7)==1 && GetArray(arrayX-2)==0){
+        if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
             imageView.setBackgroundResource(R.drawable.test_map_7);
         }
-        if(GetArray(arrayX+2)==0 && GetArray(arrayX+7)==1 && GetArray(arrayX-2)==0 && GetArray(arrayX-7)==0 ){
+        if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==0 && GetArray(arrayX-6)==0 ){
             imageView.setBackgroundResource(R.drawable.test_map_6);
         }
-        if(GetArray(arrayX+2)==0 && GetArray(arrayX+7)==0 && GetArray(arrayX-7)==0 && GetArray(arrayX-2)==1){
+        if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
             imageView.setBackgroundResource(R.drawable.test_map_8);
         }
-        if(GetArray(arrayX+2)==1 && GetArray(arrayX+7)==0 && GetArray(arrayX-7)==0 && GetArray(arrayX-2)==1){
+        if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
             imageView.setBackgroundResource(R.drawable.test_map_13);
         }
-        if(GetArray(arrayX+2)==0 && GetArray(arrayX+7)==1 && GetArray(arrayX-7)==0 && GetArray(arrayX-2)==1){
+        if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
             imageView.setBackgroundResource(R.drawable.test_map_14);
         }
-        if(GetArray(arrayX+2)==0 && GetArray(arrayX+7)==0 && GetArray(arrayX-7)==1 && GetArray(arrayX-2)==1){
+        if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
             imageView.setBackgroundResource(R.drawable.test_map_15);
         }
-        imageView.setX(1920);
-        imageView.setY(1080);
     }
     protected int SetArray(int a){
         a = arrayX;
@@ -760,8 +753,8 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         return xArray[a];
     }
     protected void animBgLeft(){
-        final ConstraintLayout constraintLayout = findViewById(R.id.Screen);
-        final ImageView imageView = findViewById(R.id.bg);
+        final ImageView iv = findViewById(R.id.bg);
+        final ImageView imageView = findViewById(R.id.bgSecond);
 
         final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,1.0f);
         animator.setRepeatCount(0);
@@ -771,39 +764,41 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 final float progress = (float) valueAnimator.getAnimatedValue();
-                final float width = constraintLayout.getWidth();
+                final float width = iv.getWidth();
                 final float translationX = width * progress;
-                constraintLayout.setTranslationX(translationX);
+                imageView.setTranslationX(translationX);
+                iv.setTranslationX(translationX-width);
+            }
+        });
+        animator.start();
+        SetBackground();
+        SetSecondBackground();
+    }
+    protected void animBgRight(){
+        final ImageView iv = findViewById(R.id.bg);
+        final ImageView imageView = findViewById(R.id.bgSecond);
+        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,-1.0f);
+        animator.setRepeatCount(0);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.setDuration(1000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                final float progress = (float) valueAnimator.getAnimatedValue();
+                final float width = iv.getWidth();
+                final float translationX = width * progress;
+                iv.setTranslationX(translationX);
                 imageView.setTranslationX(translationX+width);
             }
         });
         animator.start();
-    }
-    protected void animBgRight(){
-        final ConstraintLayout constraintLayout = findViewById(R.id.Screen);
-        final ImageView imageView = findViewById(R.id.bg);
-
-        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,1.0f);
-        animator.setRepeatCount(0);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.setDuration(1000);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                final float progress = (float) valueAnimator.getAnimatedValue();
-                final float width = constraintLayout.getWidth();
-                final float translationX = width * progress;
-                constraintLayout.setTranslationX(translationX);
-                imageView.setTranslationX(translationX-width);
-            }
-        });
-        animator.start();
+        SetBackground();
+        SetSecondBackground();
     }
     protected void animBgUp(){
-        final ConstraintLayout constraintLayout = findViewById(R.id.Screen);
-        final ImageView imageView = findViewById(R.id.bg);
-
-        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,1.0f);
+        final ImageView iv = findViewById(R.id.bg);
+        final ImageView imageView = findViewById(R.id.bgSecond);
+        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,-1.0f);
         animator.setRepeatCount(0);
         animator.setInterpolator(new LinearInterpolator());
         animator.setDuration(1000);
@@ -811,17 +806,19 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 final float progress = (float) valueAnimator.getAnimatedValue();
-                final float height = constraintLayout.getHeight();
+                final float height = iv.getHeight();
                 final float translationY = height * progress;
-                constraintLayout.setTranslationY(translationY);
-                imageView.setTranslationY(translationY-height);
+                imageView.setTranslationY(translationY);
+                iv.setTranslationY(translationY+height);
             }
         });
         animator.start();
+        SetBackground();
+        SetSecondBackground();
     }
     protected void animBgDown(){
-        final ConstraintLayout constraintLayout = findViewById(R.id.Screen);
-        final ImageView imageView = findViewById(R.id.bg);
+        final ImageView iv = findViewById(R.id.bg);
+        final ImageView imageView = findViewById(R.id.bgSecond);
 
         final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,1.0f);
         animator.setRepeatCount(0);
@@ -831,13 +828,15 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 final float progress = (float) valueAnimator.getAnimatedValue();
-                final float height = constraintLayout.getHeight();
+                final float height = iv.getHeight();
                 final float translationY = height * progress;
-                constraintLayout.setTranslationY(translationY);
-                imageView.setTranslationY(translationY+height);
+                imageView.setTranslationY(translationY);
+                iv.setTranslationY(translationY-height);
             }
         });
         animator.start();
+        SetBackground();
+        SetSecondBackground();
     }
     protected void StartSeen(){
         seen = new int[36];
@@ -919,14 +918,10 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         } else {
             SetArray(arrayX);
             ImageView img = findViewById(R.id.dot);
-            android.support.constraint.ConstraintLayout bg = findViewById(R.id.Screen);
-            bg.setBackgroundResource(0);
             x+=50;
             img.setTranslationX(x);
             CheckEnd();
             ShowMap();
-            SetBackground();
-//            SetSecondBackground();
             animBgRight();
             AddResourceMove();
             ShowStats();
@@ -943,17 +938,11 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         } else {
             SetArray(arrayX);
             ImageView img = findViewById(R.id.dot);
-            SetBackground();
-//            SetSecondBackground();
             animBgLeft();
-            //ImageView bg = findViewById(R.id.Screen);
-            //bg.setTranslationX(-1920);
             x-=50;
             img.setTranslationX(x);
             CheckEnd();
             ShowMap();
-
-            //SetBackground();
             AddResourceMove();
             ShowStats();
             //getRng();
@@ -968,16 +957,11 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         } else {
             SetArray(arrayX);
             ImageView img = findViewById(R.id.dot);
-            SetBackground();
-//            SetSecondBackground();
             animBgUp();
-            //ImageView bg = findViewById(R.id.Screen);
             y-=50;
             img.setTranslationY(y);
             CheckEnd();
             ShowMap();
-            //bg.setTranslationY(-1080);
-            //SetBackground();
             AddResourceMove();
             ShowStats();
             //getRng();
@@ -992,16 +976,11 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         } else {
             SetArray(arrayX);
             ImageView img = findViewById(R.id.dot);
-            SetBackground();
-//            SetSecondBackground();
             animBgDown();
-            //ImageView bg = findViewById(R.id.Screen);
             y+=50;
             img.setTranslationY(y);
             CheckEnd();
             ShowMap();
-            //bg.setTranslationY(1080);
-            //SetBackground();
             AddResourceMove();
             ShowStats();
             //getRng();
