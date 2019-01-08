@@ -755,7 +755,10 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     protected void animBgLeft(){
         final ImageView iv = findViewById(R.id.bg);
         final ImageView imageView = findViewById(R.id.bgSecond);
-
+        imageView.setX(0);
+        imageView.setY(0);
+        iv.setX(0);
+        iv.setY(0);
         final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,1.0f);
         animator.setRepeatCount(0);
         animator.setInterpolator(new LinearInterpolator());
@@ -771,13 +774,21 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             }
         });
         animator.start();
-        SetBackground();
-        SetSecondBackground();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SetBackground();
+            }
+        },500);
     }
     protected void animBgRight(){
         final ImageView iv = findViewById(R.id.bg);
         final ImageView imageView = findViewById(R.id.bgSecond);
         final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,-1.0f);
+        imageView.setX(0);
+        imageView.setY(0);
+        iv.setX(0);
+        iv.setY(0);
         animator.setRepeatCount(0);
         animator.setInterpolator(new LinearInterpolator());
         animator.setDuration(1000);
@@ -787,39 +798,25 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                 final float progress = (float) valueAnimator.getAnimatedValue();
                 final float width = iv.getWidth();
                 final float translationX = width * progress;
-                iv.setTranslationX(translationX);
-                imageView.setTranslationX(translationX+width);
+                imageView.setTranslationX(translationX);
+                iv.setTranslationX(translationX+width);
             }
         });
         animator.start();
-        SetBackground();
-        SetSecondBackground();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SetBackground();
+            }
+        },500);
     }
     protected void animBgUp(){
         final ImageView iv = findViewById(R.id.bg);
         final ImageView imageView = findViewById(R.id.bgSecond);
-        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,-1.0f);
-        animator.setRepeatCount(0);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.setDuration(1000);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                final float progress = (float) valueAnimator.getAnimatedValue();
-                final float height = iv.getHeight();
-                final float translationY = height * progress;
-                imageView.setTranslationY(translationY);
-                iv.setTranslationY(translationY+height);
-            }
-        });
-        animator.start();
-        SetBackground();
-        SetSecondBackground();
-    }
-    protected void animBgDown(){
-        final ImageView iv = findViewById(R.id.bg);
-        final ImageView imageView = findViewById(R.id.bgSecond);
-
+        imageView.setX(0);
+        imageView.setY(0);
+        iv.setX(0);
+        iv.setY(0);
         final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,1.0f);
         animator.setRepeatCount(0);
         animator.setInterpolator(new LinearInterpolator());
@@ -835,8 +832,42 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             }
         });
         animator.start();
-        SetBackground();
-        SetSecondBackground();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SetBackground();
+            }
+        },500);
+
+    }
+    protected void animBgDown(){
+        final ImageView iv = findViewById(R.id.bg);
+        final ImageView imageView = findViewById(R.id.bgSecond);
+        imageView.setX(0);
+        imageView.setY(0);
+        iv.setX(0);
+        iv.setY(0);
+        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,-1.0f);
+        animator.setRepeatCount(0);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.setDuration(1000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                final float progress = (float) valueAnimator.getAnimatedValue();
+                final float height = iv.getHeight();
+                final float translationY = height * progress;
+                imageView.setTranslationY(translationY);
+                iv.setTranslationY(translationY+height);
+            }
+        });
+        animator.start();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SetBackground();
+            }
+        },500);
     }
     protected void StartSeen(){
         seen = new int[36];
