@@ -113,6 +113,8 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
     }
 
     protected void ShowSellButtons(){
+        Button back = findViewById(R.id.backFromSell);
+        back.setVisibility(View.VISIBLE);
         ImageButton item_up = findViewById(R.id.up_page);
         item_up.setVisibility(View.VISIBLE);
         ImageButton item_3 = findViewById(R.id.item_3);
@@ -152,6 +154,8 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         buyCape.setVisibility(View.GONE);
     }
     protected void ShowBuyButtons(){
+        Button back = findViewById(R.id.backFromEq);
+        back.setVisibility(View.VISIBLE);
         Button buyHelm = findViewById(R.id.buyHelm);
         buyHelm.setVisibility(View.VISIBLE);
         buyHelm.setOnClickListener(this);
@@ -173,6 +177,10 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
     }
 
     protected void ShowWhichButtons(){
+        Button backEq = findViewById(R.id.backFromEq);
+        backEq.setVisibility(View.GONE);
+        Button back = findViewById(R.id.backFromWhich);
+        back.setVisibility(View.VISIBLE);
         Button buyFirst = findViewById(R.id.buyFirst);
         buyFirst.setVisibility(View.VISIBLE);
         Button buySecond = findViewById(R.id.buySecond);
@@ -197,6 +205,9 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
     }
 
     protected void BuySkill(View v){
+        freezeButtons();
+        Button back = findViewById(R.id.backFromSkills);
+        back.setVisibility(View.VISIBLE);
         WriteAnim text = (WriteAnim) findViewById(R.id.text);
         text.setCharacterDelay(30);
         text.animateText("Ktore spelle chcesz?");
@@ -243,6 +254,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                     HideYesNoButtons();
                     yes.setOnClickListener(null);
                 }
+                unfreezeButtons();
             }
         });
         final Button no = findViewById(R.id.no);
@@ -253,6 +265,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                 HideSkillButtons();
                 HideYesNoButtons();
                 no.setOnClickListener(null);
+                unfreezeButtons();
             }
         });
     }
@@ -262,6 +275,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         text.setCharacterDelay(30);
         text.animateText("Co chcialbys kupic?");
         ShowBuyButtons();
+        freezeButtons();
     }
     protected void AddEq(){
         final WriteAnim text = (WriteAnim) findViewById(R.id.text);
@@ -302,6 +316,8 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
     }
 
     protected void BuyItems(View v){
+        Button back = findViewById(R.id.backFromItems);
+        back.setVisibility(View.VISIBLE);
         WriteAnim text = (WriteAnim) findViewById(R.id.text);
         text.setCharacterDelay(30);
         text.animateText("Co chcialbys kupic?");
@@ -311,9 +327,11 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         Button buyRes = findViewById(R.id.buyResource);
         buyRes.setVisibility(View.VISIBLE);
         buyRes.setOnClickListener(this);
+        freezeButtons();
 
     }
     protected void Purchase(){
+        HideItemButtons();
         final WriteAnim text = findViewById(R.id.text);
         text.setCharacterDelay(30);
         text.animateText("Czy masz "+needmoney+" g?");
@@ -340,6 +358,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                     HideItemButtons();
                     yes.setOnClickListener(null);
                 }
+                unfreezeButtons();
             }
         });
         final Button no = findViewById(R.id.no);
@@ -355,8 +374,86 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
+    protected void freezeButtons(){
+        Button items = findViewById(R.id.buy_Items);
+        items.setEnabled(false);
+        Button eq = findViewById(R.id.Eq);
+        eq.setEnabled(false);
+        Button skills = findViewById(R.id.skills);
+        skills.setEnabled(false);
+        Button sellEq = findViewById(R.id.sell_Eq);
+        sellEq.setEnabled(false);
+        Button tavern = findViewById(R.id.gotoTavern);
+        tavern.setEnabled(false);
+    }
+    protected void unfreezeButtons(){
+        Button items = findViewById(R.id.buy_Items);
+        items.setEnabled(true);
+        Button eq = findViewById(R.id.Eq);
+        eq.setEnabled(true);
+        Button skills = findViewById(R.id.skills);
+        skills.setEnabled(true);
+        Button sellEq = findViewById(R.id.sell_Eq);
+        sellEq.setEnabled(true);
+        Button tavern = findViewById(R.id.gotoTavern);
+        tavern.setEnabled(true);
+    }
+
+    protected void backFromItems(View v){
+        WriteAnim text = (WriteAnim) findViewById(R.id.text);
+        text.setCharacterDelay(30);
+        text.animateText("Co w takim razie chcialbys kupic?");
+        HideItemButtons();
+        HideYesNoButtons();
+        unfreezeButtons();
+        Button back = findViewById(R.id.backFromItems);
+        back.setVisibility(View.GONE);
+
+    } //git
+    protected void backFromEq(View v){
+        WriteAnim text = (WriteAnim) findViewById(R.id.text);
+        text.setCharacterDelay(30);
+        text.animateText("Co w takim razie chcialbys kupic?");
+        HideBuyButtons();
+        unfreezeButtons();
+        Button back = findViewById(R.id.backFromEq);
+        back.setVisibility(View.GONE);
+        HideYesNoButtons();
+    }
+    protected void backFromWhich(View v){
+        WriteAnim text = (WriteAnim) findViewById(R.id.text);
+        text.setCharacterDelay(30);
+        text.animateText("Co w takim razie chcialbys kupic?");
+        HideWhichButtons();
+        unfreezeButtons();
+        Button back = findViewById(R.id.backFromWhich);
+        back.setVisibility(View.GONE);
+        HideYesNoButtons();
+    }
+    protected void backFromSkills(View v){
+        WriteAnim text = (WriteAnim) findViewById(R.id.text);
+        text.setCharacterDelay(30);
+        text.animateText("Co w takim razie chcialbys kupic?");
+        HideSkillButtons();
+        unfreezeButtons();
+        Button back = findViewById(R.id.backFromSkills);
+        back.setVisibility(View.GONE);
+        HideYesNoButtons();
+    }
+    protected void backFromSell(View v){
+        WriteAnim text = (WriteAnim) findViewById(R.id.text);
+        text.setCharacterDelay(30);
+        text.animateText("Co w takim razie chcialbys kupic?");
+        HideSellButtons();
+        unfreezeButtons();
+        Button back = findViewById(R.id.backFromSell);
+        back.setVisibility(View.GONE);
+        HideYesNoButtons();
+    }
+
 
     protected void SellEq(View v){
+        freezeButtons();
         ShowSellButtons();
         item_first();
         item_second();
@@ -389,6 +486,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                     b=0;
                     yes.setOnClickListener(null);
                 }
+                unfreezeButtons();
             }
         });
         final Button no = findViewById(R.id.no);
@@ -402,6 +500,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                 HideSellButtons();
                 b = 0;
                 no.setOnClickListener(null);
+                unfreezeButtons();
             }
         });
     }

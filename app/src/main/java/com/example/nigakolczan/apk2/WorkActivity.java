@@ -467,7 +467,6 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                 }else if(xArray[testCheck]!=1){
                     xArray[testCheck] = 1;
                 }
-                System.out.println(i);
             }
         }
     }
@@ -542,21 +541,36 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     }
     protected void SetBackground(){
         ImageView imageView = findViewById(R.id.bg);
-        imageView.destroyDrawingCache();
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==1 && GetArray(arrayX-6)==1 ){
-            imageView.setBackgroundResource(R.drawable.test_map_9);
+            if((arrayX) % 6== 0){
+                imageView.setBackgroundResource(R.drawable.test_map_1);
+            }else {
+                imageView.setBackgroundResource(R.drawable.test_map_9);
+            }
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
             imageView.setBackgroundResource(R.drawable.test_map_1);
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
-            imageView.setBackgroundResource(R.drawable.test_map_11);
+            if((arrayX) % 6== 0){
+                imageView.setBackgroundResource(R.drawable.test_map_3);
+            }else {
+                imageView.setBackgroundResource(R.drawable.test_map_11);
+            }
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
-            imageView.setBackgroundResource(R.drawable.test_map_10);
+            if((arrayX) % 6== 0){
+                imageView.setBackgroundResource(R.drawable.test_map_2);
+            }else {
+                imageView.setBackgroundResource(R.drawable.test_map_10);
+            }
         }
         if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
-            imageView.setBackgroundResource(R.drawable.test_map_12);
+            if((arrayX) % 6== 0){
+                imageView.setBackgroundResource(R.drawable.test_map_4);
+            }else {
+                imageView.setBackgroundResource(R.drawable.test_map_12);
+            }
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==0){
             imageView.setBackgroundResource(R.drawable.test_map_3);
@@ -580,31 +594,59 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             imageView.setBackgroundResource(R.drawable.test_map_8);
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
-            imageView.setBackgroundResource(R.drawable.test_map_13);
+            if((arrayX) % 6== 0){
+                imageView.setBackgroundResource(R.drawable.test_map_5);
+            }else {
+                imageView.setBackgroundResource(R.drawable.test_map_13);
+            }
         }
         if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
-            imageView.setBackgroundResource(R.drawable.test_map_14);
+            if((arrayX) % 6== 0){
+                imageView.setBackgroundResource(R.drawable.test_map_6);
+            }else {
+                imageView.setBackgroundResource(R.drawable.test_map_14);
+            }
         }
         if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
-            imageView.setBackgroundResource(R.drawable.test_map_15);
+            if((arrayX) % 6== 0){
+                imageView.setBackgroundResource(R.drawable.test_map_7);
+            }else {
+                imageView.setBackgroundResource(R.drawable.test_map_15);
+            }
         }
     }
     protected void SetSecondBackground(){
         ImageView imageView = findViewById(R.id.bgSecond);
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==1 && GetArray(arrayX-6)==1 ){
-            imageView.setBackgroundResource(R.drawable.test_map_9);
+            if((arrayX) % 6== 0){
+                imageView.setBackgroundResource(R.drawable.test_map_1);
+            }else {
+                imageView.setBackgroundResource(R.drawable.test_map_9);
+            }
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
             imageView.setBackgroundResource(R.drawable.test_map_1);
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
-            imageView.setBackgroundResource(R.drawable.test_map_11);
+            if((arrayX) % 6== 0){
+                imageView.setBackgroundResource(R.drawable.test_map_3);
+            }else {
+                imageView.setBackgroundResource(R.drawable.test_map_11);
+            }
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
-            imageView.setBackgroundResource(R.drawable.test_map_10);
+            if((arrayX) % 6== 0){
+                imageView.setBackgroundResource(R.drawable.test_map_2);
+            }else {
+                imageView.setBackgroundResource(R.drawable.test_map_10);
+            }
         }
         if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
-            imageView.setBackgroundResource(R.drawable.test_map_12);
+            if((arrayX) % 6== 0){
+                imageView.setBackgroundResource(R.drawable.test_map_4);
+            }else {
+                imageView.setBackgroundResource(R.drawable.test_map_12);
+            }
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==0){
             imageView.setBackgroundResource(R.drawable.test_map_3);
@@ -628,13 +670,25 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             imageView.setBackgroundResource(R.drawable.test_map_8);
         }
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
-            imageView.setBackgroundResource(R.drawable.test_map_13);
+            if((arrayX) % 6== 0){
+                imageView.setBackgroundResource(R.drawable.test_map_5);
+            }else {
+                imageView.setBackgroundResource(R.drawable.test_map_13);
+            }
         }
         if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
-            imageView.setBackgroundResource(R.drawable.test_map_14);
+            if((arrayX) % 6== 0){
+                imageView.setBackgroundResource(R.drawable.test_map_6);
+            }else {
+                imageView.setBackgroundResource(R.drawable.test_map_14);
+            }
         }
         if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
-            imageView.setBackgroundResource(R.drawable.test_map_15);
+            if((arrayX) % 6== 0){
+                imageView.setBackgroundResource(R.drawable.test_map_7);
+            }else {
+                imageView.setBackgroundResource(R.drawable.test_map_15);
+            }
         }
     }
     protected int SetArray(int a){
@@ -731,7 +785,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             }
         },500);
 
-    }
+    }  // ZROB TE ANIMACJE ZROB TE ANIMACJE ZROB TE ANIMACJE ZROB TE ANIMACJE
     protected void animBgDown(){
         final ImageView iv = findViewById(R.id.bg);
         final ImageView imageView = findViewById(R.id.bgSecond);
