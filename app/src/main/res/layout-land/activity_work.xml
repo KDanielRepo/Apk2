@@ -8,15 +8,16 @@
     tools:context="com.example.nigakolczan.apk2.WorkActivity">
 
     <ImageView
+        android:id="@+id/bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
-        android:id="@+id/bg"/>
+        android:visibility="visible" />
+
     <ImageView
+        android:id="@+id/bgSecond"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
-        android:id="@+id/bgSecond"/>
+        android:visibility="visible" />
 
     <Button
         android:layout_width="60dp"

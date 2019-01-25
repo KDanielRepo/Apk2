@@ -498,116 +498,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                }
        }
     }
-    /*protected void setBackground(){
-        idB = 0;
-        bgX = 0;
-        bgY = 0;
-        testX = 1920;
-        testY = 1080;
-        Bitmap bitmap = Bitmap.createBitmap(testX,testY, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(),R.id.Screen,options);
-        int imageHeight = options.outHeight;
-        int imageWidth = options.outWidth;
-        String imageType = options.outMimeType;
-        Paint paint = new Paint();
-        for(int i = 0; i<36; i++){
-                if(i>0 & i%6==0){
-                    bgX = 0;
-                    bgY += 180;
-                }
-                if(xArray[i]==0){
-                    bgX+=320;
-                }
-                if(xArray[i]!=0){
-                    //uwzglednij ze ponizej 6 pozycji wywala skale!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==1 && GetArray(arrayX-6)==1){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_9);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_1);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_11);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_10);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_12);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==0){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_3);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_2);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_4);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-1)==0 && GetArray(arrayX-6)==0){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_5);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==0){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_7);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==0 && GetArray(arrayX-6)==0){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_6);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_8);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_13);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==1 && GetArray(arrayX-6)==0 && GetArray(arrayX-1)==1){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_14);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    if(GetArray(arrayX+1)==0 && GetArray(arrayX+6)==0 && GetArray(arrayX-6)==1 && GetArray(arrayX-1)==1){
-                        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.test_map_15);
-                        canvas.drawBitmap(b,bgX,bgY,null);
-                    }
-                    bgX+=320;
-            }
-        }
-        android.support.constraint.ConstraintLayout constraintLayout = findViewById(R.id.Screen);
-        bitmap = Bitmap.createScaledBitmap(bitmap,testX,testY,false);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        bitmap.compress(Bitmap.CompressFormat.PNG,90,outputStream);
-        try{
-            File file = new File("data/data/com.example.nigakolczan.apk2/background.png");
-            if(file.exists()){
-                file.delete();
-            }
-            file.createNewFile();
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            fileOutputStream.write(outputStream.toByteArray());
-            fileOutputStream.flush();
-            fileOutputStream.close();
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        drawable = new BitmapDrawable(getResources(),bitmap);
-        constraintLayout.setBackground(drawable);
-    }*/
     protected void HideMap(){
         id=0;
         setY=96;
@@ -651,6 +542,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     }
     protected void SetBackground(){
         ImageView imageView = findViewById(R.id.bg);
+        imageView.destroyDrawingCache();
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==1 && GetArray(arrayX-6)==1 ){
             imageView.setBackgroundResource(R.drawable.test_map_9);
         }
@@ -755,10 +647,10 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     protected void animBgLeft(){
         final ImageView iv = findViewById(R.id.bg);
         final ImageView imageView = findViewById(R.id.bgSecond);
-        imageView.setX(0);
-        imageView.setY(0);
         iv.setX(0);
         iv.setY(0);
+        imageView.setX(0);
+        imageView.setY(0);
         final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,1.0f);
         animator.setRepeatCount(0);
         animator.setInterpolator(new LinearInterpolator());
@@ -813,10 +705,10 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     protected void animBgUp(){
         final ImageView iv = findViewById(R.id.bg);
         final ImageView imageView = findViewById(R.id.bgSecond);
-        imageView.setX(0);
-        imageView.setY(0);
         iv.setX(0);
         iv.setY(0);
+        imageView.setX(0);
+        imageView.setY(0);
         final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,1.0f);
         animator.setRepeatCount(0);
         animator.setInterpolator(new LinearInterpolator());
@@ -956,8 +848,13 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             animBgRight();
             AddResourceMove();
             ShowStats();
-            //getRng();
-            //Fight();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getRng();
+                    Fight();
+                }
+            },600);
             BossFight();
         }
     }
@@ -976,8 +873,13 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             ShowMap();
             AddResourceMove();
             ShowStats();
-            //getRng();
-            //Fight();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getRng();
+                    Fight();
+                }
+            },600);
             BossFight();
         }
     }
@@ -995,8 +897,13 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             ShowMap();
             AddResourceMove();
             ShowStats();
-            //getRng();
-           // Fight();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getRng();
+                    Fight();
+                }
+            },600);
             BossFight();
         }
     }
@@ -1014,8 +921,13 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             ShowMap();
             AddResourceMove();
             ShowStats();
-            //getRng();
-            //Fight();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getRng();
+                    Fight();
+                }
+            },600);
             BossFight();
         }
     }
