@@ -51,6 +51,7 @@ import android.graphics.Bitmap;
 
 public class WorkActivity extends AppCompatActivity implements Runnable {
     Thread test;
+    ImageView imageView1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -341,8 +342,8 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         imageView.setTranslationX(a);
     }
 
-    /*int setY=96;
-    int setX=1584;*/
+    int setY=96;
+    int setX=1584;
 
     //Zmiene do tworzenia mapy
     private int[] xArray;
@@ -353,12 +354,9 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     private int id = 0;
     private int finish = 0;
 
-
     private void ResetMap(){
-        setX(0);
-        setY(0);
-        /*setY=96;
-        setX=1584;*/
+        setY=96;
+        setX=1584;
         arrayX=0;
         x=0;
         y=0;
@@ -370,6 +368,10 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         deep++;
         SetBackground();
         SetSecondBackground();
+        ImageView iv = findViewById(R.id.dot);
+        iv.setImageResource(R.drawable.dot);
+        iv.setTranslationX(x);
+        iv.setTranslationY(y);
         if(deep == 2){
             bossFight = true;
         }
@@ -379,26 +381,25 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             Finished();
         }
     }
-    public void BlackoutMap(){
+    protected void BlackoutMap(){
         id=0;
-        ImageView imageView1 = findViewById(R.id.dot);
-        float X = imageView1.getX();
-        float Y = imageView1.getY();
+        setY=96;
+        setX=1584;
         for(int i = 0; i<36; i++){
             ImageView imageView = findViewById(id);
             if(i>0 & i%6==0){
-                X=0;
-                Y+=50;
+                setX=1584;
+                setY+=50;
             }
             if(seen[i]==0){
-                X+=50;
+                setX+=50;
             }
             if(seen[i]!=0){
-                imageView.setTranslationX(X);
-                imageView.setTranslationY(Y);
+                imageView.setX(setX);
+                imageView.setY(setY);
                 imageView.setImageResource(0);
                 id++;
-                X+=50;
+                setX+=50;
             }}
     }
 
@@ -481,78 +482,75 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             }
         }
     }
-    public void setMap(){
+    protected void setMap(){
         id=0;
-        ImageView imageView1 = findViewById(R.id.dot);
-        float X = imageView1.getX();
-        float Y = imageView1.getY();
-       for(int i = 0; i<36; i++){
-           if(i>0 & i%6==0){
-               X=0;
-               Y+=50;
-           }
-           if(xArray[i]==0){
-               X+=50;
-           }
-           if(xArray[i]!=0){
-               android.support.constraint.ConstraintLayout constraintLayout = findViewById(R.id.Screen);
-               ImageView imageView = new ImageView(this);
-               imageView.setLayoutParams(new LinearLayout.LayoutParams(62,62));
-               imageView.setPadding(8,8,8,8);
-               imageView.setId(id);
-               imageView.setTranslationX(X);
-               imageView.setTranslationY(Y);
-               id++;
-               X+=50;
-               constraintLayout.addView(imageView);
-               }
-       }
-    }
-
-    public void HideMap(){
-        id=0;
-        setY(0);
-        setX(0);
-        float X=0;
-        float Y=0;
+        setY=96;
+        setX=1584;
         for(int i = 0; i<36; i++){
             if(i>0 & i%6==0){
-                X=0;
-                Y+=50;
+                setX=1584;
+                setY+=50;
             }
             if(xArray[i]==0){
-                X+=50;
+                setX+=50;
+            }
+            if(xArray[i]!=0){
+                android.support.constraint.ConstraintLayout constraintLayout = findViewById(R.id.Screen);
+                ImageView imageView = new ImageView(this);
+                //imageView.setImageResource(R.drawable.bgdot);
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(62,62));
+                imageView.setPadding(8,8,8,8);
+                imageView.setId(id);
+                imageView.setX(setX);
+                imageView.setY(setY);
+                id++;
+                setX+=50;
+                constraintLayout.addView(imageView);
+            }
+        }
+    }
+    protected void HideMap(){
+        id=0;
+        setY=96;
+        setX=1584;
+        for(int i = 0; i<36; i++){
+            if(i>0 & i%6==0){
+                setX=1584;
+                setY+=50;
+            }
+            if(xArray[i]==0){
+                setX+=50;
             }
             if(xArray[i]!=0){
                 ImageView imageView = findViewById(id);
-                imageView.setTranslationX(X);
-                imageView.setTranslationY(Y);
+                imageView.setX(setX);
+                imageView.setY(setY);
                 imageView.setImageResource(0);
                 id++;
-                X+=50;
+                setX+=50;
             }}}
-    public void ShowMap(){
+    protected void ShowMap(){
         id=0;
-        ImageView imageView1 = findViewById(R.id.dot);
-        float X = imageView1.getX();
-        float Y = imageView1.getY();
+        setY=96;
+        setX=1584;
         for(int i = 0; i<36; i++){
             ImageView imageView = findViewById(id);
             if(i>0 & i%6==0){
-                X=0;
-                Y+=50;
+                setX=1584;
+                setY+=50;
             }
             if(seen[i]==0){
-                X+=50;
+                setX+=50;
             }
             if(seen[i]!=0){
-                imageView.setTranslationX(X);
-                imageView.setTranslationY(Y);
+                imageView.setX(setX);
+                imageView.setY(setY);
                 imageView.setImageResource(R.drawable.bgdot);
                 id++;
-                X+=50;
+                setX+=50;
             }}
     }
+
     public void SetBackground(){
         ImageView imageView = findViewById(R.id.bg);
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==1 && GetArray(arrayX-6)==1 ){
@@ -787,7 +785,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             }
         },500);
 
-    }  // ZROB TE ANIMACJE ZROB TE ANIMACJE ZROB TE ANIMACJE ZROB TE ANIMACJE
+    }
     public void animBgDown(){
         final ImageView iv = findViewById(R.id.bg);
         final ImageView imageView = findViewById(R.id.bgSecond);
