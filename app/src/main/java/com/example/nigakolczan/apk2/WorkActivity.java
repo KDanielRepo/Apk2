@@ -15,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.graphics.drawable.AnimationDrawable;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -50,7 +52,7 @@ import android.graphics.Bitmap;
 public class WorkActivity extends AppCompatActivity implements Runnable {
     Thread test;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Equipment equipment = new Equipment();
         equipment.SetStats();
@@ -59,6 +61,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         img.setBackgroundResource(R.drawable.testanim_1);
         AnimationDrawable frameAnimation = (AnimationDrawable) img.getBackground();
         frameAnimation.start();
+
 
         ImageView img_2 = (ImageView) findViewById(R.id.testanim_2);
         img_2.setBackgroundResource(R.drawable.testanim_2);
@@ -75,7 +78,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         test.start();
         System.out.println(Thread.activeCount());
         }
-    protected Node getNode(String tagName, NodeList nodes) {
+    public Node getNode(String tagName, NodeList nodes) {
         for (int x = 0; x < nodes.getLength(); x++) {
             Node node = nodes.item(x);
             if (node.getNodeName().equalsIgnoreCase(tagName)) {
@@ -112,7 +115,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     protected static int lvl = Integer.parseInt(RestActivity.Lvl);
     protected static int shekles = Integer.parseInt(RestActivity.Shekles);
     protected int exp = Integer.parseInt(RestActivity.Experience);
-    protected int SetHp(){
+    public int SetHp(){
         int reset = 0;
         if(reset == 0){
             hp = ((lvl*2) + Equipment.Hp)/2;
@@ -122,7 +125,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         }
         return hp;
     }
-    protected int SetDmg(){
+    public int SetDmg(){
         int reset = 0;
         if(reset == 0){
             dmg = Equipment.Dmg;
@@ -138,7 +141,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     protected String resourceName = RestActivity.Resource;
     protected int resource = 0;
     protected int resourceMax = 0;
-    protected int SetResource(){
+    public int SetResource(){
         switch(resourceName){
             case "Mana":
                 resourceMax = lvl *10;
@@ -150,7 +153,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         }
         return resource;
     }
-    protected int AddResourceFight(){
+    public int AddResourceFight(){
         switch(resourceName){
             case "Mana":
                 return resource;
@@ -167,7 +170,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         }
         return  resource;
     }
-    protected int AddResourceMove(){
+    public int AddResourceMove(){
         switch(resourceName){
             case "Energy":
                 resource +=5;
@@ -177,7 +180,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         }
         return  resource;
     }
-    protected void getSpells(){
+    public void getSpells(){
         RestActivity restActivity = new RestActivity();
         for(int i = 0; i < 8; i++){
             restActivity.getSpells(i);
@@ -282,13 +285,13 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                 break;
         }
     }
-    protected void ShowStats(){
+    public void ShowStats(){
         TextView hpBar = findViewById(R.id.hpBar);
         hpBar.setText("Hp:"+Integer.toString(hp));
         TextView exp = findViewById(R.id.expBar);
         exp.setText(resourceName+" : "+resource);
     }
-    protected void setDmgTemp(){
+    public void setDmgTemp(){
         dmgTemp = dmg;
     }
 
@@ -324,13 +327,22 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     String newLine = System.getProperty("line.separator");
 
     //Współrzędne na mapie
-    int x = 0;
-    int y = 0;
+    float x = 0;
+    float y = 0;
     int arrayX=0;
 
     //Współrzędne dla tworzenia mapy
-    int setY=96;
-    int setX=1584;
+    public void setY(float a){
+        ImageView imageView = findViewById(R.id.dot);
+        imageView.setTranslationY(a);
+    }
+    public void setX(float a){
+        ImageView imageView = findViewById(R.id.dot);
+        imageView.setTranslationX(a);
+    }
+
+    /*int setY=96;
+    int setX=1584;*/
 
     //Zmiene do tworzenia mapy
     private int[] xArray;
@@ -343,8 +355,10 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
 
 
     private void ResetMap(){
-        setY=96;
-        setX=1584;
+        setX(0);
+        setY(0);
+        /*setY=96;
+        setX=1584;*/
         arrayX=0;
         x=0;
         y=0;
@@ -356,10 +370,6 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         deep++;
         SetBackground();
         SetSecondBackground();
-        ImageView iv = findViewById(R.id.dot);
-        iv.setImageResource(R.drawable.dot);
-        iv.setTranslationX(x);
-        iv.setTranslationY(y);
         if(deep == 2){
             bossFight = true;
         }
@@ -369,29 +379,30 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             Finished();
         }
     }
-    protected void BlackoutMap(){
+    public void BlackoutMap(){
         id=0;
-        setY=96;
-        setX=1584;
+        ImageView imageView1 = findViewById(R.id.dot);
+        float X = imageView1.getX();
+        float Y = imageView1.getY();
         for(int i = 0; i<36; i++){
             ImageView imageView = findViewById(id);
             if(i>0 & i%6==0){
-                setX=1584;
-                setY+=50;
+                X=0;
+                Y+=50;
             }
             if(seen[i]==0){
-                setX+=50;
+                X+=50;
             }
             if(seen[i]!=0){
-                imageView.setX(setX);
-                imageView.setY(setY);
+                imageView.setTranslationX(X);
+                imageView.setTranslationY(Y);
                 imageView.setImageResource(0);
                 id++;
-                setX+=50;
+                X+=50;
             }}
     }
 
-    protected void GetArea(){
+    public void GetArea(){
         xArray = new int[36];
         xArray[0] = 1;
         for (int i = 0; i < 11; i++) {
@@ -470,76 +481,79 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             }
         }
     }
-    protected void setMap(){
+    public void setMap(){
         id=0;
-        setY=96;
-        setX=1584;
+        ImageView imageView1 = findViewById(R.id.dot);
+        float X = imageView1.getX();
+        float Y = imageView1.getY();
        for(int i = 0; i<36; i++){
            if(i>0 & i%6==0){
-               setX=1584;
-               setY+=50;
+               X=0;
+               Y+=50;
            }
            if(xArray[i]==0){
-               setX+=50;
+               X+=50;
            }
            if(xArray[i]!=0){
                android.support.constraint.ConstraintLayout constraintLayout = findViewById(R.id.Screen);
                ImageView imageView = new ImageView(this);
-               //imageView.setImageResource(R.drawable.bgdot);
                imageView.setLayoutParams(new LinearLayout.LayoutParams(62,62));
                imageView.setPadding(8,8,8,8);
                imageView.setId(id);
-               imageView.setX(setX);
-               imageView.setY(setY);
+               imageView.setTranslationX(X);
+               imageView.setTranslationY(Y);
                id++;
-               setX+=50;
+               X+=50;
                constraintLayout.addView(imageView);
                }
        }
     }
 
-    protected void HideMap(){
+    public void HideMap(){
         id=0;
-        setY=96;
-        setX=1584;
+        setY(0);
+        setX(0);
+        float X=0;
+        float Y=0;
         for(int i = 0; i<36; i++){
             if(i>0 & i%6==0){
-                setX=1584;
-                setY+=50;
+                X=0;
+                Y+=50;
             }
             if(xArray[i]==0){
-                setX+=50;
+                X+=50;
             }
             if(xArray[i]!=0){
                 ImageView imageView = findViewById(id);
-                imageView.setX(setX);
-                imageView.setY(setY);
+                imageView.setTranslationX(X);
+                imageView.setTranslationY(Y);
                 imageView.setImageResource(0);
                 id++;
-                setX+=50;
+                X+=50;
             }}}
-    protected void ShowMap(){
+    public void ShowMap(){
         id=0;
-        setY=96;
-        setX=1584;
+        ImageView imageView1 = findViewById(R.id.dot);
+        float X = imageView1.getX();
+        float Y = imageView1.getY();
         for(int i = 0; i<36; i++){
             ImageView imageView = findViewById(id);
             if(i>0 & i%6==0){
-                setX=1584;
-                setY+=50;
+                X=0;
+                Y+=50;
             }
             if(seen[i]==0){
-                setX+=50;
+                X+=50;
             }
             if(seen[i]!=0){
-                imageView.setX(setX);
-                imageView.setY(setY);
+                imageView.setTranslationX(X);
+                imageView.setTranslationY(Y);
                 imageView.setImageResource(R.drawable.bgdot);
                 id++;
-                setX+=50;
+                X+=50;
             }}
     }
-    protected void SetBackground(){
+    public void SetBackground(){
         ImageView imageView = findViewById(R.id.bg);
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==1 && GetArray(arrayX-6)==1 ){
             if((arrayX) % 6== 0){
@@ -615,7 +629,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             }
         }
     }
-    protected void SetSecondBackground(){
+    public void SetSecondBackground(){
         ImageView imageView = findViewById(R.id.bgSecond);
         if(GetArray(arrayX+1)==1 && GetArray(arrayX+6)==1 && GetArray(arrayX-1)==1 && GetArray(arrayX-6)==1 ){
             if((arrayX) % 6== 0){
@@ -691,14 +705,14 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             }
         }
     }
-    protected int SetArray(int a){
+    public int SetArray(int a){
         a = arrayX;
         if(arrayX>35){
             a-=1;
         }
         return xArray[a];
     }
-    protected void animBgLeft(){
+    public void animBgLeft(){
         final ImageView iv = findViewById(R.id.bg);
         final ImageView imageView = findViewById(R.id.bgSecond);
         iv.setX(0);
@@ -727,7 +741,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             }
         },500);
     }
-    protected void animBgRight(){
+    public void animBgRight(){
         final ImageView iv = findViewById(R.id.bg);
         final ImageView imageView = findViewById(R.id.bgSecond);
         final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,-1.0f);
@@ -756,77 +770,53 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             }
         },500);
     }
-    protected void animBgUp(){
+    public void animBgUp(){
         final ImageView iv = findViewById(R.id.bg);
         final ImageView imageView = findViewById(R.id.bgSecond);
-        iv.setX(0);
-        iv.setY(0);
-        imageView.setX(0);
-        imageView.setY(0);
-        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,1.0f);
-        animator.setRepeatCount(0);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.setDuration(1000);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                final float progress = (float) valueAnimator.getAnimatedValue();
-                final float height = iv.getHeight();
-                final float translationY = height * progress;
-                imageView.setTranslationY(translationY);
-                iv.setTranslationY(translationY-height);
-            }
-        });
-        animator.start();
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoomin);
+        imageView.startAnimation(animation);
+        iv.startAnimation(animation);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoomout);
+                iv.startAnimation(animation1);
+                imageView.startAnimation(animation1);
                 SetBackground();
+                SetSecondBackground();
             }
         },500);
 
     }  // ZROB TE ANIMACJE ZROB TE ANIMACJE ZROB TE ANIMACJE ZROB TE ANIMACJE
-    protected void animBgDown(){
+    public void animBgDown(){
         final ImageView iv = findViewById(R.id.bg);
         final ImageView imageView = findViewById(R.id.bgSecond);
-        imageView.setX(0);
-        imageView.setY(0);
-        iv.setX(0);
-        iv.setY(0);
-        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f,-1.0f);
-        animator.setRepeatCount(0);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.setDuration(1000);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                final float progress = (float) valueAnimator.getAnimatedValue();
-                final float height = iv.getHeight();
-                final float translationY = height * progress;
-                imageView.setTranslationY(translationY);
-                iv.setTranslationY(translationY+height);
-            }
-        });
-        animator.start();
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoomin);
+        imageView.startAnimation(animation);
+        iv.startAnimation(animation);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.zoomout);
+                iv.startAnimation(animation1);
+                imageView.startAnimation(animation1);
                 SetBackground();
+                SetSecondBackground();
             }
         },500);
     }
-    protected void StartSeen(){
+    public void StartSeen(){
         seen = new int[36];
         seen[0] = 1;
         for(int i = 1; i < 36; i++){
             seen[i] = 0;
         }
     }
-    protected int SetSeen(int a){
+    public int SetSeen(int a){
         seen[a] = 1;
         return seen[a];
     }
-    protected void CheckEnd(){
+    public void CheckEnd(){
         if(seen[arrayX] == 0){
             SetSeen(arrayX);
                 finish++;
@@ -844,7 +834,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                 SetSecondBackground();
             }
         }
-    protected int GetArray(int a){
+    public int GetArray(int a){
         xArray[0]=1;
         if(a<0){
             a=0;
@@ -856,7 +846,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         }
         return xArray[a];
     }
-    protected void Finished(){
+    public void Finished(){
         final WriteAnim writeAnim = (WriteAnim) findViewById(R.id.battleText);
         writeAnim.setVisibility(View.VISIBLE);
         writeAnim.setCharacterDelay(30);
@@ -881,14 +871,14 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
 
     //losowo generowane potyczki
     int rng = 3;
-    protected int getRng() {
+    public int getRng() {
         end = false;
         rng = ThreadLocalRandom.current().nextInt(0, 4);
         return rng;
     }
 
     //Sekcja ruchu na mapie
-    protected void Right(View v) {
+    public void Right(View v) {
         arrayX += 1;
         if (arrayX>35 | arrayX % 6== 0 | SetArray(arrayX) == 0 | SetArray(arrayX)%6 == 0) {
             arrayX -= 1;
@@ -902,17 +892,19 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             animBgRight();
             AddResourceMove();
             ShowStats();
+            blockMovement();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     getRng();
-                    Fight();
+                    /*Fight();*/
+                    enableMovement();
                 }
             },600);
             BossFight();
         }
     }
-    protected void Left(View v) {
+    public void Left(View v) {
         arrayX -= 1;
         // tak na wszelki wypadek  | SetArray(arrayX)%6 == 0 | (arrayX > 0 & arrayX % 6 == 0)
         if ( arrayX < 0 || SetArray(arrayX) == 0 || (arrayX > 4 && (arrayX+1)%6==0) ) {
@@ -927,17 +919,19 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             ShowMap();
             AddResourceMove();
             ShowStats();
+            blockMovement();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     getRng();
-                    Fight();
+                    /*Fight();*/
+                    enableMovement();
                 }
             },600);
             BossFight();
         }
     }
-    protected void Up(View v) {
+    public void Up(View v) {
         arrayX -= 6;
         if (arrayX < 0 || SetArray(arrayX) == 0) {
             arrayX += 6;
@@ -951,17 +945,19 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             ShowMap();
             AddResourceMove();
             ShowStats();
+            blockMovement();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     getRng();
-                    Fight();
+                    /*Fight();*/
+                    enableMovement();
                 }
             },600);
             BossFight();
         }
     }
-    protected void Down(View v) {
+    public void Down(View v) {
         arrayX += 6;
         if (arrayX > 36 || SetArray(arrayX) == 0) {
             arrayX -= 6;
@@ -975,26 +971,48 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             ShowMap();
             AddResourceMove();
             ShowStats();
+            blockMovement();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     getRng();
-                    Fight();
+                    /*Fight();*/
+                    enableMovement();
                 }
             },600);
             BossFight();
         }
     }
+    public void blockMovement(){
+        Button up = findViewById(R.id.Up);
+        Button down = findViewById(R.id.Down);
+        Button left = findViewById(R.id.Left);
+        Button right = findViewById(R.id.Right);
+        up.setEnabled(false);
+        down.setEnabled(false);
+        left.setEnabled(false);
+        right.setEnabled(false);
+    }
+    public void enableMovement(){
+        Button up = findViewById(R.id.Up);
+        Button down = findViewById(R.id.Down);
+        Button left = findViewById(R.id.Left);
+        Button right = findViewById(R.id.Right);
+        up.setEnabled(true);
+        down.setEnabled(true);
+        left.setEnabled(true);
+        right.setEnabled(true);
+    }
 
     //Interfejs w trakcie walki
-    protected void Exit(View v) {
+    public void Exit(View v) {
         LostExit();
     }
-    protected void LostExit(){
+    public void LostExit(){
         Intent tavern = new Intent(getApplicationContext(),TavernActivity.class);
         startActivity(tavern);
     }
-    protected void move(){
+    public void move(){
         final WriteAnim battleText = (WriteAnim) findViewById(R.id.writeAnim);
         battleText.animateText("");
         battleText.setVisibility(View.VISIBLE);
@@ -1045,18 +1063,18 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         }
         ShowStats();
     }
-    protected void Move(View v) {
+    public void Move(View v) {
         move();
     }
-    protected void CpuTurn() {
+    public void CpuTurn() {
         int cpurng = ThreadLocalRandom.current().nextInt(0,5);
         ImageView img = findViewById(R.id.testanim_2);
-        img.setX(700);
+        img.setTranslationX(-600);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 ImageView img = findViewById(R.id.testanim_2);
-                img.setX(1200);
+                img.setTranslationX(0);
             }
         },500);
         if(cpurng == 5){
@@ -1072,7 +1090,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             EndFight();
         }
     }
-    protected void Check(View v) {
+    public void Check(View v) {
         WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
         if (stateCheck == true) {
             if(!bossFight){
@@ -1093,7 +1111,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             ShowAfterCheck();
         }
     }
-    protected void List(View v) {
+    public void List(View v) {
         ImageView lv = findViewById(R.id.it_list);
         if (stateList == true) {
             lv.setVisibility(View.VISIBLE);
@@ -1108,14 +1126,14 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     }
 
     //ruchy w walce
-    protected void FightAnimMelee(){
+    public void FightAnimMelee(){
         ImageView img = findViewById(R.id.testanim);
-        img.setX(900);
+        img.setTranslationX(600);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 ImageView img = findViewById(R.id.testanim);
-                img.setX(400);
+                img.setTranslationX(0);
             }
         },500);
         MoveList_hide();
@@ -1138,7 +1156,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             });
         }
     }
-    protected void Stunned(){
+    public void Stunned(){
         if(a<=stunFor){
             stun = true;
         }else{
@@ -1146,7 +1164,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             stun = false;
         }
     }
-    protected void Ablaze(){
+    public void Ablaze(){
         if(a<=ablazeFor){
             ablaze = true;
         }else{
@@ -1159,7 +1177,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             }
         }
     }
-    protected void Bleed(){
+    public void Bleed(){
         if(a<=bleedFor){
             bleed = true;
         }else{
@@ -1172,7 +1190,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             }
         }
     }
-    protected void CheckforIlments(){
+    public void CheckforIlments(){
         if(stun){
             Stunned();
             a++;
@@ -1222,7 +1240,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     }
 
     //Umiejetnosci
-    protected void Test_at1(final View v){
+    public void Test_at1(final View v){
         CheckforIlments();
         WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
         battleText.setVisibility(View.VISIBLE);
@@ -1238,7 +1256,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         }
         FightAnimMelee();
     }
-    protected void Test_at2(final View v){
+    public void Test_at2(final View v){
         Boolean done = false;
         final WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
         battleText.setVisibility(View.VISIBLE);
@@ -1301,7 +1319,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             FightAnimMelee();
         }
     }
-    protected void Test_at3(final View v){
+    public void Test_at3(final View v){
         Boolean done = false;
         final WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
         battleText.setVisibility(View.VISIBLE);
@@ -1346,7 +1364,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             click++;
         }
     }
-    protected void Test_at4(final View v){
+    public void Test_at4(final View v){
         Boolean done = false;
         final WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
         battleText.setVisibility(View.VISIBLE);
@@ -1413,13 +1431,13 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             Back(v);
         }
     }
-    protected void Test_at5(final View v){}
-    protected void Test_at6(final View v){}
-    protected void Test_at7(final View v){}
-    protected void Test_at8(final View v){}
+    public void Test_at5(final View v){}
+    public void Test_at6(final View v){}
+    public void Test_at7(final View v){}
+    public void Test_at8(final View v){}
 
     //pokazuje lub ukrywa liste ruchow w walce
-    protected void CheckSkillsFirstRow(){
+    public void CheckSkillsFirstRow(){
         getSpells();
         TavernActivity tavernActivity = new TavernActivity();
         tavernActivity.SetSpellNames();
@@ -1467,7 +1485,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             previousPage.setVisibility(View.GONE);
         }
     }
-    protected void CheckSkillsSecRow(){
+    public void CheckSkillsSecRow(){
         TavernActivity tavernActivity = new TavernActivity();
         Boolean skill_5 = Spells.get(4).equals("T");
         if(skill_5){
@@ -1498,7 +1516,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         }
     }
 
-    protected void MoveList(){
+    public void MoveList(){
         Button move = findViewById(R.id.Move);
         move.setVisibility(View.GONE);
         Button check = findViewById(R.id.Check);
@@ -1513,7 +1531,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         Button back = findViewById(R.id.back);
         back.setVisibility(View.VISIBLE);
     }
-    protected void MoveList_next(View v){
+    public void MoveList_next(View v){
         Button test_at1 = findViewById(R.id.test_At1);
         test_at1.setVisibility(View.GONE);
         Button test_at2 = findViewById(R.id.test_At2);
@@ -1525,7 +1543,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
 
         CheckSkillsSecRow();
     }
-    protected void MoveList_previous(View v){
+    public void MoveList_previous(View v){
         CheckSkillsFirstRow();
 
         Button test_at5 = findViewById(R.id.test_At5);
@@ -1537,7 +1555,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         Button test_at8 = findViewById(R.id.test_At8);
         test_at8.setVisibility(View.GONE);
     }
-    protected void MoveList_hide(){
+    public void MoveList_hide(){
         Button move = findViewById(R.id.Move);
         move.setVisibility(View.VISIBLE);
         Button check = findViewById(R.id.Check);
@@ -1570,10 +1588,10 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         Button previousPage = findViewById(R.id.p_Page);
         previousPage.setVisibility(View.GONE);
     }
-    protected void Back(View v){
+    public void Back(View v){
         MoveList_hide();
     }
-    protected void BlockButtons(){
+    public void BlockButtons(){
         Button move = findViewById(R.id.Move);
         move.setEnabled(false);
         Button check = findViewById(R.id.Check);
@@ -1583,7 +1601,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         Button dunno = findViewById(R.id.dunno);
         dunno.setEnabled(false);
     }
-    protected void EnableButtons(){
+    public void EnableButtons(){
         Button move = findViewById(R.id.Move);
         move.setEnabled(true);
         Button check = findViewById(R.id.Check);
@@ -1595,7 +1613,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     }
 
     //pokazuje lub ukrywa strzalki ruchu
-    protected void HideMovement(){
+    public void HideMovement(){
         Button up = findViewById(R.id.Up);
         up.setVisibility(View.GONE);
         Button down = findViewById(R.id.Down);
@@ -1605,7 +1623,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         Button right = findViewById(R.id.Right);
         right.setVisibility(View.GONE);
     }
-    protected void ShowMovement(){
+    public void ShowMovement(){
         Button up = findViewById(R.id.Up);
         up.setVisibility(View.VISIBLE);
         Button down = findViewById(R.id.Down);
@@ -1617,7 +1635,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     }
 
     //pokazuje lub ukrywa elementy interface'u w trakcie check'u
-    protected void HideDuringCheck(){
+    public void HideDuringCheck(){
         Button move = findViewById(R.id.Move);
         move.setVisibility(View.GONE);
         Button list = findViewById(R.id.List);
@@ -1625,7 +1643,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         Button dunno = findViewById(R.id.dunno);
         dunno.setVisibility(View.GONE);
     }
-    protected void ShowAfterCheck(){
+    public void ShowAfterCheck(){
         Button move = findViewById(R.id.Move);
         move.setVisibility(View.VISIBLE);
         Button list = findViewById(R.id.List);
@@ -1635,7 +1653,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     }
 
     //pokazuje lub ukrywa elementy interface'u w trakcie patrzenia do eq
-    protected void HideEq(){
+    public void HideEq(){
         ImageButton helm = findViewById(R.id.Helm);
         helm.setVisibility(View.GONE);
         ImageButton chest = findViewById(R.id.Chest);
@@ -1668,7 +1686,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         down_page.setVisibility(View.GONE);
 
     }
-    protected void ShowEq(){
+    public void ShowEq(){
         ImageButton helm = findViewById(R.id.Helm);
         helm.setVisibility(View.VISIBLE);
         ImageButton chest = findViewById(R.id.Chest);
@@ -1713,7 +1731,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     }
 
     //Poczatek i koniec walki
-    protected void Fight() {
+    public void Fight() {
         if (rng==3) {
 
             final WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
@@ -1759,7 +1777,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             HideMovement();
         }
     }
-    protected void BossFight(){
+    public void BossFight(){
         if(bossFight){
             final WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
             battleText.setVisibility(View.VISIBLE);
@@ -1804,7 +1822,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             HideMovement();
         }
     }
-    protected void EndBossFight() {
+    public void EndBossFight() {
         if (bossHp <= 0) {
             MoveList_hide();
             click = 1;
@@ -1852,7 +1870,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             LostFight();
         }
     }
-    protected void EndFight() {
+    public void EndFight() {
         if (enemyHp <= 0) {
             MoveList_hide();
             click = 1;
@@ -1900,7 +1918,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             LostFight();
         }
     }
-    protected void LostFight(){
+    public void LostFight(){
         final WriteAnim writeAnim = (WriteAnim) findViewById(R.id.battleText);
         writeAnim.setVisibility(View.VISIBLE);
         writeAnim.setCharacterDelay(30);
@@ -1917,7 +1935,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     }
 
     //Komunikaty na ekranie
-    protected void Writer(){
+    public void Writer(){
         final WriteAnim writer = (WriteAnim) findViewById(R.id.writeAnim);
         writer.setVisibility(View.VISIBLE);
         writer.setCharacterDelay(30);
@@ -1939,7 +1957,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         });
 
     }
-    protected void BattleWriter(){
+    public void BattleWriter(){
         final WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
         battleText.setCharacterDelay(30);
         battleText.setVisibility(View.VISIBLE);
@@ -1956,7 +1974,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     }
 
     //Zapis statystyk
-    protected void Ck(View v){
+    public void Ck(View v){
         try {
             File file = new File ("data/data/com.example.nigakolczan.apk2/Stats_"+RestActivity.a+".xml");
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -2001,7 +2019,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
 
     //Odpowiedzialne za stan przedmiotow do uzycia
     private int b = 0;
-    protected void item_first(){
+    public void item_first(){
         final ImageButton item = findViewById(R.id.item_1);
         if(b <= Equipment.max){
             switch(equipment.GetItemFromBackpack(b)){
@@ -2042,7 +2060,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             item.setImageResource(0);
         }
     }
-    protected void item_second(){
+    public void item_second(){
         final ImageButton item = findViewById(R.id.item_2);
         if (b+1 <= Equipment.max) {
             switch (equipment.GetItemFromBackpack(b + 1)) {
@@ -2082,7 +2100,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
             item.setImageResource(0);
         }
     }
-    protected void item_third(){
+    public void item_third(){
         final ImageButton item = findViewById(R.id.item_3);
         if (b+2 <= Equipment.max) {
             switch (equipment.GetItemFromBackpack(b + 2)) {
@@ -2124,17 +2142,17 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         }
     }
 
-    protected void item_1(View v){
+    public void item_1(View v){
         item_first();
     }
-    protected void item_2(View v) {
+    public void item_2(View v) {
         item_second();
     }
-    protected void item_3(View v) {
+    public void item_3(View v) {
         item_third();
     }
 
-    protected void item_up(View v){
+    public void item_up(View v){
         b++;
         if(b+1 >= Equipment.max){
             b--;
@@ -2143,7 +2161,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
         item_second();
         item_third();
     }
-    protected void item_down(View v){
+    public void item_down(View v){
         b--;
         if(b < 0){
             b++;

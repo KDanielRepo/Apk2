@@ -42,7 +42,7 @@ public class StatsCreate extends AppCompatActivity {
     protected static String Klasa;
     protected static String Resource;
 
-    protected Node getNode(String tagName, NodeList nodes) {
+    public Node getNode(String tagName, NodeList nodes) {
         for (int x = 0; x < nodes.getLength(); x++) {
             Node node = nodes.item(x);
             if (node.getNodeName().equalsIgnoreCase(tagName)) {
@@ -54,31 +54,31 @@ public class StatsCreate extends AppCompatActivity {
     }
 
     //pobiera statystyki przeciwnikow
-    protected static int GetMoney(){
+    public static int GetMoney(){
         money = EnemyLvlVar *10;
         return money;
     }
-    protected static int GetBossMoney(){
+    public static int GetBossMoney(){
         money = bossLvlVar *20;
         return money;
     }
-    protected static int GetBossExperience(){
+    public static int GetBossExperience(){
         experience = bossLvlVar*10;
         return experience;
     }
-    protected static int GetExperience(){
+    public static int GetExperience(){
         experience = EnemyLvlVar *5;
         return experience;
     }
-    protected static int GetEnemyLvlVar(){
+    public static int GetEnemyLvlVar(){
         EnemyLvlVar = ThreadLocalRandom.current().nextInt(TavernActivity.min, TavernActivity.max);
         return EnemyLvlVar;
     }
-    protected static int GetEnemyNameVar(){
+    public static int GetEnemyNameVar(){
         EnemyNameVar = ThreadLocalRandom.current().nextInt(1, 6);
         return EnemyNameVar;
     }
-    /*protected static String GetEnemyLvl(){
+    /*public static String GetEnemyLvl(){
         String EnemyLvl;
         switch (EnemyLvlVar) {
             case 1:
@@ -102,7 +102,7 @@ public class StatsCreate extends AppCompatActivity {
         }
         return EnemyLvl;
     }*/
-    protected static String GetEnemyName(){
+    public static String GetEnemyName(){
         String EnemyNames;
         switch (EnemyNameVar) {
             case 1:
@@ -126,15 +126,15 @@ public class StatsCreate extends AppCompatActivity {
         }
         return EnemyNames;
     }
-    protected static int GetBossLvlVar(){
+    public static int GetBossLvlVar(){
         bossLvlVar = ThreadLocalRandom.current().nextInt(TavernActivity.bossMin, TavernActivity.bossMax);
         return bossLvlVar;
     }
-    protected static int GetBossNameVar(){
+    public static int GetBossNameVar(){
         bossNameVar = ThreadLocalRandom.current().nextInt(1,6);
         return bossNameVar;
     }
-    protected static String GetBossName(){
+    public static String GetBossName(){
         String bossNames;
         switch (bossNameVar) {
             case 1:
@@ -160,25 +160,25 @@ public class StatsCreate extends AppCompatActivity {
     }
 
     //Pobiera wybrane nick rase i klase
-    protected String GetInput(){
+    public String GetInput(){
         Input = RestActivity.input;
         return Input;
     }
-    protected String GetRace(){
+    public String GetRace(){
         Rasa = RestActivity.RaceType;
         return Rasa;
     }
-    protected String GetProf(){
+    public String GetProf(){
         Klasa = RestActivity.ProfType;
         return Klasa;
     }
-    protected String GetResource(){
+    public String GetResource(){
         Resource = RestActivity.Resource;
         return Resource;
     }
 
     //Tworzy pliki z zapisem
-    protected void Stats() {
+    public void Stats() {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -366,7 +366,7 @@ public class StatsCreate extends AppCompatActivity {
             pce.printStackTrace();
         }
     }
-    protected void CreateResource(){
+    public void CreateResource(){
         try {
             File file = new File ("data/data/com.example.nigakolczan.apk2/Stats_"+RestActivity.a+".xml");
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -394,7 +394,7 @@ public class StatsCreate extends AppCompatActivity {
 
     }
     //zrobic statystyki dla bossa
-    protected static void EnemyStats() {
+    public static void EnemyStats() {
         try {
             GetEnemyNameVar();
             GetEnemyLvlVar();
@@ -460,7 +460,7 @@ public class StatsCreate extends AppCompatActivity {
             pce.printStackTrace();
         }
     }
-    protected static void BossStats() {
+    public static void BossStats() {
         try {
             GetBossNameVar();
             GetBossLvlVar();

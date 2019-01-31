@@ -79,7 +79,7 @@ public class TavernActivity extends AppCompatActivity{
     protected static int bossMax;
     List<String> Spells = new ArrayList<>();
 
-    protected Node getNode(String tagName, NodeList nodes) {
+    public Node getNode(String tagName, NodeList nodes) {
         for (int x = 0; x < nodes.getLength(); x++) {
             Node node = nodes.item(x);
             if (node.getNodeName().equalsIgnoreCase(tagName)) {
@@ -90,7 +90,7 @@ public class TavernActivity extends AppCompatActivity{
         return null;
     }
 
-    protected void SetSpellNames(){
+    public void SetSpellNames(){
         RestActivity restActivity = new RestActivity();
         for(int i = 0; i<8 ; i++){
             restActivity.getSpells(i);
@@ -127,7 +127,7 @@ public class TavernActivity extends AppCompatActivity{
 
         }
     }
-    protected void HideInterface(){
+    public void HideInterface(){
         Button tk = findViewById(R.id.tavernKeeper);
         tk.setVisibility(View.GONE);
         Button town = findViewById(R.id.gotoTown);
@@ -135,7 +135,7 @@ public class TavernActivity extends AppCompatActivity{
         Button map = findViewById(R.id.gotoDungeon);
         map.setVisibility(View.GONE);
     }
-    protected void ShowInterface(){
+    public void ShowInterface(){
         Button tk = findViewById(R.id.tavernKeeper);
         tk.setVisibility(View.VISIBLE);
         Button town = findViewById(R.id.gotoTown);
@@ -143,7 +143,7 @@ public class TavernActivity extends AppCompatActivity{
         Button map = findViewById(R.id.gotoDungeon);
         map.setVisibility(View.VISIBLE);
     }
-    protected void HideMapArea(View v){
+    public void HideMapArea(View v){
         Button area_1 = findViewById(R.id.area_1);
         area_1.setVisibility(View.GONE);
         Button area_2 = findViewById(R.id.area_2);
@@ -156,7 +156,7 @@ public class TavernActivity extends AppCompatActivity{
         back.setVisibility(View.GONE);
         ShowInterface();
     }
-    protected void SelectMapArea(View v){
+    public void SelectMapArea(View v){
         HideInterface();
         Button area_1 = findViewById(R.id.area_1);
         area_1.setVisibility(View.VISIBLE);
@@ -181,28 +181,28 @@ public class TavernActivity extends AppCompatActivity{
             area_4.setEnabled(true);
         }
     }
-    protected void SelectArea_1(View v){
+    public void SelectArea_1(View v){
         min=1;
         max=3;
         bossMin=4;
         bossMax=6;
         GotoDungeon();
     }
-    protected void SelectArea_2(View v){
+    public void SelectArea_2(View v){
         min=3;
         max=5;
         bossMin=6;
         bossMax=8;
         GotoDungeon();
     }
-    protected void SelectArea_3(View v){
+    public void SelectArea_3(View v){
         min=5;
         max=7;
         bossMin=8;
         bossMax=10;
         GotoDungeon();
     }
-    protected void SelectArea_4(View v){
+    public void SelectArea_4(View v){
         min=7;
         max=9;
         bossMin=10;
@@ -210,11 +210,11 @@ public class TavernActivity extends AppCompatActivity{
         GotoDungeon();
     }
 
-    protected void GotoTown(View view){
+    public void GotoTown(View view){
         Intent Town = new Intent(getApplicationContext(), SkillAddActivity.class);
         startActivity(Town);
     }
-    protected void GotoDungeon(){
+    public void GotoDungeon(){
         Intent work = new Intent(getApplicationContext(), WorkActivity.class);
         startActivity(work);
     }

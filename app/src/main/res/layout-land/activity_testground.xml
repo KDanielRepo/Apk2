@@ -5,7 +5,8 @@
     android:id="@+id/Screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.nigakolczan.apk2.TestGroundActivity">
+    tools:context="com.example.nigakolczan.apk2.TestGroundActivity"
+    tools:ignore="MissingDefaultResource">
 
     <Button
         android:layout_width="60dp"

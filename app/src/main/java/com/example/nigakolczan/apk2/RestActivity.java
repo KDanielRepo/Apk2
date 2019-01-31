@@ -58,15 +58,15 @@ public class RestActivity extends AppCompatActivity {
     protected static int a;
 
     List<String> spells = new ArrayList<>();
-    protected String getFirst_eq(){
+    public String getFirst_eq(){
         return First_eq;
     }
-    protected String setFirst_eq(String a){
+    public String setFirst_eq(String a){
         First_eq = a;
         return First_eq;
     }
 
-    protected String getSpells(int i){
+    public String getSpells(int i){
         try{
             File file = new File("data/data/com.example.nigakolczan.apk2/Stats_"+a+".xml");
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -93,7 +93,7 @@ public class RestActivity extends AppCompatActivity {
         return spells.get(i);
     }
 
-    protected String getEquipment(int i){
+    public String getEquipment(int i){
         List<String> eq = new ArrayList<>();
         eq.add(Helm);
         eq.add(Chest);
@@ -104,7 +104,7 @@ public class RestActivity extends AppCompatActivity {
         return eq.get(i);
     }
 
-    protected Node getNode(String tagName, NodeList nodes) {
+    public Node getNode(String tagName, NodeList nodes) {
         for (int x = 0; x < nodes.getLength(); x++) {
             Node node = nodes.item(x);
             if (node.getNodeName().equalsIgnoreCase(tagName)) {
@@ -114,7 +114,7 @@ public class RestActivity extends AppCompatActivity {
 
         return null;
     }
-    protected String getNodeValue(String tagName, NodeList nodes) {
+    public String getNodeValue(String tagName, NodeList nodes) {
         for (int x = 0; x < nodes.getLength(); x++) {
             Node node = nodes.item(x);
             if (node.getNodeName().equalsIgnoreCase(tagName)) {
@@ -128,7 +128,7 @@ public class RestActivity extends AppCompatActivity {
         }
         return "";
     }
-    protected String getNodeAttr(String attrName, Node node) {
+    public String getNodeAttr(String attrName, Node node) {
         NamedNodeMap attrs = node.getAttributes();
         for (int y = 0; y < attrs.getLength(); y++) {
             Node attr = attrs.item(y);
@@ -139,12 +139,12 @@ public class RestActivity extends AppCompatActivity {
         return "";
     }
 
-    protected String GetName(){
+    public String GetName(){
         EditText edit = (EditText) findViewById(R.id.editText);
         input = edit.getText().toString();
         return input;
     }
-    protected void CheckExists(){
+    public void CheckExists(){
         try {
             File file = new File("data/data/com.example.nigakolczan.apk2/Stats_"+a+".xml");
             GetName();
@@ -156,7 +156,7 @@ public class RestActivity extends AppCompatActivity {
             e.printStackTrace();
         }}
 
-    protected void HideAttr(){
+    public void HideAttr(){
         TextView tvp = findViewById(R.id.textViewProf);
         tvp.setVisibility(View.GONE);
         TextView tvr = findViewById(R.id.textViewRace);
@@ -170,7 +170,7 @@ public class RestActivity extends AppCompatActivity {
         Button srp = findViewById(R.id.selectRaceRight);
         srp.setVisibility(View.GONE);
     }
-    protected void ShowAttr(){
+    public void ShowAttr(){
         TextView tvp = findViewById(R.id.textViewProf);
         tvp.setVisibility(View.VISIBLE);
         TextView tvr = findViewById(R.id.textViewRace);
@@ -184,7 +184,7 @@ public class RestActivity extends AppCompatActivity {
         Button srp = findViewById(R.id.selectRaceRight);
         srp.setVisibility(View.VISIBLE);
     }
-    protected void HideInterface(){
+    public void HideInterface(){
         HideAttr();
         EditText editText = findViewById(R.id.editText);
         editText.setVisibility(View.GONE);
@@ -197,7 +197,7 @@ public class RestActivity extends AppCompatActivity {
         Button delete = findViewById(R.id.Dstats);
         delete.setVisibility(View.GONE);
     }
-    protected void ShowInterface(){
+    public void ShowInterface(){
         EditText editText = findViewById(R.id.editText);
         editText.setVisibility(View.VISIBLE);
         com.example.nigakolczan.apk2.WriteAnim writeAnim = findViewById(R.id.writeStats);
@@ -207,7 +207,7 @@ public class RestActivity extends AppCompatActivity {
         Button getStats = findViewById(R.id.Gstats);
         getStats.setVisibility(View.VISIBLE);
     }
-    protected void HideSlots(){
+    public void HideSlots(){
         Button slot1 = findViewById(R.id.saveSlot_1);
         slot1.setVisibility(View.GONE);
         Button slot2 = findViewById(R.id.saveSlot_2);
@@ -215,26 +215,34 @@ public class RestActivity extends AppCompatActivity {
         Button slot3 = findViewById(R.id.saveSlot_3);
         slot3.setVisibility(View.GONE);
     }
+    public void showSlots(){
+        Button slot1 = findViewById(R.id.saveSlot_1);
+        slot1.setVisibility(View.VISIBLE);
+        Button slot2 = findViewById(R.id.saveSlot_2);
+        slot2.setVisibility(View.VISIBLE);
+        Button slot3 = findViewById(R.id.saveSlot_3);
+        slot3.setVisibility(View.VISIBLE);
+    }
 
-    protected void SelectSlot1(View v){
+    public void SelectSlot1(View v){
         HideSlots();
         a=1;
         CheckExists();
         ShowInterface();
     }
-    protected void SelectSlot2(View v){
+    public void SelectSlot2(View v){
         HideSlots();
         a=2;
         CheckExists();
         ShowInterface();
     }
-    protected void SelectSlot3(View v){
+    public void SelectSlot3(View v){
         HideSlots();
         a=3;
         CheckExists();
         ShowInterface();
     }
-    protected void CreateSave(){
+    public void CreateSave(){
         try {
             File file = new File("data/data/com.example.nigakolczan.apk2/Stats_"+a+".xml");
             GetName();
@@ -272,17 +280,17 @@ public class RestActivity extends AppCompatActivity {
         }
     }
 
-    protected void Start(View v) {
+    public void Start(View v) {
         CreateSave();
         GetStats(v);
 
     }
-    protected void Delete(View v) {
+    public void Delete(View v) {
         File file = new File("data/data/com.example.nigakolczan.apk2/Stats_"+a+".xml");
         file.delete();
         ShowAttr();
     }
-    protected void GetStats(View v) {
+    public void GetStats(View view) {
         try {
             File file = new File("data/data/com.example.nigakolczan.apk2/Stats_"+a+".xml");
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -331,7 +339,11 @@ public class RestActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    protected void EnemyStats(){
+    public void backToSelect(View view){
+        HideInterface();
+        showSlots();
+    }
+    public void EnemyStats(){
         try {
             File file = new File("data/data/com.example.nigakolczan.apk2/EnemyStats.xml");
             Boolean exists = file.exists();
@@ -346,7 +358,7 @@ public class RestActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    protected void BossStats(){
+    public void BossStats(){
         try {
             File file = new File("data/data/com.example.nigakolczan.apk2/BossStats.xml");
             Boolean exists = file.exists();
@@ -362,7 +374,7 @@ public class RestActivity extends AppCompatActivity {
         }
     }
 
-    protected void UpdateEq(){
+    public void UpdateEq(){
         try {
             File file = new File("data/data/com.example.nigakolczan.apk2/Stats_"+RestActivity.a+".xml");
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -389,7 +401,7 @@ public class RestActivity extends AppCompatActivity {
     }
 
     //interface do wyboru rasy i klasy w menu
-    protected void SelectRaceLeft(View v){
+    public void SelectRaceLeft(View v){
         raceType -= 1;
         if(raceType < 1){
             raceType=4;
@@ -414,7 +426,7 @@ public class RestActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.textViewRace);
         tv.setText(RaceType);
     }
-    protected void SelectRaceRight(View v){
+    public void SelectRaceRight(View v){
         raceType += 1;
         if(raceType > 4){
             raceType=1;
@@ -439,7 +451,7 @@ public class RestActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.textViewRace);
         tv.setText(RaceType);
     }
-    protected void SelectProfLeft(View v){
+    public void SelectProfLeft(View v){
         profType -= 1;
         if(profType < 1){
             profType =3;
@@ -464,7 +476,7 @@ public class RestActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.textViewProf);
         tv.setText(ProfType);
     }
-    protected void SelectProfRight(View v){
+    public void SelectProfRight(View v){
         profType += 1;
         if(profType > 3){
             profType=1;
@@ -489,5 +501,6 @@ public class RestActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.textViewProf);
         tv.setText(ProfType);
     }
+
 
 }

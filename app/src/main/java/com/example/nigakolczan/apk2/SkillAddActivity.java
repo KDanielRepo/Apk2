@@ -32,7 +32,7 @@ import javax.xml.transform.stream.StreamResult;
 
 public class SkillAddActivity extends AppCompatActivity implements View.OnClickListener{
 
-    protected void onCreate(Bundle saveInstance){
+    public void onCreate(Bundle saveInstance){
         super.onCreate(saveInstance);
         setContentView(R.layout.activity_skilladd);
 
@@ -41,7 +41,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         text.animateText("Henlo, What can i do for you?");
         ShowMoney();
     }
-    protected Node getNode(String tagName, NodeList nodes) {
+    public Node getNode(String tagName, NodeList nodes) {
         for (int x = 0; x < nodes.getLength(); x++) {
             Node node = nodes.item(x);
             if (node.getNodeName().equalsIgnoreCase(tagName)) {
@@ -51,7 +51,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
 
         return null;
     }
-    protected String getNodeValue(String tagName, NodeList nodes) {
+    public String getNodeValue(String tagName, NodeList nodes) {
         for (int x = 0; x < nodes.getLength(); x++) {
             Node node = nodes.item(x);
             if (node.getNodeName().equalsIgnoreCase(tagName)) {
@@ -80,7 +80,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
     private Boolean choise = false;
 
     //Skille
-    protected void HideSkillButtons(){
+    public void HideSkillButtons(){
         Button addSkill_2 = findViewById(R.id.addSkill_2);
         addSkill_2.setVisibility(View.GONE);
         Button addSkill_3 = findViewById(R.id.addSkill_3);
@@ -94,25 +94,25 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         Button addSkill_7 = findViewById(R.id.addSkill_7);
         addSkill_7.setVisibility(View.GONE);
     }
-    protected void ShowMoney(){
+    public void ShowMoney(){
         TextView m = findViewById(R.id.money);
         m.setText("Szekle: "+WorkActivity.shekles);
     }
 
-    protected void ShowYesNoButtons(){
+    public void ShowYesNoButtons(){
         Button yes = findViewById(R.id.yes);
         yes.setVisibility(View.VISIBLE);
         Button no = findViewById(R.id.no);
         no.setVisibility(View.VISIBLE);
     }
-    protected void HideYesNoButtons(){
+    public void HideYesNoButtons(){
         Button yes = findViewById(R.id.yes);
         yes.setVisibility(View.GONE);
         Button no = findViewById(R.id.no);
         no.setVisibility(View.GONE);
     }
 
-    protected void ShowSellButtons(){
+    public void ShowSellButtons(){
         Button back = findViewById(R.id.backFromSell);
         back.setVisibility(View.VISIBLE);
         ImageButton item_up = findViewById(R.id.up_page);
@@ -126,7 +126,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         ImageButton item_down = findViewById(R.id.down_page);
         item_down.setVisibility(View.VISIBLE);
     }
-    protected void HideSellButtons(){
+    public void HideSellButtons(){
         ImageButton item_up = findViewById(R.id.up_page);
         item_up.setVisibility(View.GONE);
         ImageButton item_3 = findViewById(R.id.item_3);
@@ -139,7 +139,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         item_down.setVisibility(View.GONE);
     }
 
-    protected void HideBuyButtons(){
+    public void HideBuyButtons(){
         Button buyHelm = findViewById(R.id.buyHelm);
         buyHelm.setVisibility(View.GONE);
         Button buyChest = findViewById(R.id.buyChest);
@@ -153,7 +153,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         Button buyCape = findViewById(R.id.buyCape);
         buyCape.setVisibility(View.GONE);
     }
-    protected void ShowBuyButtons(){
+    public void ShowBuyButtons(){
         Button back = findViewById(R.id.backFromEq);
         back.setVisibility(View.VISIBLE);
         Button buyHelm = findViewById(R.id.buyHelm);
@@ -176,7 +176,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         buyCape.setOnClickListener(this);
     }
 
-    protected void ShowWhichButtons(){
+    public void ShowWhichButtons(){
         Button backEq = findViewById(R.id.backFromEq);
         backEq.setVisibility(View.GONE);
         Button back = findViewById(R.id.backFromWhich);
@@ -188,7 +188,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         Button buyThird = findViewById(R.id.buyThird);
         buyThird.setVisibility(View.VISIBLE);
     }
-    protected void HideWhichButtons(){
+    public void HideWhichButtons(){
         Button buyFirst = findViewById(R.id.buyFirst);
         buyFirst.setVisibility(View.GONE);
         Button buySecond = findViewById(R.id.buySecond);
@@ -197,14 +197,14 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         buyThird.setVisibility(View.GONE);
     }
 
-    protected void HideItemButtons(){
+    public void HideItemButtons(){
         Button buyHp = findViewById(R.id.buyHp);
         buyHp.setVisibility(View.GONE);
         Button buyRes = findViewById(R.id.buyResource);
         buyRes.setVisibility(View.GONE);
     }
 
-    protected void BuySkill(View v){
+    public void BuySkill(View v){
         freezeButtons();
         Button back = findViewById(R.id.backFromSkills);
         back.setVisibility(View.VISIBLE);
@@ -230,7 +230,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         addSkill_7.setVisibility(View.VISIBLE);
         addSkill_7.setOnClickListener(this);
     }
-    protected void AddSkill(){
+    public void AddSkill(){
         final WriteAnim text = (WriteAnim) findViewById(R.id.text);
         text.setCharacterDelay(30);
         text.animateText("czy masz lvl "+needlvl+" i "+needmoney+" g?");
@@ -270,14 +270,14 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    protected void BuyEq(View v){
+    public void BuyEq(View v){
         WriteAnim text = (WriteAnim) findViewById(R.id.text);
         text.setCharacterDelay(30);
         text.animateText("Co chcialbys kupic?");
         ShowBuyButtons();
         freezeButtons();
     }
-    protected void AddEq(){
+    public void AddEq(){
         final WriteAnim text = (WriteAnim) findViewById(R.id.text);
         text.setCharacterDelay(30);
         text.animateText("czy masz lvl "+needlvl+" i "+needmoney+" g?");
@@ -315,7 +315,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    protected void BuyItems(View v){
+    public void BuyItems(View v){
         Button back = findViewById(R.id.backFromItems);
         back.setVisibility(View.VISIBLE);
         WriteAnim text = (WriteAnim) findViewById(R.id.text);
@@ -330,7 +330,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         freezeButtons();
 
     }
-    protected void Purchase(){
+    public void Purchase(){
         HideItemButtons();
         final WriteAnim text = findViewById(R.id.text);
         text.setCharacterDelay(30);
@@ -374,7 +374,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    protected void freezeButtons(){
+    public void freezeButtons(){
         Button items = findViewById(R.id.buy_Items);
         items.setEnabled(false);
         Button eq = findViewById(R.id.Eq);
@@ -386,7 +386,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         Button tavern = findViewById(R.id.gotoTavern);
         tavern.setEnabled(false);
     }
-    protected void unfreezeButtons(){
+    public void unfreezeButtons(){
         Button items = findViewById(R.id.buy_Items);
         items.setEnabled(true);
         Button eq = findViewById(R.id.Eq);
@@ -399,7 +399,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         tavern.setEnabled(true);
     }
 
-    protected void backFromItems(View v){
+    public void backFromItems(View v){
         WriteAnim text = (WriteAnim) findViewById(R.id.text);
         text.setCharacterDelay(30);
         text.animateText("Co w takim razie chcialbys kupic?");
@@ -410,7 +410,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         back.setVisibility(View.GONE);
 
     } //git
-    protected void backFromEq(View v){
+    public void backFromEq(View v){
         WriteAnim text = (WriteAnim) findViewById(R.id.text);
         text.setCharacterDelay(30);
         text.animateText("Co w takim razie chcialbys kupic?");
@@ -420,7 +420,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         back.setVisibility(View.GONE);
         HideYesNoButtons();
     }
-    protected void backFromWhich(View v){
+    public void backFromWhich(View v){
         WriteAnim text = (WriteAnim) findViewById(R.id.text);
         text.setCharacterDelay(30);
         text.animateText("Co w takim razie chcialbys kupic?");
@@ -430,7 +430,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         back.setVisibility(View.GONE);
         HideYesNoButtons();
     }
-    protected void backFromSkills(View v){
+    public void backFromSkills(View v){
         WriteAnim text = (WriteAnim) findViewById(R.id.text);
         text.setCharacterDelay(30);
         text.animateText("Co w takim razie chcialbys kupic?");
@@ -440,7 +440,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         back.setVisibility(View.GONE);
         HideYesNoButtons();
     }
-    protected void backFromSell(View v){
+    public void backFromSell(View v){
         WriteAnim text = (WriteAnim) findViewById(R.id.text);
         text.setCharacterDelay(30);
         text.animateText("Co w takim razie chcialbys kupic?");
@@ -452,7 +452,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    protected void SellEq(View v){
+    public void SellEq(View v){
         freezeButtons();
         ShowSellButtons();
         item_first();
@@ -462,7 +462,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         text.setCharacterDelay(30);
         text.animateText("co chcesz sprzedac");
     }
-    protected void Sell(){
+    public void Sell(){
         final WriteAnim text = findViewById(R.id.text);
         text.setCharacterDelay(30);
         text.animateText("Czy chcesz za to "+needmoney+" g?");
@@ -505,16 +505,16 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    protected void item_1(View v){
+    public void item_1(View v){
         item_first();
     }
-    protected void item_2(View v){
+    public void item_2(View v){
         item_second();
     }
-    protected void item_3(View v){
+    public void item_3(View v){
         item_third();
     }
-    protected void item_first(){
+    public void item_first(){
         final ImageButton item = findViewById(R.id.item_1);
         if(b <= Equipment.max){
             switch(equipment.GetItemFromBackpack(b)){
@@ -549,7 +549,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
             item.setImageResource(0);
         }
     }
-    protected void item_second(){
+    public void item_second(){
         final ImageButton item = findViewById(R.id.item_2);
         if (b+1 <= Equipment.max) {
             switch (equipment.GetItemFromBackpack(b + 1)) {
@@ -585,7 +585,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
             item.setImageResource(0);
         }
     }
-    protected void item_third(){
+    public void item_third(){
         final ImageButton item = findViewById(R.id.item_3);
         if (b+2 <= Equipment.max) {
             switch (equipment.GetItemFromBackpack(b + 2)) {
@@ -621,7 +621,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
             item.setImageResource(0);
         }
     }
-    protected void item_up(View v){
+    public void item_up(View v){
         b++;
         if(b >= 8){
             b--;
@@ -630,7 +630,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         item_second();
         item_third();
     }
-    protected void item_down(View v){
+    public void item_down(View v){
         b--;
         if(b < 0){
             b++;
@@ -640,7 +640,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         item_third();
     }
 
-    protected void Back(View view){
+    public void Back(View view){
         Intent Tavern = new Intent(getApplicationContext(), TavernActivity.class);
         startActivity(Tavern);
     }
@@ -734,26 +734,26 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    protected void BuyFirst(View v){
+    public void BuyFirst(View v){
         tempType = "First";
         needlvl=3;
         needmoney=100;
         AddEq();
     }
-    protected void BuySecond(View v){
+    public void BuySecond(View v){
         tempType = "Second";
         needlvl=5;
         needmoney=300;
         AddEq();
     }
-    protected void BuyThird(View v){
+    public void BuyThird(View v){
         tempType = "Third";
         needlvl=5;
         needmoney=300;
         AddEq();
     }
 
-    protected void UpdateStats(){
+    public void UpdateStats(){
         try {
             File file = new File ("data/data/com.example.nigakolczan.apk2/Stats_"+RestActivity.a+".xml");
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -792,7 +792,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
             pce.printStackTrace();
         }
     }
-    protected void UpdateEq(){
+    public void UpdateEq(){
         try {
             File file = new File ("data/data/com.example.nigakolczan.apk2/Stats_"+RestActivity.a+".xml");
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -835,7 +835,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    protected void UpdateBackpack() {
+    public void UpdateBackpack() {
         try {
             File file = new File("data/data/com.example.nigakolczan.apk2/Stats_" + RestActivity.a + ".xml");
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();

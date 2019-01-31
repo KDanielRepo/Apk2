@@ -35,7 +35,7 @@ import javax.xml.transform.stream.StreamResult;
 public class TestGroundActivity extends AppCompatActivity {
     WorkActivity workActivity = new WorkActivity();
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testground);
 
@@ -52,7 +52,7 @@ public class TestGroundActivity extends AppCompatActivity {
         Fight();
     }
 
-    protected Node getNode(String tagName, NodeList nodes) {
+    public Node getNode(String tagName, NodeList nodes) {
         for (int x = 0; x < nodes.getLength(); x++) {
             Node node = nodes.item(x);
             if (node.getNodeName().equalsIgnoreCase(tagName)) {
@@ -110,7 +110,7 @@ public class TestGroundActivity extends AppCompatActivity {
         dunno.setVisibility(View.VISIBLE);
     }
 
-    protected void Check(View view){
+    public void Check(View view){
         WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
         if (stateCheck == true) {
             battleText.setVisibility(View.VISIBLE);
@@ -124,17 +124,17 @@ public class TestGroundActivity extends AppCompatActivity {
         }
     }
 
-    protected void List(View v){
+    public void List(View v){
         workActivity.List(v);
     }
 
 
     //Interfejs w trakcie walki
-    protected void Exit(View v) {
+    public void Exit(View v) {
         Intent tavern = new Intent(getApplicationContext(),TavernActivity.class);
         startActivity(tavern);
     }
-    protected void move(){
+    public void move(){
         final WriteAnim battleText = (WriteAnim) findViewById(R.id.writeAnim);
         battleText.animateText("");
         battleText.setVisibility(View.VISIBLE);
@@ -171,12 +171,12 @@ public class TestGroundActivity extends AppCompatActivity {
             MoveList();
         }
     }
-    protected void Move(View v) {
+    public void Move(View v) {
         move();
     }
 
     //ruchy w walce
-    protected void Test_at1(View v){
+    public void Test_at1(View v){
         WriteAnim battleText = (WriteAnim) findViewById(R.id.battleText);
         battleText.setVisibility(View.VISIBLE);
         battleText.setCharacterDelay(30);
@@ -223,11 +223,11 @@ public class TestGroundActivity extends AppCompatActivity {
         Button back = findViewById(R.id.back);
         back.setVisibility(View.GONE);
     }
-    protected void Back(View v){
+    public void Back(View v){
         MoveList_hide();
     }
 
-    protected void FightAnimMelee(){
+    public void FightAnimMelee(){
         ImageView img = findViewById(R.id.testanim);
         img.setX(900);
         new Handler().postDelayed(new Runnable() {
@@ -253,7 +253,7 @@ public class TestGroundActivity extends AppCompatActivity {
             });
         }
     }
-    protected void BlockButtons(){
+    public void BlockButtons(){
         Button move = findViewById(R.id.Move);
         move.setEnabled(false);
         Button check = findViewById(R.id.Check);
@@ -263,7 +263,7 @@ public class TestGroundActivity extends AppCompatActivity {
         Button dunno = findViewById(R.id.dunno);
         dunno.setEnabled(false);
     }
-    protected void EnableButtons(){
+    public void EnableButtons(){
         Button move = findViewById(R.id.Move);
         move.setEnabled(true);
         Button check = findViewById(R.id.Check);
