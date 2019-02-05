@@ -1104,7 +1104,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     public void CpuTurn() {
         int cpurng = ThreadLocalRandom.current().nextInt(0,5);
         ImageView img = findViewById(R.id.testanim_2);
-        img.setTranslationX(-540);
+        img.setTranslationX(-400);
         enemyAttackSprite();
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -1166,7 +1166,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
     public void FightAnimMelee(){
         ImageView img = findViewById(R.id.testanim);
         playerAttackSprite();
-        img.setTranslationX(540);
+        img.setTranslationX(400);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -2095,6 +2095,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                             HideEq();
                             click++;
                             item.setOnClickListener(null);
+                            FightAnimMelee();
                         }
                     });
                     break;
@@ -2109,6 +2110,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                             HideEq();
                             click++;
                             item.setOnClickListener(null);
+                            FightAnimMelee();
                         }
                     });
 
@@ -2136,6 +2138,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                             HideEq();
                             click++;
                             item.setOnClickListener(null);
+                            FightAnimMelee();
                         }
                     });
                     break;
@@ -2150,6 +2153,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                             HideEq();
                             click++;
                             item.setOnClickListener(null);
+                            FightAnimMelee();
                         }
                     });
                     break;
@@ -2176,6 +2180,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                             HideEq();
                             click++;
                             item.setOnClickListener(null);
+                            FightAnimMelee();
                         }
                     });
                     break;
@@ -2191,6 +2196,7 @@ public class WorkActivity extends AppCompatActivity implements Runnable {
                             HideEq();
                             click++;
                             item.setOnClickListener(null);
+                            FightAnimMelee();
                         }
                     });
                     break;

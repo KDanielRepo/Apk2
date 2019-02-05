@@ -305,7 +305,7 @@ public class TestGroundActivity extends AppCompatActivity {
 
     public void FightAnimMelee(){
         ImageView img = findViewById(R.id.testanim);
-        img.setTranslationX(540);
+        img.setTranslationX(400);
         playerAttackSprite();
         new Handler().postDelayed(new Runnable() {
             @Override

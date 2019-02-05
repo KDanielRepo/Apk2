@@ -183,13 +183,13 @@ public class TavernActivity extends AppCompatActivity{
         area_4.setEnabled(false);
         Button back = findViewById(R.id.back);
         back.setVisibility(View.VISIBLE);
-        if(Integer.parseInt(RestActivity.Lvl) >= 3){
+        if(WorkActivity.lvl >= 3){
             area_2.setEnabled(true);
         }
-        if(Integer.parseInt(RestActivity.Lvl) >= 5){
+        if(WorkActivity.lvl >= 5){
             area_3.setEnabled(true);
         }
-        if(Integer.parseInt(RestActivity.Lvl) >= 8){
+        if(WorkActivity.lvl >= 8){
             area_4.setEnabled(true);
         }
     }
