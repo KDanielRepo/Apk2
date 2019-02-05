@@ -38,7 +38,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
 
         WriteAnim text = (WriteAnim) findViewById(R.id.text);
         text.setCharacterDelay(30);
-        text.animateText("Henlo, What can i do for you?");
+        text.animateText("Witaj, co chcialbys kupic?");
         ShowMoney();
     }
     public Node getNode(String tagName, NodeList nodes) {
@@ -96,6 +96,8 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
     }
     public void ShowMoney(){
         TextView m = findViewById(R.id.money);
+        TextView textView = findViewById(R.id.lvl);
+        textView.setText("Twoj Poziom: "+WorkActivity.lvl);
         m.setText("Szekle: "+WorkActivity.shekles);
     }
 
@@ -203,32 +205,52 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         Button buyRes = findViewById(R.id.buyResource);
         buyRes.setVisibility(View.GONE);
     }
+    public void hideBackButtons(){
+        Button button = findViewById(R.id.backFromEq);
+        Button button1 = findViewById(R.id.backFromSell);
+        Button button2 = findViewById(R.id.backFromItems);
+        Button button3 = findViewById(R.id.backFromSkills);
+        Button button4 = findViewById(R.id.backFromWhich);
+        button.setVisibility(View.GONE);
+        button1.setVisibility(View.GONE);
+        button2.setVisibility(View.GONE);
+        button3.setVisibility(View.GONE);
+        button4.setVisibility(View.GONE);
+    }
 
     public void BuySkill(View v){
+        TavernActivity tavernActivity = new TavernActivity();
+        tavernActivity.SetSpellNames();
         freezeButtons();
         Button back = findViewById(R.id.backFromSkills);
         back.setVisibility(View.VISIBLE);
         WriteAnim text = (WriteAnim) findViewById(R.id.text);
         text.setCharacterDelay(30);
-        text.animateText("Ktore spelle chcesz?");
+        text.animateText("Czego chcialbys sie nauczyc?");
         Button addSkill_2 = findViewById(R.id.addSkill_2);
+        addSkill_2.setText(tavernActivity.Spells.get(2));
         addSkill_2.setVisibility(View.VISIBLE);
         addSkill_2.setOnClickListener(this);
         Button addSkill_3 = findViewById(R.id.addSkill_3);
+        addSkill_3.setText(tavernActivity.Spells.get(3));
         addSkill_3.setVisibility(View.VISIBLE);
         addSkill_3.setOnClickListener(this);
-        Button addSkill_4 = findViewById(R.id.addSkill_4);
+        /*Button addSkill_4 = findViewById(R.id.addSkill_4);
+        addSkill_4.setText(tavernActivity.Spells.get(4));
         addSkill_4.setVisibility(View.VISIBLE);
         addSkill_4.setOnClickListener(this);
         Button addSkill_5 = findViewById(R.id.addSkill_5);
+        addSkill_5.setText(tavernActivity.Spells.get(5));
         addSkill_5.setVisibility(View.VISIBLE);
         addSkill_5.setOnClickListener(this);
         Button addSkill_6 = findViewById(R.id.addSkill_6);
+        addSkill_6.setText(tavernActivity.Spells.get(6));
         addSkill_6.setVisibility(View.VISIBLE);
         addSkill_6.setOnClickListener(this);
         Button addSkill_7 = findViewById(R.id.addSkill_7);
+        addSkill_7.setText(tavernActivity.Spells.get(7));
         addSkill_7.setVisibility(View.VISIBLE);
-        addSkill_7.setOnClickListener(this);
+        addSkill_7.setOnClickListener(this);*/
     }
     public void AddSkill(){
         final WriteAnim text = (WriteAnim) findViewById(R.id.text);
@@ -255,6 +277,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                     yes.setOnClickListener(null);
                 }
                 unfreezeButtons();
+                hideBackButtons();
             }
         });
         final Button no = findViewById(R.id.no);
@@ -266,6 +289,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                 HideYesNoButtons();
                 no.setOnClickListener(null);
                 unfreezeButtons();
+                hideBackButtons();
             }
         });
     }
@@ -301,6 +325,8 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                     HideYesNoButtons();
                     yes.setOnClickListener(null);
                 }
+                unfreezeButtons();
+                hideBackButtons();
             }
         });
         final Button no = findViewById(R.id.no);
@@ -310,6 +336,8 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                 text.animateText("W takim razie odejdz...");
                 HideWhichButtons();
                 HideYesNoButtons();
+                unfreezeButtons();
+                hideBackButtons();
                 no.setOnClickListener(null);
             }
         });
@@ -359,6 +387,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                     yes.setOnClickListener(null);
                 }
                 unfreezeButtons();
+                hideBackButtons();
             }
         });
         final Button no = findViewById(R.id.no);
@@ -369,6 +398,8 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                 text.animateText("W takim razie odejdz...");
                 HideYesNoButtons();
                 HideItemButtons();
+                hideBackButtons();
+                unfreezeButtons();
                 no.setOnClickListener(null);
             }
         });
@@ -383,7 +414,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         skills.setEnabled(false);
         Button sellEq = findViewById(R.id.sell_Eq);
         sellEq.setEnabled(false);
-        Button tavern = findViewById(R.id.gotoTavern);
+        ImageButton tavern = findViewById(R.id.gotoTavern);
         tavern.setEnabled(false);
     }
     public void unfreezeButtons(){
@@ -395,7 +426,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         skills.setEnabled(true);
         Button sellEq = findViewById(R.id.sell_Eq);
         sellEq.setEnabled(true);
-        Button tavern = findViewById(R.id.gotoTavern);
+        ImageButton tavern = findViewById(R.id.gotoTavern);
         tavern.setEnabled(true);
     }
 
@@ -453,6 +484,10 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
 
 
     public void SellEq(View v){
+        ImageButton imageButton = findViewById(R.id.up_page);
+        imageButton.setImageResource(R.drawable.up);
+        ImageButton imageButton1 = findViewById(R.id.down_page);
+        imageButton1.setImageResource(R.drawable.down);
         freezeButtons();
         ShowSellButtons();
         item_first();
@@ -487,6 +522,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                     yes.setOnClickListener(null);
                 }
                 unfreezeButtons();
+                hideBackButtons();
             }
         });
         final Button no = findViewById(R.id.no);
@@ -499,8 +535,9 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                 HideYesNoButtons();
                 HideSellButtons();
                 b = 0;
-                no.setOnClickListener(null);
+                hideBackButtons();
                 unfreezeButtons();
+                no.setOnClickListener(null);
             }
         });
     }
@@ -640,7 +677,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         item_third();
     }
 
-    public void Back(View view){
+    public void Back(View view) {
         Intent Tavern = new Intent(getApplicationContext(), TavernActivity.class);
         startActivity(Tavern);
     }
@@ -659,7 +696,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
             case R.id.buyChest:
                 HideBuyButtons();
                 ShowWhichButtons();
-                text.animateText("ktory klate bys chcial?");
+                text.animateText("ktory napiersnik bys chcial?");
                 tempName = "chest";
                 break;
             case R.id.buyLegs:
@@ -698,7 +735,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                 needmoney=200;
                 AddSkill();
                 break;
-            case R.id.addSkill_4:
+            /*case R.id.addSkill_4:
                 a=4;
                 needlvl=5;
                 needmoney=300;
@@ -721,7 +758,7 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                 needlvl=5;
                 needmoney=300;
                 AddSkill();
-                break;
+                break;*/
             case R.id.buyHp:
                 needmoney = 50;
                 item = "Heal";

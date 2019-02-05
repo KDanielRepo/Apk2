@@ -47,4 +47,3 @@ public class WriteAnim extends TextView {
         mDelay = millis;
     }
 }
-

@@ -126,16 +126,16 @@ class Equipment {
         RestActivity restActivity = new RestActivity();
         switch (restActivity.getEquipment(4)) {
             case "First":
-                Dmg += 2;
+                Dmg += 3;
                 Hp += 5;
                 break;
             case "Second":
                 Hp += 10;
-                Dmg += 3;
+                Dmg += 5;
                 break;
             case "Third":
                 Hp += 15;
-                Dmg += 4;
+                Dmg += 9;
                 break;
         }
         restActivity.UpdateEq();

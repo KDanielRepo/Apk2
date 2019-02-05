@@ -2,10 +2,12 @@ package com.example.nigakolczan.apk2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -38,9 +40,9 @@ public class TavernActivity extends AppCompatActivity{
         min =1;
         max = 2;
         if(RestActivity.CheckTG.equals("F")){
-            Button dungeon = findViewById(R.id.gotoDungeon);
+            ImageButton dungeon = findViewById(R.id.gotoDungeon);
             dungeon.setEnabled(false);
-            Button town = findViewById(R.id.gotoTown);
+            ImageButton town = findViewById(R.id.gotoTown);
             town.setEnabled(false);
             WriteAnim text = (WriteAnim) findViewById(R.id.text);
             text.setCharacterDelay(30);
@@ -61,15 +63,21 @@ public class TavernActivity extends AppCompatActivity{
             constraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    text.animateText("Tak jak kazdy, dostajesz 100 sztuk zlota oraz podstawowy ekwipunek, mocniejszy sprzet znajdziesz w podziemiach, powodzenia");
+                    text.animateText("Tak jak kazdy, dostajesz 100 sztuk zlota oraz podstawowy ekwipunek, mocniejszy sprzet mozesz kupic w sklepie ktory jest nie daleko za drzwiami, aby udac sie do podziemi kliknij na mapke po mojej prawej, powodzenia");
                     SetComplete_2();
                     constraintLayout.setOnClickListener(null);
                 }
             });
         }else if(RestActivity.CheckTG.equals("T") & RestActivity.CheckTG_2.equals("T")){
-            WriteAnim text = (WriteAnim) findViewById(R.id.text);
+            final WriteAnim text = (WriteAnim) findViewById(R.id.text);
             text.setCharacterDelay(30);
             text.animateText("Hello There "+RestActivity.input+"!");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    text.animateText(" ");
+                }
+            },1500);
         }
     }
 
@@ -101,46 +109,46 @@ public class TavernActivity extends AppCompatActivity{
                 Spells.set(1, "Fireball");
                 Spells.set(2, "Ice Shield");
                 Spells.set(3, "Frost Shock");
-                Spells.set(4, "Mage_Skill_5");
+                /*Spells.set(4, "Mage_Skill_5");
                 Spells.set(5, "Mage_Skill_6");
                 Spells.set(6, "Mage_Skill_7");
-                Spells.set(7, "Mage_Skill_8");
+                Spells.set(7, "Mage_Skill_8");*/
                 break;
             case "Rage":
                 Spells.set(1, "Unleash Fury");
                 Spells.set(2, "Heal Wounds");
                 Spells.set(3, "Skull Bash");
-                Spells.set(4, "Warrior_Skill_5");
+                /*Spells.set(4, "Warrior_Skill_5");
                 Spells.set(5, "Warrior_Skill_6");
                 Spells.set(6, "Warrior_Skill_7");
-                Spells.set(7, "Warrior_Skill_8");
+                Spells.set(7, "Warrior_Skill_8");*/
                 break;
             case "Energy":
                 Spells.set(1, "Backstab");
                 Spells.set(2, "First aid");
                 Spells.set(3, "Cheap Shot");
-                Spells.set(4, "Thief_Skill_5");
+                /*Spells.set(4, "Thief_Skill_5");
                 Spells.set(5, "Thief_Skill_6");
                 Spells.set(6, "Thief_Skill_7");
-                Spells.set(7, "Thief_Skill_8");
+                Spells.set(7, "Thief_Skill_8");*/
                 break;
 
         }
     }
     public void HideInterface(){
-        Button tk = findViewById(R.id.tavernKeeper);
-        tk.setVisibility(View.GONE);
-        Button town = findViewById(R.id.gotoTown);
+        /*Button tk = findViewById(R.id.tavernKeeper);
+        tk.setVisibility(View.GONE);*/
+        ImageButton town = findViewById(R.id.gotoTown);
         town.setVisibility(View.GONE);
-        Button map = findViewById(R.id.gotoDungeon);
+        ImageButton map = findViewById(R.id.gotoDungeon);
         map.setVisibility(View.GONE);
     }
     public void ShowInterface(){
-        Button tk = findViewById(R.id.tavernKeeper);
-        tk.setVisibility(View.VISIBLE);
-        Button town = findViewById(R.id.gotoTown);
+        /*Button tk = findViewById(R.id.tavernKeeper);
+        tk.setVisibility(View.VISIBLE);*/
+        ImageButton town = findViewById(R.id.gotoTown);
         town.setVisibility(View.VISIBLE);
-        Button map = findViewById(R.id.gotoDungeon);
+        ImageButton map = findViewById(R.id.gotoDungeon);
         map.setVisibility(View.VISIBLE);
     }
     public void HideMapArea(View v){
@@ -154,10 +162,14 @@ public class TavernActivity extends AppCompatActivity{
         area_4.setVisibility(View.GONE);
         Button back = findViewById(R.id.back);
         back.setVisibility(View.GONE);
+        ImageView imageView = findViewById(R.id.mapkaBlisko);
+        imageView.setVisibility(View.GONE);
         ShowInterface();
     }
     public void SelectMapArea(View v){
         HideInterface();
+        ImageView imageView = findViewById(R.id.mapkaBlisko);
+        imageView.setVisibility(View.VISIBLE);
         Button area_1 = findViewById(R.id.area_1);
         area_1.setVisibility(View.VISIBLE);
         Button area_2 = findViewById(R.id.area_2);

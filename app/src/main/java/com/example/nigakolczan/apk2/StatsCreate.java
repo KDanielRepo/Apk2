@@ -75,50 +75,20 @@ public class StatsCreate extends AppCompatActivity {
         return EnemyLvlVar;
     }
     public static int GetEnemyNameVar(){
-        EnemyNameVar = ThreadLocalRandom.current().nextInt(1, 6);
+        EnemyNameVar = ThreadLocalRandom.current().nextInt(1, 4);
         return EnemyNameVar;
     }
-    /*public static String GetEnemyLvl(){
-        String EnemyLvl;
-        switch (EnemyLvlVar) {
-            case 1:
-                EnemyLvl = "1";
-                break;
-            case 2:
-                EnemyLvl = "2";
-                break;
-            case 3:
-                EnemyLvl = "3";
-                break;
-            case 4:
-                EnemyLvl = "4";
-                break;
-            case 5:
-                EnemyLvl = "5";
-                break;
-            default:
-                EnemyLvl = "100";
-                break;
-        }
-        return EnemyLvl;
-    }*/
     public static String GetEnemyName(){
         String EnemyNames;
         switch (EnemyNameVar) {
             case 1:
-                EnemyNames = "Test_1";
+                EnemyNames = "Blob";
                 break;
             case 2:
-                EnemyNames = "Test_2";
+                EnemyNames = "Agresywny Blob";
                 break;
             case 3:
-                EnemyNames = "Test_3";
-                break;
-            case 4:
-                EnemyNames = "Test_4";
-                break;
-            case 5:
-                EnemyNames = "Test_5";
+                EnemyNames = "Żarłoczny Blob";
                 break;
             default:
                 EnemyNames = "err";
@@ -131,26 +101,20 @@ public class StatsCreate extends AppCompatActivity {
         return bossLvlVar;
     }
     public static int GetBossNameVar(){
-        bossNameVar = ThreadLocalRandom.current().nextInt(1,6);
+        bossNameVar = ThreadLocalRandom.current().nextInt(1,4);
         return bossNameVar;
     }
     public static String GetBossName(){
         String bossNames;
         switch (bossNameVar) {
             case 1:
-                bossNames = "Boss_1";
+                bossNames = "Twardy Blob";
                 break;
             case 2:
-                bossNames = "Boss_2";
+                bossNames = "Twardy Agresywny Blob";
                 break;
             case 3:
-                bossNames = "Boss_3";
-                break;
-            case 4:
-                bossNames = "Boss_4";
-                break;
-            case 5:
-                bossNames = "Boss_5";
+                bossNames = "Twardy Żarłoczny Blob";
                 break;
             default:
                 bossNames = "err";
@@ -182,8 +146,8 @@ public class StatsCreate extends AppCompatActivity {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            // root elements
             Document doc = docBuilder.newDocument();
+
             GetInput();
             GetRace();
             GetProf();
@@ -191,34 +155,28 @@ public class StatsCreate extends AppCompatActivity {
             Element rootElement = doc.createElement("Stats");
             doc.appendChild(rootElement);
 
-            // Postac
             Element character = doc.createElement("Character");
             rootElement.appendChild(character);
 
-            // Jej poziom
             Attr attr = doc.createAttribute("Lvl");
-            attr.setValue("5");
+            attr.setValue("1");
             character.setAttributeNode(attr);
 
 
-            // Nazwa
             Element nickName = doc.createElement("NickName");
             nickName.appendChild(doc.createTextNode(Input));
             character.appendChild(nickName);
 
 
-            // Rasa
             Element race = doc.createElement("Race");
             race.appendChild(doc.createTextNode(Rasa));
             character.appendChild(race);
 
 
-            // Profesja
             Element prof = doc.createElement("Profession");
             prof.appendChild(doc.createTextNode(Klasa));
             character.appendChild(prof);
 
-            // Sprawdza testground
             Element TestGround_pt1 = doc.createElement("TestGround_pt1");
             TestGround_pt1.appendChild(doc.createTextNode("F"));
             character.appendChild(TestGround_pt1);
@@ -227,7 +185,6 @@ public class StatsCreate extends AppCompatActivity {
             TestGround_pt2.appendChild(doc.createTextNode("F"));
             character.appendChild(TestGround_pt2);
 
-            //Sekcja Umiejek
             Element skill_1 = doc.createElement("Skill_1");
             skill_1.appendChild(doc.createTextNode("T"));
             character.appendChild(skill_1);
@@ -261,7 +218,6 @@ public class StatsCreate extends AppCompatActivity {
             character.appendChild(skill_8);
 
 
-            //Eq
             Element helm = doc.createElement("helm");
             helm.appendChild(doc.createTextNode("First"));
             character.appendChild(helm);
@@ -290,15 +246,13 @@ public class StatsCreate extends AppCompatActivity {
             first_eq.appendChild(doc.createTextNode("F"));
             character.appendChild(first_eq);
 
-            // Zloto
             Element gold = doc.createElement("Gold");
             character.appendChild(gold);
 
             Attr shekles = doc.createAttribute("Shekles");
-            shekles.setValue("1000");
+            shekles.setValue("100");
             gold.setAttributeNode(shekles);
 
-            // Ilosc doswiadczenia
             Element Experience = doc.createElement("Experience");
             character.appendChild(Experience);
 
@@ -349,14 +303,10 @@ public class StatsCreate extends AppCompatActivity {
             exp.setValue("0");
             Experience.setAttributeNode(exp);
 
-            // write the content into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File("data/data/com.example.nigakolczan.apk2/Stats_"+RestActivity.a+".xml"));
-
-            // Output to console for testing
-            // StreamResult result = new StreamResult(System.out);
 
             transformer.transform(source, result);
 

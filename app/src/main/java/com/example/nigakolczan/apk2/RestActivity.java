@@ -1,11 +1,14 @@
 package com.example.nigakolczan.apk2;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -94,6 +97,29 @@ public class RestActivity extends AppCompatActivity {
     }
 
     public String getEquipment(int i){
+        try {
+            File file = new File("data/data/com.example.nigakolczan.apk2/Stats_"+a+".xml");
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(file);
+            NodeList root = doc.getChildNodes();
+
+            //Wszystkie znaczniki w XML
+            Node Stats = getNode("Stats", root);
+            Node Chk = getNode("Character", Stats.getChildNodes());
+            NodeList nodes = Chk.getChildNodes();
+
+            //Wszystkie atrybuty znaczników w XML
+
+            Helm = getNodeValue("Helm",nodes);
+            Chest = getNodeValue("Chest",nodes);
+            Legs = getNodeValue("Legs",nodes);
+            Boots = getNodeValue("Boots",nodes);
+            Weapon = getNodeValue("Weapon",nodes);
+            Cape = getNodeValue("Cape",nodes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         List<String> eq = new ArrayList<>();
         eq.add(Helm);
         eq.add(Chest);
@@ -283,7 +309,6 @@ public class RestActivity extends AppCompatActivity {
     public void Start(View v) {
         CreateSave();
         GetStats(v);
-
     }
     public void Delete(View v) {
         File file = new File("data/data/com.example.nigakolczan.apk2/Stats_"+a+".xml");
@@ -331,6 +356,7 @@ public class RestActivity extends AppCompatActivity {
                 WriteAnim writeStats = (WriteAnim) findViewById(R.id.writeStats);
                 writeStats.setCharacterDelay(30);
                 writeStats.animateText("Nickname: "+NickName +newLine+ "Lvl: "+Lvl +newLine+ "Race: "+Rasa +newLine+ "Profession: "+Klasa +newLine+ "Gold: "+Shekles +newLine+ "Exp: "+Experience);
+                playerSpriteStart();
             } else {
                 System.out.println("No such acc found");
             }
@@ -340,7 +366,10 @@ public class RestActivity extends AppCompatActivity {
         }
     }
     public void backToSelect(View view){
+        ImageView imageView = findViewById(R.id.sprite);
+        imageView.setVisibility(View.GONE);
         HideInterface();
+
         showSlots();
     }
     public void EnemyStats(){
@@ -373,7 +402,92 @@ public class RestActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    public void playerSprite(){
+        ImageView img = (ImageView) findViewById(R.id.sprite);
+        if(RestActivity.raceType == 1 & RestActivity.profType == 1){
+            System.out.println("jestem 1 1");
+            img.setBackgroundResource(R.drawable.mage_h);
+        }
+        if(RestActivity.raceType == 1 & RestActivity.profType == 2){
+            System.out.println("jestem 1 2");
+            img.setBackgroundResource(R.drawable.warrior_h);
+        }
+        if(RestActivity.raceType == 1 & RestActivity.profType == 3){
+            System.out.println("jestem 1 3");
+            img.setBackgroundResource(R.drawable.rogue_h);
+        }
+        if(RestActivity.raceType == 2 & RestActivity.profType == 1){
+            System.out.println("jestem 2 1");
+            img.setBackgroundResource(R.drawable.mage_k);
+        }
+        if(RestActivity.raceType == 2 & RestActivity.profType == 2){
+            System.out.println("jestem 2 2 ");
+            img.setBackgroundResource(R.drawable.warrior_k);
+        }
+        if(RestActivity.raceType == 2 & RestActivity.profType == 3){
+            System.out.println("jestem 2 3");
+            img.setBackgroundResource(R.drawable.rogue_k);
+        }
+        if(RestActivity.raceType == 3 & RestActivity.profType == 1){
+            System.out.println("jestem 3 1");
+            img.setBackgroundResource(R.drawable.mage_e);
+        }
+        if(RestActivity.raceType == 3 & RestActivity.profType == 2){
+            System.out.println("jestem 3 2");
+            img.setBackgroundResource(R.drawable.warrior_e);
+        }
+        if(RestActivity.raceType == 3 & RestActivity.profType == 3){
+            System.out.println("jestem 3 3");
+            img.setBackgroundResource(R.drawable.rogue_e);
+        }
+        AnimationDrawable frameAnimation = (AnimationDrawable) img.getBackground();
+        img.setVisibility(View.VISIBLE);
+        frameAnimation.start();
 
+    }
+    public void playerSpriteStart(){
+        ImageView img = (ImageView) findViewById(R.id.sprite);
+        if(RestActivity.Rasa.equals("Czlowiek") & RestActivity.Klasa.equals("Mag")){
+            System.out.println("jestem 1 1");
+            img.setBackgroundResource(R.drawable.mage_h);
+        }
+        if(RestActivity.Rasa.equals("Czlowiek") & RestActivity.Klasa.equals("Wojownik")){
+            System.out.println("jestem 1 2");
+            img.setBackgroundResource(R.drawable.warrior_h);
+        }
+        if(RestActivity.Rasa.equals("Czlowiek") & RestActivity.Klasa.equals("Lotr")){
+            System.out.println("jestem 1 3");
+            img.setBackgroundResource(R.drawable.rogue_h);
+        }
+        if(RestActivity.Rasa.equals("Krasnolud") & RestActivity.Klasa.equals("Mag")){
+            System.out.println("jestem 2 1");
+            img.setBackgroundResource(R.drawable.mage_k);
+        }
+        if(RestActivity.Rasa.equals("Krasnolud") & RestActivity.Klasa.equals("Wojownik")){
+            System.out.println("jestem 2 2 ");
+            img.setBackgroundResource(R.drawable.warrior_k);
+        }
+        if(RestActivity.Rasa.equals("Krasnolud") & RestActivity.Klasa.equals("Lotr")){
+            System.out.println("jestem 2 3");
+            img.setBackgroundResource(R.drawable.rogue_k);
+        }
+        if(RestActivity.Rasa.equals("Elf") & RestActivity.Klasa.equals("Mag")){
+            System.out.println("jestem 3 1");
+            img.setBackgroundResource(R.drawable.mage_e);
+        }
+        if(RestActivity.Rasa.equals("Elf") & RestActivity.Klasa.equals("Wojownik")){
+            System.out.println("jestem 3 2");
+            img.setBackgroundResource(R.drawable.warrior_e);
+        }
+        if(RestActivity.Rasa.equals("Elf") & RestActivity.Klasa.equals("Lotr")){
+            System.out.println("jestem 3 3");
+            img.setBackgroundResource(R.drawable.rogue_e);
+        }
+        AnimationDrawable frameAnimation = (AnimationDrawable) img.getBackground();
+        frameAnimation.start();
+        img.setVisibility(View.VISIBLE);
+
+    }
     public void UpdateEq(){
         try {
             File file = new File("data/data/com.example.nigakolczan.apk2/Stats_"+RestActivity.a+".xml");
@@ -404,20 +518,17 @@ public class RestActivity extends AppCompatActivity {
     public void SelectRaceLeft(View v){
         raceType -= 1;
         if(raceType < 1){
-            raceType=4;
+            raceType=3;
         }
         switch (raceType) {
             case 1:
-                RaceType = "Husky";
+                RaceType = "Czlowiek";
                 break;
             case 2:
-                RaceType = "Corgi";
+                RaceType = "Krasnolud";
                 break;
             case 3:
-                RaceType = "G_Sheperd";
-                break;
-            case 4:
-                RaceType = "Bulldog";
+                RaceType = "Elf";
                 break;
             default:
                 RaceType = "err";
@@ -425,24 +536,22 @@ public class RestActivity extends AppCompatActivity {
         }
         TextView tv = findViewById(R.id.textViewRace);
         tv.setText(RaceType);
+        playerSprite();
     }
     public void SelectRaceRight(View v){
         raceType += 1;
-        if(raceType > 4){
+        if(raceType > 3){
             raceType=1;
         }
         switch (raceType) {
             case 1:
-                RaceType = "Husky";
+                RaceType = "Czlowiek";
                 break;
             case 2:
-                RaceType = "Corgi";
+                RaceType = "Krasnolud";
                 break;
             case 3:
-                RaceType = "G_Sheperd";
-                break;
-            case 4:
-                RaceType = "Bulldog";
+                RaceType = "Elf";
                 break;
             default:
                 RaceType = "err";
@@ -450,6 +559,7 @@ public class RestActivity extends AppCompatActivity {
         }
         TextView tv = findViewById(R.id.textViewRace);
         tv.setText(RaceType);
+        playerSprite();
     }
     public void SelectProfLeft(View v){
         profType -= 1;
@@ -458,15 +568,15 @@ public class RestActivity extends AppCompatActivity {
         }
         switch (profType) {
             case 1:
-                ProfType = "Mage";
+                ProfType = "Mag";
                 Resource = "Mana";
                 break;
             case 2:
-                ProfType = "Warrior";
+                ProfType = "Wojownik";
                 Resource = "Rage";
                 break;
             case 3:
-                ProfType = "Thief";
+                ProfType = "Lotr";
                 Resource = "Energy";
                 break;
             default:
@@ -475,6 +585,7 @@ public class RestActivity extends AppCompatActivity {
         }
         TextView tv = findViewById(R.id.textViewProf);
         tv.setText(ProfType);
+        playerSprite();
     }
     public void SelectProfRight(View v){
         profType += 1;
@@ -483,15 +594,15 @@ public class RestActivity extends AppCompatActivity {
         }
         switch (profType) {
             case 1:
-                ProfType = "Mage";
+                ProfType = "Mag";
                 Resource = "Mana";
                 break;
             case 2:
-                ProfType = "Warrior";
+                ProfType = "Wojownik";
                 Resource = "Rage";
                 break;
             case 3:
-                ProfType = "Thief";
+                ProfType = "Lotr";
                 Resource = "Energy";
                 break;
             default:
@@ -500,6 +611,7 @@ public class RestActivity extends AppCompatActivity {
         }
         TextView tv = findViewById(R.id.textViewProf);
         tv.setText(ProfType);
+        playerSprite();
     }
 
 

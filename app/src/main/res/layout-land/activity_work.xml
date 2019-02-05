@@ -19,11 +19,11 @@
         android:layout_height="match_parent"
         android:visibility="visible" />
 
-    <Button
+    <!--<Button
         android:layout_width="60dp"
         android:layout_height="48dp"
         android:onClick="Exit"
-        android:text="@string/Exit_button" />
+        android:text="@string/Exit_button" />-->
 
     <Button
         android:id="@+id/Move"
@@ -41,7 +41,7 @@
         app:layout_constraintHorizontal_bias="0.017"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.972" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/Check"
@@ -56,10 +56,10 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.348"
+        app:layout_constraintHorizontal_bias="0.357"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.972" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/List"
@@ -74,12 +74,12 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.665"
+        app:layout_constraintHorizontal_bias="0.691"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.972" />
+        app:layout_constraintVertical_bias="1.0" />
 
-    <Button
+    <!--<Button
         android:id="@+id/dunno"
         android:layout_width="128dp"
         android:layout_height="48dp"
@@ -94,9 +94,9 @@
         app:layout_constraintHorizontal_bias="0.982"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.972" />
+        app:layout_constraintVertical_bias="0.972" />-->
 
-    <Button
+    <ImageButton
         android:id="@+id/Right"
         android:layout_width="64dp"
         android:layout_height="48dp"
@@ -104,8 +104,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/right"
         android:onClick="Right"
-        android:text="@string/Right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.200"
@@ -113,7 +113,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.755" />
 
-    <Button
+    <ImageButton
         android:id="@+id/Left"
         android:layout_width="64dp"
         android:layout_height="48dp"
@@ -121,8 +121,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/left"
         android:onClick="Left"
-        android:text="@string/Left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.020"
@@ -130,7 +130,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.755" />
 
-    <Button
+    <ImageButton
         android:id="@+id/Up"
         android:layout_width="64dp"
         android:layout_height="48dp"
@@ -138,8 +138,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/up"
         android:onClick="Up"
-        android:text="@string/Up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.110"
@@ -147,7 +147,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.600" />
 
-    <Button
+    <ImageButton
         android:id="@+id/Down"
         android:layout_width="64dp"
         android:layout_height="48dp"
@@ -156,30 +156,13 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:onClick="Down"
-        android:text="@string/Down"
+        android:background="@drawable/down"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.110"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.910" />
-
-    <Button
-        android:id="@+id/ck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:onClick="Ck"
-        android:text="Ck"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.872"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.712" />
 
 
     <Button
@@ -381,35 +364,6 @@
         app:layout_constraintVertical_bias="0.972" />
 
 
-    <com.example.nigakolczan.apk2.WriteAnim
-        android:id="@+id/writeAnim"
-        android:layout_width="426dp"
-        android:layout_height="91dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.884" />
-
-    <com.example.nigakolczan.apk2.WriteAnim
-        android:id="@+id/battleText"
-        android:layout_width="426dp"
-        android:layout_height="91dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.884" />
-
     <TextView
         android:id="@+id/hpBar"
         android:layout_width="106dp"
@@ -455,7 +409,7 @@
         app:layout_constraintHorizontal_bias="0.236"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.248"
+        app:layout_constraintVertical_bias="0.800"
         tools:ignore="ContentDescription" />
 
 
@@ -473,8 +427,37 @@
         app:layout_constraintHorizontal_bias="0.765"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.245"
+        app:layout_constraintVertical_bias="0.800"
         tools:ignore="ContentDescription" />
+
+    <com.example.nigakolczan.apk2.WriteAnim
+        android:id="@+id/writeAnim"
+        android:layout_width="426dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.884" />
+
+    <com.example.nigakolczan.apk2.WriteAnim
+        android:id="@+id/battleText"
+        android:layout_width="426dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.884" />
 
 
     <ImageView
@@ -509,6 +492,22 @@
         app:layout_constraintVertical_bias="0.089"
         tools:ignore="ContentDescription" />
 
+
+    <ImageView
+        android:id="@+id/dotHelper"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.859"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.089"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/it_list"
@@ -635,6 +634,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/up"
         android:onClick="item_up"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -708,6 +708,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/down"
         android:onClick="item_down"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

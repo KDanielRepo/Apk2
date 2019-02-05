@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.nigakolczan.apk2">
     <application
         android:allowBackup="true"
         android:largeHeap="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Apk2"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="RPG"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:hardwareAccelerated="false">
@@ -19,9 +21,6 @@
         </activity>
         <activity android:name=".WorkActivity"
             android:screenOrientation="landscape"/>
-        <activity
-            android:name=".OptionsActivity"
-            android:label="@string/title_activity_options"/>
         <activity
             android:name=".RestActivity"
             android:screenOrientation="portrait"/>

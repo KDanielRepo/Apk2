@@ -39,15 +39,10 @@ public class TestGroundActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testground);
 
-        ImageView img = (ImageView) findViewById(R.id.testanim);
-        img.setBackgroundResource(R.drawable.testanim_1);
-        AnimationDrawable frameAnimation = (AnimationDrawable) img.getBackground();
-        frameAnimation.start();
+        playerSprite();
 
         ImageView img_2 = (ImageView) findViewById(R.id.testanim_2);
-        img_2.setBackgroundResource(R.drawable.testanim_2);
-        AnimationDrawable frameAnimation_2 = (AnimationDrawable) img_2.getBackground();
-        frameAnimation_2.start();
+        img_2.setBackgroundResource(R.drawable.kukla);
 
         Fight();
     }
@@ -62,11 +57,94 @@ public class TestGroundActivity extends AppCompatActivity {
 
         return null;
     }
+    public void playerSprite(){
+        ImageView img = (ImageView) findViewById(R.id.testanim);
+        System.out.println(RestActivity.Rasa+" "+RestActivity.Klasa);
+        if(RestActivity.Rasa.equals("Czlowiek") & RestActivity.Klasa.equals("Mag")){
+            System.out.println("jestem 1 1");
+            img.setBackgroundResource(R.drawable.mage_h);
+        }
+        if(RestActivity.Rasa.equals("Czlowiek") & RestActivity.Klasa.equals("Wojownik")){
+            System.out.println("jestem 1 2");
+            img.setBackgroundResource(R.drawable.warrior_h);
+        }
+        if(RestActivity.Rasa.equals("Czlowiek") & RestActivity.Klasa.equals("Lotr")){
+            System.out.println("jestem 1 3");
+            img.setBackgroundResource(R.drawable.rogue_h);
+        }
+        if(RestActivity.Rasa.equals("Krasnolud") & RestActivity.Klasa.equals("Mag")){
+            System.out.println("jestem 2 1");
+            img.setBackgroundResource(R.drawable.mage_k);
+        }
+        if(RestActivity.Rasa.equals("Krasnolud") & RestActivity.Klasa.equals("Wojownik")){
+            System.out.println("jestem 2 2 ");
+            img.setBackgroundResource(R.drawable.warrior_k);
+        }
+        if(RestActivity.Rasa.equals("Krasnolud") & RestActivity.Klasa.equals("Lotr")){
+            System.out.println("jestem 2 3");
+            img.setBackgroundResource(R.drawable.rogue_k);
+        }
+        if(RestActivity.Rasa.equals("Elf") & RestActivity.Klasa.equals("Mag")){
+            System.out.println("jestem 3 1");
+            img.setBackgroundResource(R.drawable.mage_e);
+        }
+        if(RestActivity.Rasa.equals("Elf") & RestActivity.Klasa.equals("Wojownik")){
+            System.out.println("jestem 3 2");
+            img.setBackgroundResource(R.drawable.warrior_e);
+        }
+        if(RestActivity.Rasa.equals("Elf") & RestActivity.Klasa.equals("Lotr")){
+            System.out.println("jestem 3 3");
+            img.setBackgroundResource(R.drawable.rogue_e);
+        }
+        AnimationDrawable frameAnimation = (AnimationDrawable) img.getBackground();
+        frameAnimation.start();
+
+    }
+    public void playerAttackSprite(){
+        ImageView img = (ImageView) findViewById(R.id.testanim);
+        if(RestActivity.Rasa.equals("Czlowiek") & RestActivity.Klasa.equals("Mag")){
+            System.out.println("jestem 1 1");
+            img.setBackgroundResource(R.drawable.mage_h_attack);
+        }
+        if(RestActivity.Rasa.equals("Czlowiek") & RestActivity.Klasa.equals("Wojownik")){
+            System.out.println("jestem 1 2");
+            img.setBackgroundResource(R.drawable.warrior_h_attack);
+        }
+        if(RestActivity.Rasa.equals("Czlowiek") & RestActivity.Klasa.equals("Lotr")){
+            System.out.println("jestem 1 3");
+            img.setBackgroundResource(R.drawable.rogue_h_attack);
+        }
+        if(RestActivity.Rasa.equals("Krasnolud") & RestActivity.Klasa.equals("Mag")){
+            System.out.println("jestem 2 1");
+            img.setBackgroundResource(R.drawable.mage_k_attack);
+        }
+        if(RestActivity.Rasa.equals("Krasnolud") & RestActivity.Klasa.equals("Wojownik")){
+            System.out.println("jestem 2 2 ");
+            img.setBackgroundResource(R.drawable.warrior_k_attack);
+        }
+        if(RestActivity.Rasa.equals("Krasnolud") & RestActivity.Klasa.equals("Lotr")){
+            System.out.println("jestem 2 3");
+            img.setBackgroundResource(R.drawable.rogue_k_attack);
+        }
+        if(RestActivity.Rasa.equals("Elf") & RestActivity.Klasa.equals("Mag")){
+            System.out.println("jestem 3 1");
+            img.setBackgroundResource(R.drawable.mage_e_attack);
+        }
+        if(RestActivity.Rasa.equals("Elf") & RestActivity.Klasa.equals("Wojownik")){
+            System.out.println("jestem 3 2");
+            img.setBackgroundResource(R.drawable.warrior_e_attack);
+        }
+        if(RestActivity.Rasa.equals("Elf") & RestActivity.Klasa.equals("Lotr")){
+            System.out.println("jestem 3 3");
+            img.setBackgroundResource(R.drawable.rogue_e_attack);
+        }
+    }
+
 
     //Statystyki bohatera
     private static int Poziom = Integer.parseInt(RestActivity.Lvl);
-    private int Hp = Poziom * 20;
-    private int Dmg = Poziom;
+    private int Hp = Poziom * 5;
+    private int Dmg = Poziom+2;
     String newLine = System.getProperty("line.separator");
     private int steps = 0;
 
@@ -82,13 +160,11 @@ public class TestGroundActivity extends AppCompatActivity {
     private Boolean end = false;
 
     private void cpuTurn(){
-        ImageView img = findViewById(R.id.testanim_2);
-        img.setX(700);
+        final ImageView img = findViewById(R.id.testanim_2);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ImageView img = findViewById(R.id.testanim_2);
-                img.setX(1200);
+                img.setTranslationX(0);
             }
         },500);
         EndFight();
@@ -98,16 +174,16 @@ public class TestGroundActivity extends AppCompatActivity {
         move.setVisibility(View.GONE);
         Button list = findViewById(R.id.List);
         list.setVisibility(View.GONE);
-        Button dunno = findViewById(R.id.dunno);
-        dunno.setVisibility(View.GONE);
+        /*Button dunno = findViewById(R.id.dunno);
+        dunno.setVisibility(View.GONE);*/
     }
     private void ShowAfterCheck(){
         Button move = findViewById(R.id.Move);
         move.setVisibility(View.VISIBLE);
         Button list = findViewById(R.id.List);
         list.setVisibility(View.VISIBLE);
-        Button dunno = findViewById(R.id.dunno);
-        dunno.setVisibility(View.VISIBLE);
+        /*Button dunno = findViewById(R.id.dunno);
+        dunno.setVisibility(View.VISIBLE);*/
     }
 
     public void Check(View view){
@@ -149,7 +225,7 @@ public class TestGroundActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     battleText.setCharacterDelay(30);
-                                    battleText.animateText("Wrog zadal: " + EnemyDmg + " obrazen!" + newLine + "Zostalo ci: " + Hp + " punktow zycia!");
+                                    battleText.animateText("Kukła stoi w miejscu... Bo to kukła");
                                     System.out.println("Koniec tury: " + tura);
                                 }
                             });
@@ -189,7 +265,7 @@ public class TestGroundActivity extends AppCompatActivity {
     //pokazuje lub ukrywa liste ruchow w walce
     private void CheckSkillsFirstRow(){
             Button test_at1 = findViewById(R.id.test_At1);
-            test_at1.setText("Melee Attack");
+            test_at1.setText("Cios Fizyczny");
             test_at1.setVisibility(View.VISIBLE);
         }
 
@@ -200,8 +276,8 @@ public class TestGroundActivity extends AppCompatActivity {
         check.setVisibility(View.GONE);
         Button list = findViewById(R.id.List);
         list.setVisibility(View.GONE);
-        Button dunno = findViewById(R.id.dunno);
-        dunno.setVisibility(View.GONE);
+        /*Button dunno = findViewById(R.id.dunno);
+        dunno.setVisibility(View.GONE);*/
 
         CheckSkillsFirstRow();
 
@@ -215,8 +291,8 @@ public class TestGroundActivity extends AppCompatActivity {
         check.setVisibility(View.VISIBLE);
         Button list = findViewById(R.id.List);
         list.setVisibility(View.VISIBLE);
-        Button dunno = findViewById(R.id.dunno);
-        dunno.setVisibility(View.VISIBLE);
+        /*Button dunno = findViewById(R.id.dunno);
+        dunno.setVisibility(View.VISIBLE);*/
         Button test_at1 = findViewById(R.id.test_At1);
         test_at1.setVisibility(View.GONE);
 
@@ -229,12 +305,14 @@ public class TestGroundActivity extends AppCompatActivity {
 
     public void FightAnimMelee(){
         ImageView img = findViewById(R.id.testanim);
-        img.setX(900);
+        img.setTranslationX(540);
+        playerAttackSprite();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 ImageView img = findViewById(R.id.testanim);
-                img.setX(400);
+                img.setTranslationX(0);
+                playerSprite();
             }
         },500);
         MoveList_hide();
@@ -260,8 +338,8 @@ public class TestGroundActivity extends AppCompatActivity {
         check.setEnabled(false);
         Button list = findViewById(R.id.List);
         list.setEnabled(false);
-        Button dunno = findViewById(R.id.dunno);
-        dunno.setEnabled(false);
+       /* Button dunno = findViewById(R.id.dunno);
+        dunno.setEnabled(false);*/
     }
     public void EnableButtons(){
         Button move = findViewById(R.id.Move);
@@ -270,8 +348,8 @@ public class TestGroundActivity extends AppCompatActivity {
         check.setEnabled(true);
         Button list = findViewById(R.id.List);
         list.setEnabled(true);
-        Button dunno = findViewById(R.id.dunno);
-        dunno.setEnabled(true);
+       /* Button dunno = findViewById(R.id.dunno);
+        dunno.setEnabled(true);*/
     }
 
     private void Fight(){
@@ -279,8 +357,8 @@ public class TestGroundActivity extends AppCompatActivity {
         move.setEnabled(false);
         Button list = findViewById(R.id.List);
         list.setEnabled(false);
-        Button dunno = findViewById(R.id.dunno);
-        dunno.setEnabled(false);
+        /*Button dunno = findViewById(R.id.dunno);
+        dunno.setEnabled(false);*/
         final Button check = findViewById(R.id.Check);
         check.setEnabled(false);
         ImageView map = findViewById(R.id.testbg);
@@ -318,7 +396,7 @@ public class TestGroundActivity extends AppCompatActivity {
         StatsCreate.EnemyStats();
         RestActivity set = new RestActivity();
         set.EnemyStats();
-        EnemyHp = 6;
+        EnemyHp = 5;
         EnemyDmg = 0;
 
     }
@@ -334,8 +412,8 @@ public class TestGroundActivity extends AppCompatActivity {
             check.setVisibility(View.GONE);
             Button list = findViewById(R.id.List);
             list.setVisibility(View.GONE);
-            Button dunno = findViewById(R.id.dunno);
-            dunno.setVisibility(View.GONE);
+           /* Button dunno = findViewById(R.id.dunno);
+            dunno.setVisibility(View.GONE);*/
             ImageView map = findViewById(R.id.testbg);
             map.setVisibility(View.VISIBLE);
             ImageView dot = findViewById(R.id.dot);

@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Background_Black"
+    android:background="@drawable/open"
     tools:context="com.example.nigakolczan.apk2.MainActivity">
 
-    <com.example.nigakolczan.apk2.GifImageView
+    <!--<com.example.nigakolczan.apk2.GifImageView
         android:id="@+id/GifImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/doggoss" />
+        android:background="@drawable/doggoss" />-->
 
 
     <LinearLayout
@@ -58,12 +58,12 @@
             android:layout_height="48dp"
             android:orientation="vertical"></LinearLayout>
 
-        <Button
+        <!--<Button
             android:id="@+id/Options_button"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:text="@string/Options_button"
-            android:onClick="Options"/>
+            android:onClick="Options"/>-->
 
         <LinearLayout
             android:layout_width="match_parent"
