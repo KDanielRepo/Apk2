@@ -228,18 +228,18 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
         text.setCharacterDelay(30);
         text.animateText("Czego chcialbys sie nauczyc?");
         Button addSkill_2 = findViewById(R.id.addSkill_2);
-        addSkill_2.setText(tavernActivity.Spells.get(2));
+        addSkill_2.setText(tavernActivity.Spells.get(1));
         addSkill_2.setVisibility(View.VISIBLE);
         addSkill_2.setOnClickListener(this);
         Button addSkill_3 = findViewById(R.id.addSkill_3);
-        addSkill_3.setText(tavernActivity.Spells.get(3));
+        addSkill_3.setText(tavernActivity.Spells.get(2));
         addSkill_3.setVisibility(View.VISIBLE);
         addSkill_3.setOnClickListener(this);
-        /*Button addSkill_4 = findViewById(R.id.addSkill_4);
-        addSkill_4.setText(tavernActivity.Spells.get(4));
+        Button addSkill_4 = findViewById(R.id.addSkill_4);
+        addSkill_4.setText(tavernActivity.Spells.get(3));
         addSkill_4.setVisibility(View.VISIBLE);
         addSkill_4.setOnClickListener(this);
-        Button addSkill_5 = findViewById(R.id.addSkill_5);
+        /*Button addSkill_5 = findViewById(R.id.addSkill_5);
         addSkill_5.setText(tavernActivity.Spells.get(5));
         addSkill_5.setVisibility(View.VISIBLE);
         addSkill_5.setOnClickListener(this);
@@ -735,13 +735,13 @@ public class SkillAddActivity extends AppCompatActivity implements View.OnClickL
                 needmoney=200;
                 AddSkill();
                 break;
-            /*case R.id.addSkill_4:
+            case R.id.addSkill_4:
                 a=4;
                 needlvl=5;
                 needmoney=300;
                 AddSkill();
                 break;
-            case R.id.addSkill_5:
+            /*case R.id.addSkill_5:
                 a=5;
                 needlvl=5;
                 needmoney=300;
